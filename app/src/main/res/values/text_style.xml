@@ -3,33 +3,33 @@
     <style name="bigMontserrat_Bold" >
         <item name="android:font">@font/montserrat_regular</item>
         <item name="android:textSize">@dimen/dimen_20_sp</item>
-        <item name="android:textColor">@color/neutral_07_whisper</item>
+        <item name="android:textColor">@color/neutral_08_whisper</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="bigMontserrat_Regular" >
         <item name="android:font">@font/montserrat_regular</item>
         <item name="android:textSize">@dimen/dimen_20_sp</item>
-        <item name="android:textColor">@color/neutral_07_whisper</item>
+        <item name="android:textColor">@color/neutral_08_whisper</item>
     </style>
 
     <style name="normalMontserrat_Bold" >
         <item name="android:font">@font/montserrat_regular</item>
         <item name="android:textSize">@dimen/dimen_16_sp</item>
-        <item name="android:textColor">@color/neutral_07_whisper</item>
+        <item name="android:textColor">@color/neutral_08_whisper</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="normalMontserrat_Regular" >
         <item name="android:font">@font/montserrat_regular</item>
         <item name="android:textSize">@dimen/dimen_16_sp</item>
-        <item name="android:textColor">@color/neutral_07_whisper</item>
+        <item name="android:textColor">@color/neutral_08_whisper</item>
     </style>
 
     <style name="smallMontserrat_Bold" >
         <item name="android:font">@font/montserrat_regular</item>
         <item name="android:textSize">@dimen/dimen_14_sp</item>
-        <item name="android:textColor">@color/neutral_07_lightest_grey</item>
+        <item name="android:textColor">@color/neutral_06_lighter_grey</item>
         <item name="android:textStyle">bold</item>
 
     </style>
@@ -37,7 +37,19 @@
     <style name="smallMontserrat_Regular" >
         <item name="android:font">@font/montserrat_regular</item>
         <item name="android:textSize">@dimen/dimen_14_sp</item>
-        <item name="android:textColor">@color/neutral_07_lightest_grey</item>
+        <item name="android:textColor">@color/neutral_06_lighter_grey</item>
+    </style>
+
+    <style name="smallMontserrat_ButtonFocused" >
+        <item name="android:font">@font/montserrat_regular</item>
+        <item name="android:textSize">@dimen/dimen_14_sp</item>
+        <item name="android:textColor">@color/Neutral_01_black</item>
+    </style>
+
+    <style name="smallMontserrat_Button" >
+        <item name="android:font">@font/montserrat_regular</item>
+        <item name="android:textSize">@dimen/dimen_14_sp</item>
+        <item name="android:textColor">@color/neutral_08_whisper</item>
     </style>
 
     <style name="normalMontserrat_noFavourites" >
@@ -56,6 +68,12 @@
         <item name="android:font">@font/montserrat_regular</item>
         <item name="android:textSize">@dimen/dimen_16_sp</item>
         <item name="android:textColor">@color/neutral_07_lightest_grey</item>
+    </style>
+
+    <style name="normalMontserrat_title" >
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">@dimen/dimen_18_sp</item>
+        <item name="android:textColor">@color/yellow_primary</item>
     </style>
 
     <style name="hintMontserrat_Regular" >
