@@ -17,12 +17,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        showSplashScreen()
+//        showSplashScreen()
+        fragmentSetup()
     }
 
     private fun showSplashScreen() {
         val splashScreenLayout = ActivitySplashScreenBinding.inflate(layoutInflater)
-        binding.constraintFrame.addView(splashScreenLayout.root, ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
+        binding.constraintFrame.addView(
+            splashScreenLayout.root,
+            ConstraintLayout.LayoutParams.MATCH_PARENT,
+            ConstraintLayout.LayoutParams.MATCH_PARENT
+        )
 
         Handler().postDelayed({
             binding.constraintFrame.removeView(splashScreenLayout.root)
