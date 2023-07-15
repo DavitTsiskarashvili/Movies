@@ -1,7 +1,7 @@
-package com.movies.presentation.ui
+package com.movies.presentation.home.view_model
 
 import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+
 }

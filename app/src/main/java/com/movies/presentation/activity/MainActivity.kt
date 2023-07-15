@@ -1,10 +1,11 @@
-package com.movies
+package com.movies.presentation.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.movies.R
 import com.movies.databinding.ActivityMainBinding
-import com.movies.presentation.ui.HomeFragment
+import com.movies.presentation.home.ui.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

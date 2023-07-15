@@ -1,13 +1,12 @@
-package com.movies.presentation.ui
+package com.movies.presentation.home.custom_view
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import androidx.core.content.ContextCompat
 import com.movies.databinding.NavigationCustomViewBinding
 
-class NavigationCustomView @JvmOverloads constructor(
+class NavigationView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttrs: Int = 0,
