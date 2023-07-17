@@ -3,17 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/Neutral_01_black">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/errorImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_230_dp"
         android:src="@drawable/ic_caution"
+        app:layout_constraintBottom_toTopOf="@+id/titleTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/titleTextView"
@@ -22,22 +25,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_28_dp"
         android:text="@string/no_data"
+        app:layout_constraintBottom_toTopOf="@+id/notificationTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/errorImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/errorImageView" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/notificationTextView"
         style="@style/normalMontserrat_noInternet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_23_dp"
         android:layout_marginHorizontal="@dimen/dimen_65_dp"
+        android:layout_marginTop="@dimen/dimen_23_dp"
         android:gravity="center_horizontal"
         android:text="@string/no_internet"
+        app:layout_constraintBottom_toTopOf="@+id/refreshButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/refreshButton"
@@ -50,8 +57,10 @@
         android:paddingHorizontal="@dimen/dimen_30_dp"
         android:paddingVertical="@dimen/dimen_14_dp"
         android:text="@string/refresh"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/notificationTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/notificationTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
