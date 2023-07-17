@@ -1,7 +1,9 @@
 package com.movies
 
 import android.app.Application
-import com.movies.data.remote.service.di.networkModule
+import com.movies.data.remote.di.mapperDTOModule
+import com.movies.data.remote.di.networkModule
+import com.movies.presentation.di.mapperUIModule
 import com.movies.presentation.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -16,7 +18,9 @@ class QuizApp : Application() {
             androidContext(this@QuizApp)
             modules(
                 networkModule,
-                viewModelModule
+                viewModelModule,
+                mapperDTOModule,
+                mapperUIModule
             )
         }
     }

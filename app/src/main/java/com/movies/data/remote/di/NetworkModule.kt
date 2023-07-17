@@ -1,4 +1,4 @@
-package com.movies.data.remote.service.di
+package com.movies.data.remote.di
 
 import com.movies.common.extensions.LocalDateTimeProvider
 import com.movies.data.remote.service.api.ServiceApi
