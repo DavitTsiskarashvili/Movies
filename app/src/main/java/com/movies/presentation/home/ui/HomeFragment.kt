@@ -1,19 +1,24 @@
 package com.movies.presentation.home.ui
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.movies.R
+import com.movies.common.extensions.viewBinding
+import com.movies.databinding.FragmentHomeBinding
+import com.movies.presentation.base.fragment.BaseFragment
+import com.movies.presentation.home.view_model.HomeViewModel
+import kotlin.reflect.KClass
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<HomeViewModel>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    private val binding by viewBinding (FragmentHomeBinding::bind)
+
+    override val layout: Int
+        get() = R.layout.fragment_home
+
+    override val viewModelClass: KClass<HomeViewModel>
+        get() = HomeViewModel::class
+
+    override fun onBind() {
+
     }
 
 }

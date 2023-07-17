@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import com.movies.common.C
-import com.movies.common.S
+import com.movies.common.utils.C
+import com.movies.common.utils.S
 import com.movies.common.extensions.changeBackgroundColor
 import com.movies.common.extensions.changeDrawable
 import com.movies.common.extensions.changeDrawableColor
