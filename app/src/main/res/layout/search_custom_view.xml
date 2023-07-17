@@ -7,7 +7,7 @@
     android:paddingBottom="@dimen/dimen_4_dp">
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/searchView"
+        android:id="@+id/searchEditText"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="@dimen/dimen_16_dp"
@@ -22,21 +22,21 @@
         android:hint="@string/search"
         android:paddingHorizontal="@dimen/dimen_24_dp"
         android:textColorHint="@color/neutral_05_light_grey"
-        app:layout_constraintEnd_toStartOf="@id/filterImageView"
+        app:layout_constraintEnd_toStartOf="@id/filterImageButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/filterImageView"
+        android:id="@+id/filterImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dimen_16_dp"
         android:background="@null"
         android:src="@drawable/ic_filter_not_clicked"
-        app:layout_constraintBottom_toBottomOf="@id/searchView"
+        app:layout_constraintBottom_toBottomOf="@id/searchEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/searchView"
-        app:layout_constraintTop_toTopOf="@id/searchView" />
+        app:layout_constraintStart_toEndOf="@id/searchEditText"
+        app:layout_constraintTop_toTopOf="@id/searchEditText" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/nowShowingButton"
@@ -53,7 +53,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/comingSoonButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView" />
+        app:layout_constraintTop_toBottomOf="@id/searchEditText" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/comingSoonButton"
