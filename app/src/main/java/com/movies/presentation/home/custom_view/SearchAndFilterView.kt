@@ -3,7 +3,6 @@ package com.movies.presentation.home.custom_view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.movies.R
@@ -21,7 +20,7 @@ class SearchAndFilterView @JvmOverloads constructor(
 
     fun isFilterChecked(checked: Boolean) {
         with(binding) {
-            filterImageView.setOnClickListener{
+            filterImageButton.setOnClickListener{
                 if (checked){
                     changeDrawable(R.drawable.ic_filter_clicked)
                     filterViewGroup.setVisibility(true)
@@ -34,7 +33,7 @@ class SearchAndFilterView @JvmOverloads constructor(
 
     private fun changeDrawable(drawableRes: Int) {
         val drawable = ContextCompat.getDrawable(context, drawableRes)
-        binding.filterImageView.setImageDrawable(drawable)
+        binding.filterImageButton.setImageDrawable(drawable)
     }
 
 

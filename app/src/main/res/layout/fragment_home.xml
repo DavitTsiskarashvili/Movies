@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Neutral_01_black"
+    android:background="@color/neutral_01_black"
     tools:context=".presentation.home.ui.HomeFragment">
 
     <com.movies.presentation.home.custom_view.SearchAndFilterView
@@ -56,12 +56,12 @@
         android:layout_marginHorizontal="@dimen/dimen_16_dp"
         android:layout_marginTop="@dimen/dimen_11_dp"
         android:paddingHorizontal="@dimen/dimen_8_dp"
+        android:text="@string/favourite_movies"
         android:textAlignment="center"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/lorem" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/emptyListImageView"

@@ -26,13 +26,16 @@
         app:layout_constraintTop_toBottomOf="@id/posterImageButton"
         tools:text="@tools:sample/lorem" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/favouritesButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.AppCompatToggleButton
+        android:id="@+id/favouritesToggleButton"
+        android:layout_width="@dimen/dimen_20_dp"
+        android:layout_height="@dimen/dimen_20_dp"
         android:layout_marginTop="@dimen/dimen_4_dp"
         android:layout_marginEnd="@dimen/dimen_4_dp"
-        android:src="@drawable/ic_favourites_unchecked"
+        android:background="@drawable/ic_favourites_selector"
+        android:checked="false"
+        android:textOff=""
+        android:textOn=""
         app:layout_constraintStart_toEndOf="@id/titleTextView"
         app:layout_constraintTop_toBottomOf="@id/posterImageButton" />
 

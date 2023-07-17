@@ -4,8 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import androidx.core.content.ContextCompat
-import com.movies.R
+import com.movies.common.C
+import com.movies.common.S
+import com.movies.common.extensions.changeBackgroundColor
+import com.movies.common.extensions.changeDrawable
+import com.movies.common.extensions.changeDrawableColor
+import com.movies.common.extensions.changeText
+import com.movies.common.extensions.changeTextStyle
 import com.movies.databinding.NavigationCustomViewItemBinding
 
 class NavigationViewItem @JvmOverloads constructor(
@@ -18,35 +23,34 @@ class NavigationViewItem @JvmOverloads constructor(
     private val binding =
         NavigationCustomViewItemBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun setActiveButton(isInFocus: Boolean) {
-        if (isInFocus) {
-            changeText(R.string.home_button)
-            changeDrawable(R.drawable.ic_home)
-            changeBackgroundColor(R.color.yellow_primary)
-            changeTextColor(R.style.normalMontserrat_ButtonFocused)
-        } else {
-            changeText(R.string.favourites_button)
-            changeDrawable(R.drawable.ic_favourite_button)
-            changeBackgroundColor(R.color.neutral_02_darkest_grey)
-            changeTextColor(R.style.normalMontserrat_Button)
+    fun setActiveButton(isActive: Boolean) {
+        val backgroundColor = if (isActive) ACTIVE_BACKGROUND_COLOR else PASSIVE_BACKGROUND_COLOR
+        val textStyle = if (isActive) ACTIVE_TEXT_STYLE else PASSIVE_TEXT_STYLE
+        val drawableColor = if (isActive) ACTIVE_DRAWABLE_COLOR else PASSIVE_DRAWABLE_COLOR
+
+        with(binding) {
+            root.changeBackgroundColor(backgroundColor)
+            pageTextView.changeTextStyle(textStyle)
+            iconImageView.changeDrawableColor(drawableColor)
         }
     }
 
-    private fun changeBackgroundColor(colorRes: Int) {
-        binding.root.backgroundTintList = ContextCompat.getColorStateList(context, colorRes)
+    fun setContent(buttonType: NavigationButtons) {
+        with(binding) {
+            iconImageView.changeDrawable(buttonType.icon)
+            pageTextView.changeText(buttonType.title)
+        }
     }
 
-    private fun changeTextColor(styleRes: Int) {
-        binding.pageTextView.setTextAppearance(styleRes)
-    }
+    companion object {
+        private val ACTIVE_BACKGROUND_COLOR = C.yellow_primary
+        private val PASSIVE_BACKGROUND_COLOR = C.neutral_02_darkest_grey
 
-    private fun changeDrawable(drawableRes: Int) {
-        val drawable = ContextCompat.getDrawable(context, drawableRes)
-        binding.iconTextView.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-    }
+        private val ACTIVE_TEXT_STYLE = S.normalMontserrat_ButtonFocused
+        private val PASSIVE_TEXT_STYLE = S.normalMontserrat_Button
 
-    private fun changeText(textRes: Int) {
-        binding.pageTextView.text = context.getString(textRes)
+        private val ACTIVE_DRAWABLE_COLOR = C.neutral_01_black
+        private val PASSIVE_DRAWABLE_COLOR = C.neutral_08_whisper
     }
 
 }

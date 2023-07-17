@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/iconTextView"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dimen_10_dp"
             android:layout_marginStart="@dimen/dimen_42_dp"
             android:layout_marginEnd="@dimen/dimen_3_dp"
-            android:drawableStart="@drawable/ic_home"
+            android:src="@drawable/ic_home"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pageTextView"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -33,11 +33,11 @@
             android:layout_marginEnd="@dimen/dimen_42_dp"
             android:gravity="center_horizontal"
             android:text="@string/home_button"
-            android:textColor="@color/Neutral_01_black"
-            app:layout_constraintBottom_toBottomOf="@id/iconTextView"
+            android:textColor="@color/neutral_01_black"
+            app:layout_constraintBottom_toBottomOf="@id/iconImageView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iconTextView"
-            app:layout_constraintTop_toTopOf="@id/iconTextView" />
+            app:layout_constraintStart_toEndOf="@id/iconImageView"
+            app:layout_constraintTop_toTopOf="@id/iconImageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
