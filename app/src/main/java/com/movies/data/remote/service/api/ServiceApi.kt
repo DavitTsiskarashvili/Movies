@@ -8,3 +8,5 @@ interface ServiceApi {
     @GET("/filmsNowShowing")
     suspend fun getMovies(): Response<List<MoviesDTO>>
 }
+
+
