@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Neutral_01_black"
+    android:background="@color/neutral_01_black"
     tools:context=".presentation.home.ui.HomeFragment">
 
     <com.movies.presentation.home.custom_view.SearchAndFilterView
