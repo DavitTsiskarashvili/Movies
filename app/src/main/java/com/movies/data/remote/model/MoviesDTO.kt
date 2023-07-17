@@ -27,12 +27,14 @@ data class MoviesDTO(
         val filmTrailer: String?,
         @SerializedName("synopsis_long")
         val synopsisLong: String?,
-        val images: Image
+        val images: Image,
+        val status: Status?
     ) {
         data class OtherTitle(
             @SerializedName("EN")
             val en: String
         )
+
         data class Date(
             @SerializedName("release_date")
             val releaseDate: String?,
@@ -46,6 +48,7 @@ data class MoviesDTO(
             @SerializedName("age_advisory")
             val ageAdvisory: String?
         )
+
         data class Image(
             val poster: `1`,
             val still: `1`
@@ -64,6 +67,20 @@ data class MoviesDTO(
                 )
             }
         }
+        data class Status(
+            val count: Int?,
+            val state: String?,
+            val method: String?,
+            val message: String?,
+            @SerializedName("request_method")
+            val requestMethod: String?,
+            val version: String?,
+            val territory: String?,
+            @SerializedName("device_datetime_sent")
+            val deviceDatetimeSent: String?,
+            @SerializedName("device_datetime_used")
+            val deviceDatetimeUsed: String?
+        )
     }
 }
 
