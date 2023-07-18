@@ -1,6 +1,5 @@
 package com.movies.data.remote.di
 
-import com.movies.common.extensions.LocalDateTimeProvider
 import com.movies.data.remote.service.api.ServiceApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -9,17 +8,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-private const val BASE_URL = "https://api-gate2.movieglu.com"
+private const val BASE_URL = "https://api.themoviedb.org/"
 
 private fun createInterceptor(): Interceptor {
     return Interceptor { chain ->
         val request = chain.request().newBuilder()
-            .header("client", "SPAC_0")
-            .header("x-api-key", "TtqWcYf8hO6nKghu94WFb3rTWiefvOnT78qeHEx0")
-            .header("authorization", "Basic U1BBQ18wOnJUaTZkM3NtejJCcg==")
-            .header("territory", "DE")
-            .header("api-version", "v200")
-            .header("device-datetime", LocalDateTimeProvider.dateProvider())
+            .header("Authorization", ApiKey.VALUE)
             .build()
         chain.proceed(request)
     }
@@ -41,4 +35,9 @@ private fun createRetrofit(): Retrofit {
 val networkModule = module {
     single { createRetrofit() }
     single { get<Retrofit>().create(ServiceApi::class.java) }
+}
+
+object ApiKey {
+    const val VALUE =
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NmQ2OGQ3ZjRhMGUzZGNjZmE0NWU0ZTk3YjQ1ZjM3OSIsInN1YiI6IjYzMDEwMWQ5N2Q0MWFhMDA3OWJkNzYwMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eBH951remuFztKssncwnramEF6gdsVu350VI872cuwU"
 }

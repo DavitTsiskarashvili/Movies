@@ -1,6 +1,5 @@
 package com.movies.presentation.home.view_model
 
-import android.util.Log
 import com.movies.common.extensions.viewModelScope
 import com.movies.common.utils.LiveDataDelegate
 import com.movies.domain.usecase.movies.GetMoviesUseCase
@@ -22,7 +21,6 @@ class HomeViewModel(
             loadingLiveData.addValue(true)
             getMoviesLiveData.addValue(moviesUIMapper.mapList(moviesUseCase.invoke()))
             loadingLiveData.addValue(false)
-            Log.d("movielist", "${  moviesUseCase.invoke() } ")
         }
     }
 

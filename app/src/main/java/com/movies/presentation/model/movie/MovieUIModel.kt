@@ -1,10 +1,9 @@
 package com.movies.presentation.model.movie
 
 data class MovieUIModel(
-    val filmId: Int?,
-    val filmName: String?,
-    val filmTrailer: String?,
-    val synopsisLong: String?,
+    val id: Int?,
+    val title: String?,
+    val rating: Double?,
     val releaseDate: String?,
-    val filmImage: String?,
+    val poster: String?,
 )

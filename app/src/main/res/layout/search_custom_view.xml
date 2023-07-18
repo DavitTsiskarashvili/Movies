@@ -22,24 +22,25 @@
         android:hint="@string/search"
         android:paddingHorizontal="@dimen/dimen_24_dp"
         android:textColorHint="@color/neutral_05_light_grey"
-        app:layout_constraintEnd_toStartOf="@id/filterImageButton"
+        app:layout_constraintEnd_toStartOf="@id/filterToggleButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/filterImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.AppCompatToggleButton
+        android:id="@+id/filterToggleButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="@dimen/dimen_16_dp"
-        android:background="@null"
-        android:src="@drawable/ic_filter_not_clicked"
+        android:background="@drawable/ic_filter_selector"
+        android:textOff=""
+        android:textOn=""
         app:layout_constraintBottom_toBottomOf="@id/searchEditText"
+        app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/searchEditText"
         app:layout_constraintTop_toTopOf="@id/searchEditText" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/nowShowingButton"
+        android:id="@+id/popularButton"
         style="@style/smallMontserrat_ButtonFocused"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_21_dp"
@@ -47,36 +48,35 @@
         android:background="@drawable/background_filter_focused"
         android:paddingHorizontal="@dimen/dimen_12_dp"
         android:paddingVertical="@dimen/dimen_4_dp"
-        android:text="@string/now_showing"
+        android:text="@string/popular"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/comingSoonButton"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/topRatedButton"
+        app:layout_constraintStart_toStartOf="@id/searchEditText"
         app:layout_constraintTop_toBottomOf="@id/searchEditText" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/comingSoonButton"
+        android:id="@+id/topRatedButton"
         style="@style/smallMontserrat_Button"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dimen_8_dp"
         android:background="@drawable/background_filter_unfocused"
         android:paddingHorizontal="@dimen/dimen_12_dp"
         android:paddingVertical="@dimen/dimen_4_dp"
-        android:text="@string/coming_soon"
+        android:text="@string/top_rated"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@id/nowShowingButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/nowShowingButton"
-        app:layout_constraintTop_toTopOf="@id/nowShowingButton"
+        app:layout_constraintBottom_toBottomOf="@id/popularButton"
+        app:layout_constraintStart_toEndOf="@+id/popularButton"
+        app:layout_constraintTop_toTopOf="@id/popularButton"
         app:layout_goneMarginStart="20dp" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/filterViewGroup"
-        app:constraint_referenced_ids="comingSoonButton, nowShowingButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="topRatedButton, popularButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

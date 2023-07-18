@@ -7,15 +7,19 @@ import com.movies.domain.model.MovieDomainModel
 class MovieListDTOMapper : Mapper<MoviesDTO, List<MovieDomainModel>> {
     override fun invoke(model: MoviesDTO): List<MovieDomainModel> =
         with(model) {
-            films.map {
+            this.results?.map {
                 MovieDomainModel(
-                    filmId = it.filmId,
-                    filmName = it.filmName,
-                    filmTrailer = it.filmTrailer,
-                    filmImage = it.images.poster.medium.filmImage,
-                    synopsisLong = it.synopsisLong,
-                    releaseDate = it.releaseDates[0].releaseDate
+                    id = it?.id,
+                    title = it?.title,
+                    rating = it?.voteAverage,
+                    poster = IMAGE_BASE_URL + it?.posterPath,
+                    releaseDate = it?.releaseDate,
                 )
-            }
+            } ?: emptyList()
         }
+
+    companion object {
+        const val IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500"
+    }
 }
+

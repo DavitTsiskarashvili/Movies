@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface ServiceApi {
-    @GET("/filmsNowShowing")
+    @GET("3/movie/popular")
     suspend fun getMovies(): Response<MoviesDTO>
 }
 

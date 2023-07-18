@@ -8,16 +8,15 @@ class MovieUIMapper : Mapper<MovieDomainModel, MovieUIModel> {
     override fun invoke(model: MovieDomainModel): MovieUIModel =
         with(model) {
             MovieUIModel(
-                filmId = filmId,
-                filmName = filmName,
-                filmTrailer = filmTrailer,
-                filmImage = filmImage,
-                synopsisLong = synopsisLong,
-                releaseDate = releaseDate
+                id = id,
+                title = title,
+                releaseDate = releaseDate,
+                rating = rating,
+                poster = poster
             )
         }
 
-    fun mapList(list: List<MovieDomainModel>): List<MovieUIModel>{
+    fun mapList(list: List<MovieDomainModel>): List<MovieUIModel> {
         return list.map {
             invoke(it)
         }

@@ -27,8 +27,8 @@ class MovieAdapter : BaseAdapter<MovieUIModel>() {
         override fun onBind(item: MovieUIModel) {
             with(item) {
                 with(binding) {
-                    posterImageButton.loadImage(filmImage)
-                    titleTextView.text = filmName
+                    posterImageView.loadImage(poster)
+                    titleTextView.text = title
                     releaseYearTextView.text = releaseDate
                 }
             }
