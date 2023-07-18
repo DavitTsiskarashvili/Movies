@@ -21,7 +21,7 @@
         android:layout_marginStart="@dimen/dimen_21_dp"
         android:layout_marginTop="@dimen/dimen_4_dp"
         android:layout_marginEnd="@dimen/dimen_6_dp"
-        app:layout_constraintEnd_toStartOf="@id/favouritesButton"
+        app:layout_constraintEnd_toStartOf="@id/favouritesToggleButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/posterImageButton"
         tools:text="@tools:sample/lorem" />

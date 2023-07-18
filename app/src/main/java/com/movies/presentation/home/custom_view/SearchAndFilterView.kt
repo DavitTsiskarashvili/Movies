@@ -36,5 +36,4 @@ class SearchAndFilterView @JvmOverloads constructor(
         binding.filterImageButton.setImageDrawable(drawable)
     }
 
-
 }

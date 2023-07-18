@@ -5,7 +5,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.movies.common.utils.QuizLiveDataDelegate
+import com.movies.common.utils.LiveDataDelegate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -35,9 +35,9 @@ fun <T : Any?> Fragment.collectFlow(
 }
 
 fun <T> Fragment.observeLiveData(
-    liveData: QuizLiveDataDelegate<T>,
+    liveData: LiveDataDelegate<T>,
     block: (T) -> Unit
-): QuizLiveDataDelegate<T> {
+): LiveDataDelegate<T> {
     liveData.observe(viewLifecycleOwner) {
         block(it)
     }
@@ -45,9 +45,9 @@ fun <T> Fragment.observeLiveData(
 }
 
 fun <T> Fragment.observeLiveDataNonNull(
-    liveData: QuizLiveDataDelegate<T?>,
+    liveData: LiveDataDelegate<T?>,
     block: (T) -> Unit
-): QuizLiveDataDelegate<T?> {
+): LiveDataDelegate<T?> {
     liveData.observe(viewLifecycleOwner) {
         it?.let {
             block(it)

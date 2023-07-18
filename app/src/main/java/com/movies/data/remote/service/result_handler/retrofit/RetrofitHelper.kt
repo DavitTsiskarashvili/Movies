@@ -1,5 +1,6 @@
 package com.movies.data.remote.service.result_handler.retrofit
 
+import android.util.Log
 import com.movies.data.remote.service.result_handler.resource.Resource
 import retrofit2.Response
 
@@ -8,6 +9,8 @@ inline fun <DTO : Any> apiDataFetcher(
 ): Resource<DTO> {
     return try {
         val response = apiResponse.invoke()
+        Log.d("list123", "${response}")
+
         if (response.isSuccessful) {
             Resource.Success(response.body()!!)
         } else {
