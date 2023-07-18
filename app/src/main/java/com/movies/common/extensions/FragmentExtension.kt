@@ -43,15 +43,3 @@ fun <T> Fragment.observeLiveData(
     }
     return liveData
 }
-
-fun <T> Fragment.observeLiveDataNonNull(
-    liveData: LiveDataDelegate<T?>,
-    block: (T) -> Unit
-): LiveDataDelegate<T?> {
-    liveData.observe(viewLifecycleOwner) {
-        it?.let {
-            block(it)
-        }
-    }
-    return liveData
-}

@@ -9,7 +9,7 @@ class GetMoviesUseCase(
 ) : BaseUseCase<Unit, List<MovieDomainModel>>() {
 
     override suspend fun invoke(params: Unit?): List<MovieDomainModel> {
-        return moviesRepository.getMoviesFromNetwork()
+        return moviesRepository.fetchMovies()
     }
 
 }

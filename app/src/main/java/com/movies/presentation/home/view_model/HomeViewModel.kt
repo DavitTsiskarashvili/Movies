@@ -12,14 +12,13 @@ class HomeViewModel(
     private val moviesUIMapper: MovieUIMapper
 ) : BaseViewModel() {
 
-    val getMoviesLiveData by LiveDataDelegate<List<MovieUIModel>?>()
+    val fetchMoviesLiveData by LiveDataDelegate<List<MovieUIModel>>()
     val loadingLiveData by LiveDataDelegate<Boolean>()
-
 
     fun getMovies(){
         viewModelScope {
             loadingLiveData.addValue(true)
-            getMoviesLiveData.addValue(moviesUIMapper.mapList(moviesUseCase.invoke()))
+            fetchMoviesLiveData.addValue(moviesUIMapper.mapList(moviesUseCase.invoke()))
             loadingLiveData.addValue(false)
         }
     }

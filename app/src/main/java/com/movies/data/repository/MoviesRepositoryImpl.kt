@@ -1,6 +1,5 @@
 package com.movies.data.repository
 
-import android.util.Log
 import com.movies.data.remote.mapper.MovieListDTOMapper
 import com.movies.data.remote.service.api.ServiceApi
 import com.movies.data.remote.service.result_handler.resource.Resource
@@ -12,9 +11,8 @@ class MoviesRepositoryImpl(
     private val fetchMovies: ServiceApi,
     private val movieListDTOMapper: MovieListDTOMapper
 ): MoviesRepository {
-    override suspend fun getMoviesFromNetwork(): List<MovieDomainModel> {
+    override suspend fun fetchMovies(): List<MovieDomainModel> {
         val remoteData = apiDataFetcher { fetchMovies.getMovies() }
-        Log.d("list", "$remoteData")
         if (remoteData is Resource.Success){
             return movieListDTOMapper(remoteData.data)
         }

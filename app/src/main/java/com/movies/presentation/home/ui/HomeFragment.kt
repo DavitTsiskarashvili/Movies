@@ -3,7 +3,6 @@ package com.movies.presentation.home.ui
 import androidx.core.view.isVisible
 import com.movies.R
 import com.movies.common.extensions.observeLiveData
-import com.movies.common.extensions.observeLiveDataNonNull
 import com.movies.common.extensions.viewBinding
 import com.movies.databinding.FragmentHomeBinding
 import com.movies.presentation.base.fragment.BaseFragment
@@ -39,10 +38,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         observeLiveData(viewModel.loadingLiveData) {
             binding.progressBar.isVisible = it
         }
-        observeLiveDataNonNull(viewModel.getMoviesLiveData){ movies ->
-            movies.let {
-                movieAdapter.submitList(it)
-            }
+        observeLiveData(viewModel.fetchMoviesLiveData){ movies ->
+                movieAdapter.submitList(movies)
         }
     }
 
