@@ -30,6 +30,7 @@ class MovieAdapter : BaseAdapter<MovieUIModel>() {
                     posterImageView.loadImage(poster)
                     titleTextView.text = title
                     releaseYearTextView.text = releaseDate
+                    ratingTextView.text = rating.toString()
 
                     root.setOnClickListener {
                         onClickCallback?.invoke(item)
