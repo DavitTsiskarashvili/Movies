@@ -20,4 +20,3 @@ class MovieListDTOMapper : Mapper<MoviesDTO, List<MovieDomainModel>> {
         }
 
 }
-

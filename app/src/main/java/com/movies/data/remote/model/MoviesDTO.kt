@@ -4,20 +4,20 @@ package com.movies.data.remote.model
 import com.google.gson.annotations.SerializedName
 
 data class MoviesDTO(
-    val dates: Dates?,
+    val dates: DatesDTO?,
     val page: Int?,
-    val results: List<Result?>?,
+    val results: List<ResultDTO?>?,
     @SerializedName("total_pages")
     val totalPages: Int?,
     @SerializedName("total_results")
     val totalResults: Int?
 ) {
-    data class Dates(
+    data class DatesDTO(
         val maximum: String?,
         val minimum: String?
     )
 
-    data class Result(
+    data class ResultDTO(
         val adult: Boolean?,
         @SerializedName("backdrop_path")
         val backdropPath: String?,
