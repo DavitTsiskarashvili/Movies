@@ -4,7 +4,7 @@ import androidx.core.view.isVisible
 import com.movies.R
 import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
-import com.movies.common.network.Category
+import com.movies.common.network.CategoryType
 import com.movies.databinding.FragmentHomeBinding
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.home.adapter.MovieAdapter
@@ -32,8 +32,9 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun initRecycler() {
-        viewModel.getMovies(Category.POPULAR)
+        viewModel.getMovies(CategoryType.POPULAR)
         binding.moviesRecyclerView.adapter = movieAdapter
+
     }
 
     private fun observe() {
@@ -47,11 +48,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun filterMovies() {
         with(binding.searchAndFilterView) {
-            categorySelectedListener(Category.POPULAR) {
-                viewModel.getMovies(it)
-            }
-            categorySelectedListener(Category.TOP_RATED) {
-                viewModel.getMovies(it)
+            categoryButtonListener {
+                viewModel.getMovies(it.categoryType)
             }
         }
     }

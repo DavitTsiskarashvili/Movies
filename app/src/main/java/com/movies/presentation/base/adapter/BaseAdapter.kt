@@ -15,10 +15,10 @@ abstract class BaseAdapter<MODEL : Any> :
 
     abstract class BaseViewHolder<MODEL : Any>(binding: ViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        abstract fun onBind(item: MODEL)
+        abstract fun onBind(item: MODEL, onClickCallback: ((MODEL) -> Unit)?)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<MODEL>, position: Int) {
-        holder.onBind(getItem(position))
+        holder.onBind(getItem(position), onClickCallback)
     }
 }

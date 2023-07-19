@@ -24,12 +24,16 @@ class MovieAdapter : BaseAdapter<MovieUIModel>() {
 
     class MoviesViewHolder(private val binding: MovieItemBinding) :
         BaseViewHolder<MovieUIModel>(binding) {
-        override fun onBind(item: MovieUIModel) {
+        override fun onBind(item: MovieUIModel, onClickCallback: ((MovieUIModel) -> Unit)?) {
             with(item) {
                 with(binding) {
                     posterImageView.loadImage(poster)
                     titleTextView.text = title
                     releaseYearTextView.text = releaseDate
+
+                    root.setOnClickListener {
+                        onClickCallback?.invoke(item)
+                    }
                 }
             }
         }

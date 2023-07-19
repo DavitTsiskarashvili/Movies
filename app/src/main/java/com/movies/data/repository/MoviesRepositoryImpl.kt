@@ -1,6 +1,6 @@
 package com.movies.data.repository
 
-import com.movies.common.network.Category
+import com.movies.common.network.CategoryType
 import com.movies.data.remote.mapper.MovieListDTOMapper
 import com.movies.data.remote.service.api.ServiceApi
 import com.movies.data.remote.service.result_handler.resource.Resource
@@ -12,7 +12,7 @@ class MoviesRepositoryImpl(
     private val fetchMovies: ServiceApi,
     private val movieListDTOMapper: MovieListDTOMapper
 ): MoviesRepository {
-    override suspend fun fetchMovies(category: Category): List<MovieDomainModel> {
+    override suspend fun fetchMovies(category: CategoryType): List<MovieDomainModel> {
         val remoteData = apiDataFetcher { fetchMovies.getMovies(category.value) }
         if (remoteData is Resource.Success){
             return movieListDTOMapper(remoteData.data)
