@@ -20,6 +20,22 @@ class SearchAndFilterView @JvmOverloads constructor(
         isFilterChecked()
     }
 
+    fun popularButtonListener(callback: () -> Unit) {
+        with(binding) {
+            popularButton.setOnClickListener {
+                callback()
+            }
+        }
+    }
+
+    fun topRatedButtonListener(callback: () -> Unit) {
+        with(binding) {
+            topRatedButton.setOnClickListener {
+                callback()
+            }
+        }
+    }
+
     private fun isFilterChecked() {
         with(binding) {
             filterToggleButton.setOnCheckedChangeListener { _, checked ->

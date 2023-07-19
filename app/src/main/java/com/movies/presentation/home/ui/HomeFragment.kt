@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import com.movies.R
 import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
+import com.movies.common.network.Category
 import com.movies.databinding.FragmentHomeBinding
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.home.adapter.MovieAdapter
@@ -27,10 +28,11 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     override fun onBind() {
         initRecycler()
         observe()
+        filterMovies()
     }
 
     private fun initRecycler() {
-        viewModel.getMovies()
+        viewModel.getMovies(Category.POPULAR)
         binding.moviesRecyclerView.adapter = movieAdapter
     }
 
@@ -40,6 +42,16 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }
         observeLiveData(viewModel.fetchMoviesLiveData){ movies ->
                 movieAdapter.submitList(movies)
+        }
+    }
+
+    private fun filterMovies(){
+        binding.searchAndFilterView.popularButtonListener {
+            viewModel
+                .getMovies(Category.POPULAR)
+        }
+        binding.searchAndFilterView.topRatedButtonListener {
+            viewModel.getMovies(Category.TOP_RATED)
         }
     }
 
