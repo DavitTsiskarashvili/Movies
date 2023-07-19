@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.movies.common.extensions.setVisibility
+import com.movies.common.network.Category
 import com.movies.databinding.SearchCustomViewBinding
 
 class SearchAndFilterView @JvmOverloads constructor(
@@ -20,7 +21,18 @@ class SearchAndFilterView @JvmOverloads constructor(
         isFilterChecked()
     }
 
-    fun popularButtonListener(callback: () -> Unit) {
+    fun categorySelectedListener(category: Category, callback:(Category) -> Unit){
+        when (category) {
+            Category.POPULAR -> {
+                popularButtonListener { callback(category) }
+            }
+            Category.TOP_RATED -> {
+                topRatedButtonListener { callback(category) }
+            }
+        }
+    }
+
+    private fun popularButtonListener(callback: () -> Unit) {
         with(binding) {
             popularButton.setOnClickListener {
                 callback()
@@ -28,7 +40,7 @@ class SearchAndFilterView @JvmOverloads constructor(
         }
     }
 
-    fun topRatedButtonListener(callback: () -> Unit) {
+    private fun topRatedButtonListener(callback: () -> Unit) {
         with(binding) {
             topRatedButton.setOnClickListener {
                 callback()

@@ -13,7 +13,7 @@ import kotlin.reflect.KClass
 
 class HomeFragment : BaseFragment<HomeViewModel>() {
 
-    private val binding by viewBinding (FragmentHomeBinding::bind)
+    private val binding by viewBinding(FragmentHomeBinding::bind)
 
     private val movieAdapter by lazy {
         MovieAdapter()
@@ -36,22 +36,23 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         binding.moviesRecyclerView.adapter = movieAdapter
     }
 
-    private fun observe(){
+    private fun observe() {
         observeLiveData(viewModel.loadingLiveData) {
             binding.progressBar.isVisible = it
         }
-        observeLiveData(viewModel.fetchMoviesLiveData){ movies ->
-                movieAdapter.submitList(movies)
+        observeLiveData(viewModel.fetchMoviesLiveData) { movies ->
+            movieAdapter.submitList(movies)
         }
     }
 
-    private fun filterMovies(){
-        binding.searchAndFilterView.popularButtonListener {
-            viewModel
-                .getMovies(Category.POPULAR)
-        }
-        binding.searchAndFilterView.topRatedButtonListener {
-            viewModel.getMovies(Category.TOP_RATED)
+    private fun filterMovies() {
+        with(binding.searchAndFilterView) {
+            categorySelectedListener(Category.POPULAR) {
+                viewModel.getMovies(it)
+            }
+            categorySelectedListener(Category.TOP_RATED) {
+                viewModel.getMovies(it)
+            }
         }
     }
 
