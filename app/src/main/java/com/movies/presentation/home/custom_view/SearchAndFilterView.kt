@@ -68,6 +68,7 @@ class SearchAndFilterView @JvmOverloads constructor(
     private fun Button.setActiveButton(isActive: Boolean) {
         val backgroundColor = if (isActive) ACTIVE_BACKGROUND_COLOR else PASSIVE_BACKGROUND_COLOR
         val textStyle = if (isActive) ACTIVE_TEXT_STYLE else PASSIVE_TEXT_STYLE
+
             changeBackgroundColor(backgroundColor)
             changeTextStyle(textStyle)
             changeTextStyle(textStyle)
