@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 
 class HomeFragment : BaseFragment<HomeViewModel>() {
 
-    private val binding by viewBinding (FragmentHomeBinding::bind)
+    private val binding by viewBinding(FragmentHomeBinding::bind)
 
     private val movieAdapter by lazy {
         MovieAdapter()
@@ -34,12 +34,12 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         binding.moviesRecyclerView.adapter = movieAdapter
     }
 
-    private fun observe(){
+    private fun observe() {
         observeLiveData(viewModel.loadingLiveData) {
             binding.progressBar.isVisible = it
         }
-        observeLiveData(viewModel.fetchMoviesLiveData){ movies ->
-                movieAdapter.submitList(movies)
+        observeLiveData(viewModel.fetchMoviesLiveData) { movies ->
+            movieAdapter.submitList(movies)
         }
     }
 
