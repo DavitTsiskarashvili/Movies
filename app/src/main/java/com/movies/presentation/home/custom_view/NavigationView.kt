@@ -23,7 +23,7 @@ class NavigationView @JvmOverloads constructor(
 
     fun homeButtonListener(callback: () -> Unit) {
         with(binding) {
-            homeButton.setOnClickListener {
+            navigationView.setOnClickListener {
                 callback()
                 setButtonsActiveStatus(NavigationButtons.HOME)
             }
@@ -41,7 +41,7 @@ class NavigationView @JvmOverloads constructor(
 
     private fun setDefaultButtonTypes(){
         with(binding) {
-            homeButton.setContent(NavigationButtons.HOME)
+            navigationView.setContent(NavigationButtons.HOME)
             favouritesButton.setContent(NavigationButtons.FAVOURITES)
         }
     }
@@ -50,11 +50,11 @@ class NavigationView @JvmOverloads constructor(
         with(binding) {
             when (buttonType) {
                 NavigationButtons.HOME -> {
-                    homeButton.setActiveButton(true)
+                    navigationView.setActiveButton(true)
                     favouritesButton.setActiveButton(false)
                 }
                 NavigationButtons.FAVOURITES -> {
-                    homeButton.setActiveButton(false)
+                    navigationView.setActiveButton(false)
                     favouritesButton.setActiveButton(true)
                 }
             }

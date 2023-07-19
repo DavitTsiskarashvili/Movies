@@ -1,6 +1,5 @@
 package com.movies.common.extensions
 
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,10 +8,13 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
-import androidx.core.widget.TextViewCompat.setTextAppearance
 
-fun View.setVisibility(visible: Boolean) {
+fun View.visibleIf(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.GONE
+}
+
+fun View.hiddenIf(visible: Boolean) {
+    visibility = if (visible) View.GONE else View.VISIBLE
 }
 
 fun View.changeBackgroundColor(@ColorRes colorRes: Int) {

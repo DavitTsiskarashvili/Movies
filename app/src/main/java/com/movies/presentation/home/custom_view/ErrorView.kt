@@ -15,4 +15,13 @@ class ErrorView @JvmOverloads constructor(
 
     private val binding =
         ErrorCustomViewBinding.inflate(LayoutInflater.from(context), this, true)
+
+    fun refreshButtonListener(callback: () -> Unit) {
+        with(binding) {
+            refreshButton.setOnClickListener {
+                callback()
+            }
+        }
+    }
+
 }

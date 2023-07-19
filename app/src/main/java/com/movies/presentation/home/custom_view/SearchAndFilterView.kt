@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import com.movies.common.extensions.setVisibility
+import com.movies.common.extensions.visibleIf
 import com.movies.databinding.SearchCustomViewBinding
 import com.movies.presentation.home.CategoryList
 import com.movies.presentation.home.adapter.CategoryAdapter
@@ -42,7 +42,7 @@ class SearchAndFilterView @JvmOverloads constructor(
     private fun isFilterChecked() {
         with(binding) {
             filterToggleButton.setOnCheckedChangeListener { _, checked ->
-                categoryRecyclerView.setVisibility(checked)
+                categoryRecyclerView.visibleIf(checked)
             }
         }
     }
