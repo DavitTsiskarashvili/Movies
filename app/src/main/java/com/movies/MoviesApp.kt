@@ -1,11 +1,11 @@
 package com.movies
 
 import android.app.Application
-import com.movies.data.remote.di.mapperDTOModule
+import com.movies.data.remote.di.dtoMapperModule
 import com.movies.data.remote.di.networkModule
 import com.movies.domain.di.repositoryModule
 import com.movies.domain.di.useCaseModule
-import com.movies.presentation.di.mapperUIModule
+import com.movies.presentation.di.uiMapperModule
 import com.movies.presentation.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -21,8 +21,8 @@ class MoviesApp : Application() {
             modules(
                 networkModule,
                 viewModelModule,
-                mapperDTOModule,
-                mapperUIModule,
+                dtoMapperModule,
+                uiMapperModule,
                 repositoryModule,
                 useCaseModule
             )
