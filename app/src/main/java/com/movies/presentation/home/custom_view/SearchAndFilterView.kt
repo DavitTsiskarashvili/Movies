@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.core.widget.doOnTextChanged
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.SearchCustomViewBinding
 import com.movies.presentation.home.CategoryList
@@ -23,6 +24,12 @@ class SearchAndFilterView @JvmOverloads constructor(
     init {
         isFilterChecked()
         initRecycler()
+    }
+
+    fun searchListener(callback: (String) -> Unit) {
+        binding.searchEditText.doOnTextChanged { text, _, _, _ ->
+            callback(text?.toString() ?: "")
+        }
     }
 
     fun categoryButtonListener(callback: (Category) -> Unit) {

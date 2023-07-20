@@ -45,6 +45,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/refreshButton"
+        style="@style/smallMontserrat_Regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_110_dp"
@@ -54,6 +55,8 @@
         android:paddingHorizontal="@dimen/dimen_30_dp"
         android:paddingVertical="@dimen/dimen_14_dp"
         android:text="@string/refresh"
+        android:textColor="@color/neutral_01_black"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

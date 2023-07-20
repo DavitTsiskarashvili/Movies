@@ -5,5 +5,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { HomeViewModel(moviesUseCase = get(), moviesUIMapper = get()) }
+    viewModel { HomeViewModel(moviesUseCase = get(), moviesUIMapper = get(), searchMoviesUseCase = get()) }
 }

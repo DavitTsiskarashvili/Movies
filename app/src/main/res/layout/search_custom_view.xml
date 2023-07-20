@@ -9,6 +9,7 @@
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/searchEditText"
+        style="@style/hintMontserrat_Regular"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="@dimen/dimen_16_dp"
