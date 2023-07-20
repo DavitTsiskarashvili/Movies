@@ -42,9 +42,7 @@ class HomeViewModel(
 
     fun searchMovies(query: String) {
         viewModelScope {
-            loadingLiveData.addValue(true)
             searchMoviesLiveData.addValue(moviesUIMapper.mapList(searchMoviesUseCase.invoke(query)))
-            loadingLiveData.addValue(false)
         }
     }
 

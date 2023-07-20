@@ -46,7 +46,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             handleData(movies.isNotEmpty())
             movieAdapter.submitList(movies)
         }
-        observeLiveData(viewModel.searchMoviesLiveData) { searchedMovies ->
+        observeLiveData(viewModel.searchMoviesLiveData) {searchedMovies ->
             handleData(searchedMovies.isNotEmpty())
             movieAdapter.submitList(searchedMovies)
         }
@@ -105,9 +105,10 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         with(binding.searchAndFilterView) {
             searchListener { searchInput ->
                 viewModel.searchMovies(query = searchInput)
+            } else {
+                handleData(true)
             }
         }
     }
-
 
 }

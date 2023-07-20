@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
+import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.SearchCustomViewBinding
 import com.movies.presentation.home.CategoryList
@@ -29,7 +31,43 @@ class SearchAndFilterView @JvmOverloads constructor(
     fun searchListener(callback: (String) -> Unit) {
         binding.searchEditText.doOnTextChanged { text, _, _, _ ->
             callback(text?.toString() ?: "")
+            handleViewsVisibility(true)
+            updateSearchViewConstraints(false)
+            emptyInputHandler()
         }
+        clearSearchInput()
+    }
+
+    private fun emptyInputHandler(){
+        if (binding.searchEditText.text?.isEmpty() == true){
+            handleViewsVisibility(false)
+            updateSearchViewConstraints(true)
+        }
+    }
+
+    private fun clearSearchInput() {
+        binding.cancelTextView.setOnClickListener {
+            binding.searchEditText.text?.clear()
+            handleViewsVisibility(false)
+            updateSearchViewConstraints(true)
+        }
+    }
+
+    private fun handleViewsVisibility(searchIsClicked: Boolean) {
+        with(binding) {
+            filterToggleButton.hiddenIf(searchIsClicked)
+            cancelTextView.visibleIf(searchIsClicked)
+        }
+    }
+
+    private fun updateSearchViewConstraints(isFilterVisible: Boolean) {
+        val params = binding.searchEditText.layoutParams as ConstraintLayout.LayoutParams
+        if (isFilterVisible) {
+            params.endToStart = binding.filterToggleButton.id
+        } else {
+            params.endToStart = binding.cancelTextView.id
+        }
+        binding.searchEditText.layoutParams = params
     }
 
     fun categoryButtonListener(callback: (Category) -> Unit) {
