@@ -31,22 +31,29 @@ class SearchAndFilterView @JvmOverloads constructor(
     fun searchListener(callback: (String) -> Unit) {
         binding.searchEditText.doOnTextChanged { text, _, _, _ ->
             callback(text?.toString() ?: "")
-            handleViews(true)
+            handleViewsVisibility(true)
             updateSearchViewConstraints(false)
-
+            emptyInputHandler()
         }
         clearSearchInput()
+    }
+
+    private fun emptyInputHandler(){
+        if (binding.searchEditText.text?.isEmpty() == true){
+            handleViewsVisibility(false)
+            updateSearchViewConstraints(true)
+        }
     }
 
     private fun clearSearchInput() {
         binding.cancelTextView.setOnClickListener {
             binding.searchEditText.text?.clear()
-            handleViews(false)
+            handleViewsVisibility(false)
             updateSearchViewConstraints(true)
         }
     }
 
-    private fun handleViews(searchIsClicked: Boolean) {
+    private fun handleViewsVisibility(searchIsClicked: Boolean) {
         with(binding) {
             filterToggleButton.hiddenIf(searchIsClicked)
             cancelTextView.visibleIf(searchIsClicked)
@@ -62,6 +69,7 @@ class SearchAndFilterView @JvmOverloads constructor(
         }
         binding.searchEditText.layoutParams = params
     }
+
     fun categoryButtonListener(callback: (Category) -> Unit) {
         categoryAdapter.onItemClickListener {
             callback(it)

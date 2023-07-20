@@ -1,6 +1,5 @@
 package com.movies.data.repository
 
-import android.util.Log
 import com.movies.data.remote.mapper.MovieListDTOMapper
 import com.movies.data.remote.service.api.ServiceApi
 import com.movies.data.remote.service.result_handler.resource.Resource
@@ -15,9 +14,7 @@ class SearchRepositoryImpl(
     override suspend fun searchMovies(query: String): List<MovieDomainModel> {
         val remoteData = apiDataFetcher { fetchSearchedMovies.searchMovies(query) }
         if (remoteData is Resource.Success) {
-            Log.d("searchsearch", "${remoteData.data} ")
             return movieListDTOMapper(remoteData.data)
-
         }
         return emptyList()
     }
