@@ -46,7 +46,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             handleData(movies.isNotEmpty())
             movieAdapter.submitList(movies)
         }
-        observeLiveData(viewModel.searchMoviesLiveData) {searchedMovies ->
+        observeLiveData(viewModel.searchMoviesLiveData) { searchedMovies ->
             handleData(searchedMovies.isNotEmpty())
             movieAdapter.submitList(searchedMovies)
         }
@@ -62,6 +62,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun setListeners() {
         filterMovies()
         refresh()
+        homeListener()
+        favouritesListener()
     }
 
     private fun filterMovies() {
@@ -76,12 +78,36 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }
     }
 
-    private fun searchMovies(){
-        with(binding.searchAndFilterView){
-            searchListener {searchInput ->
+    private fun homeListener() {
+        binding.navigationView.homeButtonListener {
+            handleBottomNavigation(false)
+        }
+    }
+
+    private fun favouritesListener() {
+        binding.navigationView.favouritesButtonListener {
+            handleBottomNavigation(true)
+        }
+    }
+
+    private fun handleBottomNavigation(isClicked: Boolean) {
+        with(binding) {
+            moviesRecyclerView.hiddenIf(isClicked)
+            searchAndFilterView.hiddenIf(isClicked)
+            titleTextView.hiddenIf(isClicked)
+            favouritesTitleTextView.visibleIf(isClicked)
+            emptyListImageView.visibleIf(isClicked)
+            emptyListTextView.visibleIf(isClicked)
+        }
+    }
+
+    private fun searchMovies() {
+        with(binding.searchAndFilterView) {
+            searchListener { searchInput ->
                 viewModel.searchMovies(query = searchInput)
             }
         }
     }
+
 
 }
