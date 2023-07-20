@@ -60,5 +60,7 @@
     <dimen name="dimen_180_dp">180dp</dimen>
     <dimen name="dimen_230_dp">230dp</dimen>
     <dimen name="dimen_270_dp">270dp</dimen>
+    <dimen name="dimen_280_dp">285dp</dimen>
+    <dimen name="dimen_300_dp">300dp</dimen>
 
 </resources>
