@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="neutral_01_black">#080808</color>
+    <color name="neutral_02_darkest_grey">#1C1C1C</color>
+    <color name="neutral_03_dark_grey">#5D5D5D</color>
+    <color name="neutral_04_grey">#808080</color>
+    <color name="neutral_05_light_grey">#A5A5A5</color>
+    <color name="neutral_06_lighter_grey">#CACACA</color>
+    <color name="neutral_07_lightest_grey">#DEDEDE</color>
+    <color name="neutral_08_whisper">#EAEAEA</color>
+    <color name="yellow_primary">#F5C518</color>
+
 </resources>
