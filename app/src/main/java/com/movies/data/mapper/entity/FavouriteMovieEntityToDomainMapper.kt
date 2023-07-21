@@ -1,19 +1,19 @@
-package com.movies.data.mapper
+package com.movies.data.mapper.entity
 
 import com.movies.common.mapper.Mapper
 import com.movies.data.local.entity.FavouriteMovieEntity
 import com.movies.domain.model.MovieDomainModel
 
-class FavouriteMovieDomainToEntityMapper : Mapper<MovieDomainModel, FavouriteMovieEntity> {
-    override fun invoke(model: MovieDomainModel): FavouriteMovieEntity =
+class FavouriteMovieEntityToDomainMapper : Mapper<FavouriteMovieEntity, MovieDomainModel> {
+    override fun invoke(model: FavouriteMovieEntity): MovieDomainModel =
         with(model) {
-            FavouriteMovieEntity(
+            MovieDomainModel(
                 id = id,
                 title = title,
-                rating = rating,
                 releaseDate = releaseDate,
                 poster = poster,
-                overview = overview
+                overview = overview,
+                rating = rating
             )
         }
 }

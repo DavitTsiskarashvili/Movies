@@ -5,9 +5,9 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseMovieAdapter<MODEL : Any, VH : BaseMovieAdapter.BaseMovieViewHolder<MODEL>> :
     BaseAdapter<MODEL, VH>() {
 
-    private var onFavouriteClickCallback: ((MODEL) -> Unit)? = null
+    private var onFavouriteClickCallback: ((MODEL, Boolean) -> Unit)? = null
 
-    fun onFavouriteClickListener(onFavouriteClickCallback: (MODEL) -> Unit) {
+    fun onFavouriteClickListener(onFavouriteClickCallback: (MODEL, Boolean) -> Unit) {
         this.onFavouriteClickCallback = onFavouriteClickCallback
     }
 
@@ -16,7 +16,7 @@ abstract class BaseMovieAdapter<MODEL : Any, VH : BaseMovieAdapter.BaseMovieView
         abstract fun onBindMovie(
             item: MODEL,
             onClickCallback: ((MODEL) -> Unit)?,
-            onFavouriteClickCallback: ((MODEL) -> Unit)?
+            onFavouriteClickCallback: ((MODEL, Boolean) -> Unit)?
         )
     }
 

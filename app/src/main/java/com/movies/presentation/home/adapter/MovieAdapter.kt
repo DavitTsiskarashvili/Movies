@@ -27,7 +27,7 @@ class MovieAdapter : BaseMovieAdapter<MovieUIModel, MovieAdapter.MoviesViewHolde
         override fun onBindMovie(
             item: MovieUIModel,
             onClickCallback: ((MovieUIModel) -> Unit)?,
-            onFavouriteClickCallback: ((MovieUIModel) -> Unit)?,
+            onFavouriteClickCallback: ((MovieUIModel, Boolean) -> Unit)?,
         ) {
             with(item) {
                 with(binding) {
@@ -40,7 +40,7 @@ class MovieAdapter : BaseMovieAdapter<MovieUIModel, MovieAdapter.MoviesViewHolde
                         onClickCallback?.invoke(item)
                     }
                     binding.favouritesToggleButton.setOnClickListener {
-                        onFavouriteClickCallback?.invoke(item)
+                        onFavouriteClickCallback?.invoke(item, binding.favouritesToggleButton.isChecked)
                     }
                 }
             }

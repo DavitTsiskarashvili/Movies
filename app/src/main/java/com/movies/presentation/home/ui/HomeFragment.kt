@@ -1,5 +1,6 @@
 package com.movies.presentation.home.ui
 
+import android.view.View
 import androidx.core.view.isVisible
 import com.movies.R
 import com.movies.common.extensions.hiddenIf
@@ -50,8 +51,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             handleData(searchedMovies.isNotEmpty())
             movieAdapter.submitList(searchedMovies)
         }
-        observeLiveData(viewModel.fetchFavouriteMoviesLivedata){favouriteMovies ->
-            handleData(favouriteMovies.isNotEmpty())
+        observeLiveData(viewModel.fetchFavouriteMoviesLivedata) { favouriteMovies ->
+            handleFavouriteData(favouriteMovies.isNotEmpty())
             movieAdapter.submitList(favouriteMovies)
         }
     }
@@ -63,13 +64,20 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }
     }
 
+    private fun handleFavouriteData(isLoaded: Boolean) {
+        with(binding) {
+            emptyListTextView.hiddenIf(isLoaded)
+            emptyListImageView.hiddenIf(isLoaded)
+            moviesRecyclerView.visibleIf(isLoaded)
+        }
+    }
+
     private fun setListeners() {
         filterMovies()
         refresh()
         homeListener()
         favouritesListener()
-        addToFavourites()
-        removeFromFavourites()
+        handleFavouriteButton()
     }
 
     private fun filterMovies() {
@@ -87,6 +95,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun homeListener() {
         binding.navigationView.homeButtonListener {
             handleBottomNavigation(false)
+            viewModel.getMovies()
         }
     }
 
@@ -101,7 +110,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         with(binding) {
             moviesRecyclerView.hiddenIf(isClicked)
             searchAndFilterView.hiddenIf(isClicked)
-            titleTextView.hiddenIf(isClicked)
+            titleTextView.visibility = View.INVISIBLE
             favouritesTitleTextView.visibleIf(isClicked)
             emptyListImageView.visibleIf(isClicked)
             emptyListTextView.visibleIf(isClicked)
@@ -120,16 +129,13 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }
     }
 
-    private fun addToFavourites(){
-        movieAdapter.onFavouriteClickListener { favouriteMovie ->
-            viewModel.insertFavouriteMovie(favouriteMovie)
+    private fun handleFavouriteButton() {
+        movieAdapter.onFavouriteClickListener { favouriteMovie, isClicked ->
+            if (isClicked) {
+                viewModel.insertFavouriteMovie(favouriteMovie)
+            } else {
+                viewModel.deleteFavouriteMovie(favouriteMovie)
+            }
         }
     }
-
-    private fun removeFromFavourites(){
-        movieAdapter.onFavouriteClickListener { favouriteMovie ->
-            viewModel.deleteFavouriteMovie(favouriteMovie)
-        }
-    }
-
 }
