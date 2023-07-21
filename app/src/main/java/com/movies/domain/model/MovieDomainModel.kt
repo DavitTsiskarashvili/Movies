@@ -6,4 +6,5 @@ data class MovieDomainModel(
     val rating: Double,
     val releaseDate: String,
     val poster: String,
+    val overview: String
 )

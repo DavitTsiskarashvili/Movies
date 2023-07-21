@@ -50,6 +50,10 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             handleData(searchedMovies.isNotEmpty())
             movieAdapter.submitList(searchedMovies)
         }
+        observeLiveData(viewModel.fetchFavouriteMoviesLivedata){favouriteMovies ->
+            handleData(favouriteMovies.isNotEmpty())
+            movieAdapter.submitList(favouriteMovies)
+        }
     }
 
     private fun handleData(isLoaded: Boolean) {
@@ -64,6 +68,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         refresh()
         homeListener()
         favouritesListener()
+        addToFavourites()
+        removeFromFavourites()
     }
 
     private fun filterMovies() {
@@ -87,6 +93,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun favouritesListener() {
         binding.navigationView.favouritesButtonListener {
             handleBottomNavigation(true)
+            viewModel.fetchFavouriteMovies()
         }
     }
 
@@ -110,6 +117,18 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
                     handleData(true)
                 }
             }
+        }
+    }
+
+    private fun addToFavourites(){
+        movieAdapter.onFavouriteClickListener { favouriteMovie ->
+            viewModel.insertFavouriteMovie(favouriteMovie)
+        }
+    }
+
+    private fun removeFromFavourites(){
+        movieAdapter.onFavouriteClickListener { favouriteMovie ->
+            viewModel.deleteFavouriteMovie(favouriteMovie)
         }
     }
 
