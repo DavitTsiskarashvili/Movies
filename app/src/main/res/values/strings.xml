@@ -4,8 +4,8 @@
     <string name="title">Movies</string>
     <string name="home_button">Home</string>
     <string name="favourites_button">Favourites</string>
-    <string name="now_showing">Now Showing</string>
-    <string name="coming_soon">Coming Soon</string>
+    <string name="popular">Popular</string>
+    <string name="top_rated">Top Rated</string>
     <string name="cancel">Cancel</string>
     <string name="details">Details</string>
     <string name="about">About Movie</string>

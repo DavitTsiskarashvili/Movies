@@ -1,4 +1,4 @@
-package com.movies.common
+package com.movies.common.utils
 
 import com.movies.R
 
