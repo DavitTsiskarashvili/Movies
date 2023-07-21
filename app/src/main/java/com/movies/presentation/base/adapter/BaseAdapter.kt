@@ -9,7 +9,6 @@ abstract class BaseAdapter<MODEL : Any, VH:BaseAdapter.BaseViewHolder<MODEL>> :
 
     var onClickCallback: ((MODEL) -> Unit)? = null
 
-
     fun onItemClickListener(onClickCallback: (MODEL) -> Unit) {
         this.onClickCallback = onClickCallback
     }

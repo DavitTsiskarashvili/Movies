@@ -13,20 +13,13 @@ class MovieAdapter : BaseMovieAdapter<MovieUIModel, MovieAdapter.MoviesViewHolde
         parent: ViewGroup,
         viewType: Int
     ): MoviesViewHolder {
-        val movieViewHolder = MoviesViewHolder(
+        return MoviesViewHolder(
             MovieItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
         )
-//        movieViewHolder.binding.favouritesToggleButton.setOnClickListener {
-//            onClickCallback?.invoke(getItem(movieViewHolder.adapterPosition))
-//        }
-//        movieViewHolder.itemView.setOnClickListener {
-//            onClickCallback?.invoke(getItem(movieViewHolder.adapterPosition))
-//        }
-        return movieViewHolder
     }
 
     class MoviesViewHolder(val binding: MovieItemBinding) :
@@ -35,7 +28,7 @@ class MovieAdapter : BaseMovieAdapter<MovieUIModel, MovieAdapter.MoviesViewHolde
             item: MovieUIModel,
             onClickCallback: ((MovieUIModel) -> Unit)?,
             onFavouriteClickCallback: ((MovieUIModel) -> Unit)?,
-            ) {
+        ) {
             with(item) {
                 with(binding) {
                     posterImageView.loadImage(poster)
