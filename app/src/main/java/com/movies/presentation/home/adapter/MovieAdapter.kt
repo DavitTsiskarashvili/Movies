@@ -35,6 +35,7 @@ class MovieAdapter : BaseMovieAdapter<MovieUIModel, MovieAdapter.MoviesViewHolde
                     titleTextView.text = title
                     releaseYearTextView.text = releaseDate
                     ratingTextView.text = rating.toString()
+                    favouritesToggleButton.isChecked = isFavourite
 
                     root.setOnClickListener {
                         onClickCallback?.invoke(item)

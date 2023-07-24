@@ -13,7 +13,8 @@ class MovieDomainToUIMapper : Mapper<MovieDomainModel, MovieUIModel> {
                 releaseDate = releaseDate,
                 rating = rating,
                 poster = poster,
-                overview = overview
+                overview = overview,
+                isFavourite = isFavourite
             )
         }
 

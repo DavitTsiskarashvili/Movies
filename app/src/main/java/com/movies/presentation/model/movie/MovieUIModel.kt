@@ -6,5 +6,6 @@ data class MovieUIModel(
     val rating: Double,
     val releaseDate: String,
     val poster: String,
-    val overview: String
+    val overview: String,
+    val isFavourite: Boolean
 )
