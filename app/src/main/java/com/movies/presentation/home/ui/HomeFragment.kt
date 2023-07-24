@@ -1,9 +1,9 @@
 package com.movies.presentation.home.ui
 
-import android.view.View
 import androidx.core.view.isVisible
 import com.movies.R
 import com.movies.common.extensions.hiddenIf
+import com.movies.common.extensions.invisibleIf
 import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
@@ -110,7 +110,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         with(binding) {
             moviesRecyclerView.hiddenIf(isClicked)
             searchAndFilterView.hiddenIf(isClicked)
-            titleTextView.visibility = View.INVISIBLE
+            titleTextView.invisibleIf(isClicked)
             favouritesTitleTextView.visibleIf(isClicked)
             emptyListImageView.visibleIf(isClicked)
             emptyListTextView.visibleIf(isClicked)
@@ -124,6 +124,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
                     viewModel.searchMovies(query = searchInput)
                 } else {
                     handleData(true)
+                    viewModel.getMovies()
                 }
             }
         }

@@ -17,6 +17,10 @@ fun View.hiddenIf(visible: Boolean) {
     visibility = if (visible) View.GONE else View.VISIBLE
 }
 
+fun View.invisibleIf(visible: Boolean) {
+    visibility = if (visible) View.INVISIBLE else View.VISIBLE
+}
+
 fun View.changeBackgroundColor(@ColorRes colorRes: Int) {
     backgroundTintList = ContextCompat.getColorStateList(context, colorRes)
 }
