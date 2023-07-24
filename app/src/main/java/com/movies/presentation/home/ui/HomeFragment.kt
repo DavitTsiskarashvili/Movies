@@ -95,7 +95,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun homeListener() {
         binding.navigationView.homeButtonListener {
             handleBottomNavigation(false)
-            viewModel.getMovies()
+            handleSearch(binding.searchAndFilterView.searchInput)
         }
     }
 
@@ -119,14 +119,18 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun searchMovies() {
         with(binding.searchAndFilterView) {
-            searchListener { searchInput ->
-                if (searchInput.isNotEmpty()) {
-                    viewModel.searchMovies(query = searchInput)
-                } else {
-                    handleData(true)
-                    viewModel.getMovies()
-                }
+            searchListener {
+                handleSearch(searchInput)
             }
+        }
+    }
+
+    private fun handleSearch(searchInput: String) {
+        if (searchInput.isNotEmpty()) {
+            viewModel.searchMovies(query = searchInput)
+        } else {
+            handleData(true)
+            viewModel.getMovies()
         }
     }
 

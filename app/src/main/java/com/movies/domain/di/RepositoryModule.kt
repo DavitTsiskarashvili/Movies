@@ -19,7 +19,8 @@ val repositoryModule = module {
     single<SearchRepository> {
         SearchRepositoryImpl(
             fetchSearchedMovies = get(),
-            movieListDTOMapper = get()
+            movieListDTOMapper = get(),
+            favouriteMoviesDao = get()
         )
     }
     single<FavouriteMovieRepository> {
