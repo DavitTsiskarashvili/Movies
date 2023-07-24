@@ -1,5 +1,6 @@
 package com.movies.presentation.home.ui
 
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import com.movies.R
 import com.movies.common.extensions.hiddenIf
@@ -78,6 +79,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         homeListener()
         favouritesListener()
         handleFavouriteButton()
+        setUpNavigation()
     }
 
     private fun filterMovies() {
@@ -141,6 +143,16 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             } else {
                 viewModel.deleteFavouriteMovie(favouriteMovie)
             }
+        }
+    }
+
+    private fun setUpNavigation(){
+        movieAdapter.onItemClickListener {film ->
+            viewModel.onMovieItemClick(film)
+            viewModel.navigateToDetails(film)
+        }
+        requireActivity().onBackPressedDispatcher.addCallback {
+            requireActivity().finish()
         }
     }
 }

@@ -10,6 +10,7 @@ import com.movies.domain.usecase.movies.GetMoviesUseCase
 import com.movies.domain.usecase.movies.InsertFavouriteMovieUseCase
 import com.movies.domain.usecase.search.SearchMoviesUseCase
 import com.movies.presentation.base.view_model.BaseViewModel
+import com.movies.presentation.home.ui.HomeFragmentDirections
 import com.movies.presentation.model.mapper.MovieDomainToUIMapper
 import com.movies.presentation.model.mapper.MovieUIToDomainMapper
 import com.movies.presentation.model.movie.MovieUIModel
@@ -29,6 +30,8 @@ class HomeViewModel(
     val searchMoviesLiveData by LiveDataDelegate<List<MovieUIModel>>()
     val fetchFavouriteMoviesLivedata by LiveDataDelegate<List<MovieUIModel>>()
     private val categoryStateLiveData = MutableLiveData(CategoryType.POPULAR)
+    private val selectedMovieLiveData = MutableLiveData<MovieUIModel>()
+
 
     fun getMovies() {
         viewModelScope {
@@ -71,6 +74,14 @@ class HomeViewModel(
         viewModelScope {
             fetchFavouriteMoviesLivedata.addValue(moviesUIMapper.mapList(getFavouriteMovies.invoke()))
         }
+    }
+
+    fun onMovieItemClick(film: MovieUIModel) {
+        selectedMovieLiveData.postValue(film)
+    }
+
+    fun navigateToDetails(film: MovieUIModel){
+        navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment(film))
     }
 
 }
