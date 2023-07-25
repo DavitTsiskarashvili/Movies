@@ -23,4 +23,7 @@
             android:name="MovieDetails"
             app:argType="com.movies.presentation.model.movie.MovieUIModel" />
     </fragment>
+    <action
+        android:id="@+id/action_global_detailsFragment"
+        app:destination="@id/detailsFragment" />
 </navigation>

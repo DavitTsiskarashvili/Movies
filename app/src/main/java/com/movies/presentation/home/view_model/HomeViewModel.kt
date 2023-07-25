@@ -81,7 +81,7 @@ class HomeViewModel(
     }
 
     fun navigateToDetails(film: MovieUIModel){
-        navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment(film))
+        navigate(HomeFragmentDirections.actionGlobalDetailsFragment(film))
     }
 
 }

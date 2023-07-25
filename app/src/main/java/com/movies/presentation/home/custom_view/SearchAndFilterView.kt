@@ -57,6 +57,7 @@ class SearchAndFilterView @JvmOverloads constructor(
     private fun handleViewsVisibility(searchIsClicked: Boolean) {
         with(binding) {
             filterToggleButton.hiddenIf(searchIsClicked)
+            categoryRecyclerView.hiddenIf(searchIsClicked)
             cancelTextView.visibleIf(searchIsClicked)
         }
     }

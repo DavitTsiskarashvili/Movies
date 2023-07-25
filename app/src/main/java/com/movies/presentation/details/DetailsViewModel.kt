@@ -1,7 +1,12 @@
 package com.movies.presentation.details
 
-import androidx.lifecycle.ViewModel
+import com.movies.presentation.base.view_model.BaseViewModel
 
-class DetailsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class DetailsViewModel : BaseViewModel() {
+
+
+
+
+
+
 }

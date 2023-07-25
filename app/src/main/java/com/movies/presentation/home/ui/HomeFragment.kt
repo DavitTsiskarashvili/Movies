@@ -1,6 +1,5 @@
 package com.movies.presentation.home.ui
 
-import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import com.movies.R
 import com.movies.common.extensions.hiddenIf
@@ -151,8 +150,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             viewModel.onMovieItemClick(film)
             viewModel.navigateToDetails(film)
         }
-        requireActivity().onBackPressedDispatcher.addCallback {
-            requireActivity().finish()
-        }
     }
+
 }
