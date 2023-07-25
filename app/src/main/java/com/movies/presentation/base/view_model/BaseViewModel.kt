@@ -14,4 +14,8 @@ abstract class BaseViewModel : ViewModel() {
         navigationLiveData.addValue(Event(NavigationCommand.ToDirection(navDirections)))
     }
 
+    fun navigateUp(){
+        navigationLiveData.addValue(Event(NavigationCommand.Back))
+    }
+
 }

@@ -30,8 +30,6 @@ class HomeViewModel(
     val searchMoviesLiveData by LiveDataDelegate<List<MovieUIModel>>()
     val fetchFavouriteMoviesLivedata by LiveDataDelegate<List<MovieUIModel>>()
     private val categoryStateLiveData = MutableLiveData(CategoryType.POPULAR)
-    private val selectedMovieLiveData = MutableLiveData<MovieUIModel>()
-
 
     fun getMovies() {
         viewModelScope {
@@ -74,10 +72,6 @@ class HomeViewModel(
         viewModelScope {
             fetchFavouriteMoviesLivedata.addValue(moviesUIMapper.mapList(getFavouriteMovies.invoke()))
         }
-    }
-
-    fun onMovieItemClick(film: MovieUIModel) {
-        selectedMovieLiveData.postValue(film)
     }
 
     fun navigateToDetails(film: MovieUIModel){

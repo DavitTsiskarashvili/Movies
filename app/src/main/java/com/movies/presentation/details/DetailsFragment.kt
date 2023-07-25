@@ -1,7 +1,6 @@
 package com.movies.presentation.details
 
 import androidx.activity.addCallback
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.movies.R
 import com.movies.common.extensions.loadImage
@@ -34,7 +33,6 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
                 ratingTextView.text = rating.toString()
                 yearTextView.text = releaseDate
                 descriptionTextView.text = overview
-//                durationTextView.text =
 //                categoryTextView.text =
             }
         }
@@ -42,10 +40,10 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
 
     private fun navigationListener(){
         binding.backImageButton.setOnClickListener {
-            findNavController().popBackStack()
+            viewModel.navigateUp()
         }
         requireActivity().onBackPressedDispatcher.addCallback {
-            requireActivity().finish()
+            viewModel.navigateUp()
         }
     }
 

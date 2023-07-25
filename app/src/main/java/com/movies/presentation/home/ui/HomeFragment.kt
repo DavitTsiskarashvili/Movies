@@ -147,7 +147,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun setUpNavigation(){
         movieAdapter.onItemClickListener {film ->
-            viewModel.onMovieItemClick(film)
             viewModel.navigateToDetails(film)
         }
     }
