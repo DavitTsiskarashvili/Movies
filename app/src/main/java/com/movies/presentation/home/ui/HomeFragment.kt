@@ -30,6 +30,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         initRecycler()
         observe()
         setListeners()
+        searchMovies()
     }
 
     private fun initRecycler() {
@@ -44,6 +45,10 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         observeLiveData(viewModel.fetchMoviesLiveData) { movies ->
             handleData(movies.isNotEmpty())
             movieAdapter.submitList(movies)
+        }
+        observeLiveData(viewModel.searchMoviesLiveData) { searchedMovies ->
+            handleData(searchedMovies.isNotEmpty())
+            movieAdapter.submitList(searchedMovies)
         }
     }
 
@@ -68,6 +73,16 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun refresh() {
         binding.errorStateView.refreshButtonListener {
             viewModel.getMovies()
+        }
+    }
+
+    private fun searchMovies() {
+        binding.searchAndFilterView.searchListener { searchInput ->
+            if (searchInput.isNotEmpty()) {
+                viewModel.searchMovies(query = searchInput)
+            } else {
+                handleData(true)
+            }
         }
     }
 
