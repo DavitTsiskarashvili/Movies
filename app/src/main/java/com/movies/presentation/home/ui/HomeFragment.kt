@@ -1,6 +1,5 @@
 package com.movies.presentation.home.ui
 
-import androidx.core.view.isVisible
 import com.movies.R
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.invisibleIf
@@ -11,6 +10,7 @@ import com.movies.databinding.FragmentHomeBinding
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.home.adapter.MovieAdapter
 import com.movies.presentation.home.view_model.HomeViewModel
+import com.movies.presentation.loader.LoaderDialog
 import kotlin.reflect.KClass
 
 class HomeFragment : BaseFragment<HomeViewModel>() {
@@ -31,6 +31,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         viewModel.getMovies()
     }
     override fun onBind() {
+        LoaderDialog(requireContext()).apply { initiateDialog(true) }
         initRecycler()
         observe()
         setListeners()
@@ -43,7 +44,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun observe() {
         observeLiveData(viewModel.loadingLiveData) {
-            binding.progressBar.isVisible = it
+
         }
         observeLiveData(viewModel.fetchMoviesLiveData) { movies ->
             handleData(movies.isNotEmpty())

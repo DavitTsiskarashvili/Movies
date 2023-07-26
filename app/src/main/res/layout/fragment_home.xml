@@ -40,18 +40,6 @@
         app:spanCount="2"
         tools:listitem="@layout/movie_item" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="@dimen/dimen_100_dp"
-        android:layout_height="@dimen/dimen_100_dp"
-        android:indeterminate="true"
-        android:scaleX="-1"
-        android:indeterminateDrawable="@drawable/ic_spinner"
-        app:layout_constraintBottom_toTopOf="@id/navigationButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
-
     <com.movies.presentation.home.custom_view.NavigationView
         android:id="@+id/navigationButton"
         android:layout_width="match_parent"
