@@ -7,16 +7,14 @@ import com.movies.presentation.model.mapper.MovieUIToDomainMapper
 import com.movies.presentation.model.movie.MovieUIModel
 
 class DetailsViewModel(
-    private val insertMovie: UpdateFavouriteStatusMovieUseCase,
+    private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
     private val movieUIToDomain: MovieUIToDomainMapper
     ) : BaseViewModel() {
 
-    fun insertFavouriteMovie(movie: MovieUIModel){
+    fun updateFavouriteMovieStatus(movie: MovieUIModel){
         viewModelScope {
-            insertMovie.invoke(movieUIToDomain(movie))
+            updateMovieStatus.invoke(movieUIToDomain(movie))
         }
     }
-
-
 
 }

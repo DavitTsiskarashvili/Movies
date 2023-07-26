@@ -9,6 +9,11 @@ class UpdateFavouriteStatusMovieUseCase(
 ) : BaseUseCase<MovieDomainModel, Unit>() {
 
     override suspend fun invoke(params: MovieDomainModel?) {
-        favouriteMovieRepository.updateFavouriteMovieStatus(params!!)
+        val isFavourite = favouriteMovieRepository.isFavouriteMovie(params!!.id)
+        if (isFavourite) {
+            favouriteMovieRepository.deleteFavouriteMovie(params)
+        } else {
+            favouriteMovieRepository.insertFavouriteMovie(params)
+        }
     }
 }

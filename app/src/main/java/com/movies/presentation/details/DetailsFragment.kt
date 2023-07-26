@@ -7,6 +7,7 @@ import com.movies.common.extensions.loadImage
 import com.movies.common.extensions.viewBinding
 import com.movies.databinding.FragmentDetailsBinding
 import com.movies.presentation.base.fragment.BaseFragment
+import com.movies.presentation.model.movie.MovieUIModel
 import kotlin.reflect.KClass
 
 class DetailsFragment : BaseFragment<DetailsViewModel>() {
@@ -22,11 +23,9 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
 
     override fun onBind() {
         val model = args.MovieDetails
-        val isClicked = binding.favouritesToggleButton.isChecked
-
         navigationListener()
         setMovieDetails()
-//        handleFavouriteButton(model, isClicked)
+        handleFavouriteButton(model)
     }
 
     private fun setMovieDetails(){
@@ -37,6 +36,7 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
                 ratingTextView.text = rating.toString()
                 yearTextView.text = releaseDate
                 descriptionTextView.text = overview
+                favouritesToggleButton.isChecked = isFavourite
             }
         }
     }
@@ -50,14 +50,10 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
         }
     }
 
-//    private fun handleFavouriteButton(favouriteMovie: MovieUIModel, isChecked: Boolean) {
-//        binding.favouritesToggleButton.setOnClickListener {
-//            if (isChecked) {
-//                viewModel.insertFavouriteMovie(favouriteMovie)
-//            } else {
-//                viewModel.deleteFavouriteMovie(favouriteMovie)
-//            }
-//        }
-//    }
+    private fun handleFavouriteButton(favouriteMovie: MovieUIModel) {
+        binding.favouritesToggleButton.setOnClickListener {
+                viewModel.updateFavouriteMovieStatus(favouriteMovie)
+        }
+    }
 
 }

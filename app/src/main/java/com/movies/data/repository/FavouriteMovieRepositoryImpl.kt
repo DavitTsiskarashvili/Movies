@@ -11,17 +11,22 @@ class FavouriteMovieRepositoryImpl(
     private val favouriteMovieEntityMapper: FavouriteMovieEntityToDomainMapper,
     private val favouriteMovieDomainMapper: FavouriteMovieDomainToEntityMapper
 ) : FavouriteMovieRepository {
-    override suspend fun updateFavouriteMovieStatus(movie: MovieDomainModel) {
-        val isFavourite = favouriteMoviesDao.isFavouriteMovie(movie.id)
-        if (isFavourite) {
-            favouriteMoviesDao.deleteFavouriteMovie(favouriteMovieDomainMapper(movie))
-        } else {
-            favouriteMoviesDao.insertFavouriteMovie(favouriteMovieDomainMapper(movie))
-        }
+    override suspend fun insertFavouriteMovie(movie: MovieDomainModel) {
+        return favouriteMoviesDao.insertFavouriteMovie(favouriteMovieDomainMapper(movie))
+    }
+
+
+    override suspend fun deleteFavouriteMovie(movie: MovieDomainModel) {
+        return favouriteMoviesDao.deleteFavouriteMovie(favouriteMovieDomainMapper(movie))
+
     }
 
     override suspend fun getFavouriteMovies(): List<MovieDomainModel> {
         return favouriteMoviesDao.getFavouriteMovies().map { favouriteMovieEntityMapper(it) }
+    }
+
+    override suspend fun isFavouriteMovie(id: Int): Boolean {
+        return favouriteMoviesDao.isFavouriteMovie(id)
     }
 
 }

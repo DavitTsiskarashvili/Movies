@@ -19,7 +19,7 @@ val viewModelModule = module {
 
     viewModel {
         DetailsViewModel(
-            insertMovie = get(),
+            updateMovieStatus = get(),
             movieUIToDomain = get()
         )
     }
