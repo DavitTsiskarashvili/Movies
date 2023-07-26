@@ -17,45 +17,45 @@ class NavigationView @JvmOverloads constructor(
         NavigationCustomViewBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        setButtonsActiveStatus(NavigationButtons.HOME)
+        setButtonsActiveStatus(NavigationButtons.LEFT_BUTTON)
         setDefaultButtonTypes()
     }
 
-    fun homeButtonListener(callback: () -> Unit) {
+    fun firstButtonListener(callback: () -> Unit) {
         with(binding) {
-            navigationView.setOnClickListener {
+            leftButton.setOnClickListener {
                 callback()
-                setButtonsActiveStatus(NavigationButtons.HOME)
+                setButtonsActiveStatus(NavigationButtons.LEFT_BUTTON)
             }
         }
     }
 
-    fun favouritesButtonListener(callback: () -> Unit) {
+    fun secondButtonListener(callback: () -> Unit) {
         with(binding) {
-            favouritesButton.setOnClickListener {
+            rightButton.setOnClickListener {
                 callback()
-                setButtonsActiveStatus(NavigationButtons.FAVOURITES)
+                setButtonsActiveStatus(NavigationButtons.RIGHT_BUTTON)
             }
         }
     }
 
     private fun setDefaultButtonTypes(){
         with(binding) {
-            navigationView.setContent(NavigationButtons.HOME)
-            favouritesButton.setContent(NavigationButtons.FAVOURITES)
+            leftButton.setContent(NavigationButtons.LEFT_BUTTON)
+            rightButton.setContent(NavigationButtons.RIGHT_BUTTON)
         }
     }
 
     private fun setButtonsActiveStatus(buttonType: NavigationButtons) {
         with(binding) {
             when (buttonType) {
-                NavigationButtons.HOME -> {
-                    navigationView.setActiveButton(true)
-                    favouritesButton.setActiveButton(false)
+                NavigationButtons.LEFT_BUTTON -> {
+                    leftButton.setActiveButton(true)
+                    rightButton.setActiveButton(false)
                 }
-                NavigationButtons.FAVOURITES -> {
-                    navigationView.setActiveButton(false)
-                    favouritesButton.setActiveButton(true)
+                NavigationButtons.RIGHT_BUTTON -> {
+                    leftButton.setActiveButton(false)
+                    rightButton.setActiveButton(true)
                 }
             }
         }
