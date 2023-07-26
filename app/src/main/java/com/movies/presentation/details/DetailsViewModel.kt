@@ -1,8 +1,21 @@
 package com.movies.presentation.details
 
+import com.movies.common.extensions.viewModelScope
+import com.movies.domain.usecase.movies.UpdateFavouriteStatusMovieUseCase
 import com.movies.presentation.base.view_model.BaseViewModel
+import com.movies.presentation.model.mapper.MovieUIToDomainMapper
+import com.movies.presentation.model.movie.MovieUIModel
 
-class DetailsViewModel : BaseViewModel() {
+class DetailsViewModel(
+    private val insertMovie: UpdateFavouriteStatusMovieUseCase,
+    private val movieUIToDomain: MovieUIToDomainMapper
+    ) : BaseViewModel() {
+
+    fun insertFavouriteMovie(movie: MovieUIModel){
+        viewModelScope {
+            insertMovie.invoke(movieUIToDomain(movie))
+        }
+    }
 
 
 

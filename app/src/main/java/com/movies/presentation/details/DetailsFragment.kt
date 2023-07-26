@@ -21,8 +21,12 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
         get() = DetailsViewModel::class
 
     override fun onBind() {
+        val model = args.MovieDetails
+        val isClicked = binding.favouritesToggleButton.isChecked
+
         navigationListener()
         setMovieDetails()
+//        handleFavouriteButton(model, isClicked)
     }
 
     private fun setMovieDetails(){
@@ -33,7 +37,6 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
                 ratingTextView.text = rating.toString()
                 yearTextView.text = releaseDate
                 descriptionTextView.text = overview
-//                categoryTextView.text =
             }
         }
     }
@@ -46,5 +49,15 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
             viewModel.navigateUp()
         }
     }
+
+//    private fun handleFavouriteButton(favouriteMovie: MovieUIModel, isChecked: Boolean) {
+//        binding.favouritesToggleButton.setOnClickListener {
+//            if (isChecked) {
+//                viewModel.insertFavouriteMovie(favouriteMovie)
+//            } else {
+//                viewModel.deleteFavouriteMovie(favouriteMovie)
+//            }
+//        }
+//    }
 
 }

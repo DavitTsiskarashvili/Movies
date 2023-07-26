@@ -12,14 +12,16 @@ val viewModelModule = module {
             moviesUIMapper = get(),
             searchMoviesUseCase = get(),
             movieUIToDomain = get(),
-            insertMovie = get(),
-            deleteMovie = get(),
+            updateMovieStatus = get(),
             getFavouriteMovies = get()
         )
     }
 
     viewModel {
-        DetailsViewModel()
+        DetailsViewModel(
+            insertMovie = get(),
+            movieUIToDomain = get()
+        )
     }
 
 }

@@ -136,12 +136,9 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun handleFavouriteButton() {
-        movieAdapter.onFavouriteClickListener { favouriteMovie, isClicked ->
-            if (isClicked) {
-                viewModel.insertFavouriteMovie(favouriteMovie)
-            } else {
-                viewModel.deleteFavouriteMovie(favouriteMovie)
-            }
+        movieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+                viewModel.updateFavouriteMovie(favouriteMovie)
+
         }
     }
 
