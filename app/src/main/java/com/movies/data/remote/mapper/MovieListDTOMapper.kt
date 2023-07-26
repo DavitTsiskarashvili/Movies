@@ -14,6 +14,8 @@ class MovieListDTOMapper : Mapper<MoviesDTO, List<MovieDomainModel>> {
                     rating = it?.voteAverage ?: 0.0,
                     poster = it?.posterPath ?: "",
                     releaseDate = it?.releaseDate!!.dropLast(6),
+                    overview = it.overview ?: "",
+                    isFavourite = false
                 )
             } ?: emptyList()
         }

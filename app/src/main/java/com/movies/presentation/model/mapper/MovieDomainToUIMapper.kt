@@ -12,7 +12,9 @@ class MovieUIMapper : Mapper<MovieDomainModel, MovieUIModel> {
                 title = title,
                 releaseDate = releaseDate,
                 rating = getFormattedRating(),
-                poster = getFullPoster()
+                poster = getFullPoster(),
+                overview = overview,
+                isFavourite = isFavourite
             )
         }
 

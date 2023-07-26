@@ -10,9 +10,9 @@ class GetMoviesUseCase(
 ) : BaseUseCase<CategoryType, List<MovieDomainModel>>() {
 
     override suspend fun invoke(params: CategoryType?): List<MovieDomainModel> {
-        return params?.let {
-            moviesRepository.fetchMovies(it)
-        } ?: emptyList()
+        return params.let {
+            moviesRepository.fetchMovies(it!!)
+        }
     }
 
 }

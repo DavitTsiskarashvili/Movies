@@ -1,8 +1,10 @@
 package com.movies.presentation.di
 
-import com.movies.presentation.model.mapper.MovieUIMapper
+import com.movies.presentation.model.mapper.MovieDomainToUIMapper
+import com.movies.presentation.model.mapper.MovieUIToDomainMapper
 import org.koin.dsl.module
 
 val uiMapperModule = module {
-    single { MovieUIMapper() }
+    single { MovieDomainToUIMapper() }
+    single { MovieUIToDomainMapper() }
 }

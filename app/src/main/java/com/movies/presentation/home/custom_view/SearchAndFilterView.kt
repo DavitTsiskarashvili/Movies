@@ -22,6 +22,7 @@ class SearchAndFilterView @JvmOverloads constructor(
 
     private val binding = SearchCustomViewBinding.inflate(LayoutInflater.from(context), this, true)
     private val categoryAdapter by lazy { CategoryAdapter() }
+    val searchInput get() = binding.searchEditText.text.toString()
 
     init {
         isFilterChecked()

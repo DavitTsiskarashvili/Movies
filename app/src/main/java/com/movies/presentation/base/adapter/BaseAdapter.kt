@@ -4,8 +4,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseAdapter<MODEL : Any> :
-    ListAdapter<MODEL, BaseAdapter.BaseViewHolder<MODEL>>(DiffUtilCallback<MODEL>()) {
+abstract class BaseAdapter<MODEL : Any, VH:BaseAdapter.BaseViewHolder<MODEL>> :
+    ListAdapter<MODEL, VH>(DiffUtilCallback<MODEL>()) {
 
     var onClickCallback: ((MODEL) -> Unit)? = null
 
@@ -15,10 +15,11 @@ abstract class BaseAdapter<MODEL : Any> :
 
     abstract class BaseViewHolder<MODEL : Any>(binding: ViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        abstract fun onBind(item: MODEL, onClickCallback: ((MODEL) -> Unit)?)
+        open fun onBind(item: MODEL, onClickCallback: ((MODEL) -> Unit)?){}
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<MODEL>, position: Int) {
+    override fun onBindViewHolder(holder: VH, position: Int) {
         holder.onBind(getItem(position), onClickCallback)
     }
+
 }

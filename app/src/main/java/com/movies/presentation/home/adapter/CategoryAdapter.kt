@@ -10,20 +10,16 @@ import com.movies.databinding.CategoryItemBinding
 import com.movies.presentation.base.adapter.BaseAdapter
 import com.movies.presentation.model.category.Category
 
-class CategoryAdapter : BaseAdapter<Category>() {
+class CategoryAdapter : BaseAdapter<Category, CategoryAdapter.CategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        val viewHolder = CategoryViewHolder(
+        return CategoryViewHolder(
             CategoryItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
         )
-//        viewHolder.binding.categoryButton.setOnClickListener {
-//            onClickCallback?.invoke(getItem(viewHolder.adapterPosition))
-//        }
-        return viewHolder
     }
 
     class CategoryViewHolder(val binding: CategoryItemBinding) :

@@ -3,6 +3,7 @@ package com.movies.presentation.home.ui
 import androidx.core.view.isVisible
 import com.movies.R
 import com.movies.common.extensions.hiddenIf
+import com.movies.common.extensions.invisibleIf
 import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
@@ -50,6 +51,10 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             handleData(searchedMovies.isNotEmpty())
             movieAdapter.submitList(searchedMovies)
         }
+        observeLiveData(viewModel.fetchFavouriteMoviesLivedata) { favouriteMovies ->
+            handleFavouriteData(favouriteMovies.isNotEmpty())
+            movieAdapter.submitList(favouriteMovies)
+        }
     }
 
     private fun handleData(isLoaded: Boolean) {
@@ -59,9 +64,20 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }
     }
 
+    private fun handleFavouriteData(isLoaded: Boolean) {
+        with(binding) {
+            emptyListTextView.hiddenIf(isLoaded)
+            emptyListImageView.hiddenIf(isLoaded)
+            moviesRecyclerView.visibleIf(isLoaded)
+        }
+    }
+
     private fun setListeners() {
         filterMovies()
         refresh()
+        homeListener()
+        favouritesListener()
+        handleFavouriteButton()
     }
 
     private fun filterMovies() {
@@ -76,14 +92,55 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }
     }
 
+    private fun homeListener() {
+        binding.navigationView.homeButtonListener {
+            handleBottomNavigation(false)
+            handleSearch(binding.searchAndFilterView.searchInput)
+        }
+    }
+
+    private fun favouritesListener() {
+        binding.navigationView.favouritesButtonListener {
+            handleBottomNavigation(true)
+            viewModel.fetchFavouriteMovies()
+        }
+    }
+
+    private fun handleBottomNavigation(isClicked: Boolean) {
+        with(binding) {
+            moviesRecyclerView.hiddenIf(isClicked)
+            searchAndFilterView.hiddenIf(isClicked)
+            titleTextView.invisibleIf(isClicked)
+            favouritesTitleTextView.visibleIf(isClicked)
+            emptyListImageView.visibleIf(isClicked)
+            emptyListTextView.visibleIf(isClicked)
+        }
+    }
+
     private fun searchMovies() {
-        binding.searchAndFilterView.searchListener { searchInput ->
-            if (searchInput.isNotEmpty()) {
-                viewModel.searchMovies(query = searchInput)
-            } else {
-                handleData(true)
+        with(binding.searchAndFilterView) {
+            searchListener {
+                handleSearch(searchInput)
             }
         }
     }
 
+    private fun handleSearch(searchInput: String) {
+        if (searchInput.isNotEmpty()) {
+            viewModel.searchMovies(query = searchInput)
+        } else {
+            handleData(true)
+            viewModel.getMovies()
+        }
+    }
+
+    private fun handleFavouriteButton() {
+        movieAdapter.onFavouriteClickListener { favouriteMovie, isChecked ->
+            if (isChecked) {
+                viewModel.insertFavouriteMovie(favouriteMovie)
+            } else {
+                viewModel.deleteFavouriteMovie(favouriteMovie)
+            }
+        }
+    }
 }

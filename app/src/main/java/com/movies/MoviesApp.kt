@@ -1,6 +1,8 @@
 package com.movies
 
 import android.app.Application
+import com.movies.data.local.module.dataBaseModule
+import com.movies.data.mapper.module.entityMapperModule
 import com.movies.data.remote.di.dtoMapperModule
 import com.movies.data.remote.di.networkModule
 import com.movies.domain.di.repositoryModule
@@ -24,7 +26,9 @@ class MoviesApp : Application() {
                 dtoMapperModule,
                 uiMapperModule,
                 repositoryModule,
-                useCaseModule
+                useCaseModule,
+                dataBaseModule,
+                entityMapperModule
             )
         }
     }
