@@ -40,7 +40,7 @@ class SearchAndFilterView @JvmOverloads constructor(
     }
 
     private fun emptyInputHandler(){
-        if (binding.searchEditText.text?.isEmpty() == true){
+        if (binding.searchEditText.text?.isNullOrEmpty() == true){
             handleViewsVisibility(false)
             updateSearchViewConstraints(true)
         }
@@ -63,13 +63,11 @@ class SearchAndFilterView @JvmOverloads constructor(
     }
 
     private fun updateSearchViewConstraints(isFilterVisible: Boolean) {
-        val params = binding.searchEditText.layoutParams as ConstraintLayout.LayoutParams
-        if (isFilterVisible) {
-            params.endToStart = binding.filterToggleButton.id
-        } else {
-            params.endToStart = binding.cancelTextView.id
+        with(binding){
+            val params = searchEditText.layoutParams as ConstraintLayout.LayoutParams
+            params.endToStart = if (isFilterVisible) filterToggleButton.id else cancelTextView.id
+            searchEditText.layoutParams = params
         }
-        binding.searchEditText.layoutParams = params
     }
 
     fun categoryButtonListener(callback: (Category) -> Unit) {
