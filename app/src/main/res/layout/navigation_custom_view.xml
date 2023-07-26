@@ -6,7 +6,7 @@
     android:paddingVertical="@dimen/dimen_12_dp">
 
     <com.movies.presentation.home.custom_view.NavigationViewItem
-        android:id="@+id/homeButton"
+        android:id="@+id/navigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_8_dp"

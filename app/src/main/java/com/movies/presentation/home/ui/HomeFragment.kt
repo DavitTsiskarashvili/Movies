@@ -2,9 +2,10 @@ package com.movies.presentation.home.ui
 
 import androidx.core.view.isVisible
 import com.movies.R
+import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
-import com.movies.common.network.CategoryType
+import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.home.adapter.MovieAdapter
@@ -28,13 +29,12 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     override fun onBind() {
         initRecycler()
         observe()
-        filterMovies()
+        setListeners()
     }
 
     private fun initRecycler() {
-        viewModel.getMovies(CategoryType.POPULAR)
+        viewModel.getMovies()
         binding.moviesRecyclerView.adapter = movieAdapter
-
     }
 
     private fun observe() {
@@ -42,15 +42,32 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             binding.progressBar.isVisible = it
         }
         observeLiveData(viewModel.fetchMoviesLiveData) { movies ->
+            handleData(movies.isNotEmpty())
             movieAdapter.submitList(movies)
         }
     }
 
+    private fun handleData(isLoaded: Boolean) {
+        with(binding) {
+            errorStateView.hiddenIf(isLoaded)
+            moviesRecyclerView.visibleIf(isLoaded)
+        }
+    }
+
+    private fun setListeners() {
+        filterMovies()
+        refresh()
+    }
+
     private fun filterMovies() {
-        with(binding.searchAndFilterView) {
-            categoryButtonListener {
-                viewModel.getMovies(it.categoryType)
-            }
+        binding.searchAndFilterView.categoryButtonListener {
+            viewModel.selectCategory(it.categoryType)
+        }
+    }
+
+    private fun refresh() {
+        binding.errorStateView.refreshButtonListener {
+            viewModel.getMovies()
         }
     }
 

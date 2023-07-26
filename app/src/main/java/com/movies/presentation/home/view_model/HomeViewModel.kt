@@ -1,5 +1,6 @@
 package com.movies.presentation.home.view_model
 
+import androidx.lifecycle.MutableLiveData
 import com.movies.common.extensions.viewModelScope
 import com.movies.common.network.CategoryType
 import com.movies.common.utils.LiveDataDelegate
@@ -15,13 +16,25 @@ class HomeViewModel(
 
     val fetchMoviesLiveData by LiveDataDelegate<List<MovieUIModel>>()
     val loadingLiveData by LiveDataDelegate<Boolean>()
+    private val categoryStateLiveData = MutableLiveData(CategoryType.POPULAR)
 
-    fun getMovies(category: CategoryType){
+    fun getMovies() {
         viewModelScope {
             loadingLiveData.addValue(true)
-            fetchMoviesLiveData.addValue(moviesUIMapper.mapList(moviesUseCase.invoke(category)))
+            fetchMoviesLiveData.addValue(
+                moviesUIMapper.mapList(
+                    moviesUseCase.invoke(
+                        categoryStateLiveData.value
+                    )
+                )
+            )
             loadingLiveData.addValue(false)
         }
+    }
+
+    fun selectCategory(categoryType: CategoryType) {
+        categoryStateLiveData.value = categoryType
+        getMovies()
     }
 
 }
