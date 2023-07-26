@@ -29,9 +29,9 @@ class SearchAndFilterView @JvmOverloads constructor(
         initRecycler()
     }
 
-    fun searchListener(callback: (String) -> Unit) {
+    fun searchListener(listener: (String) -> Unit) {
         binding.searchEditText.doOnTextChanged { text, _, _, _ ->
-            callback(text?.toString() ?: "")
+            listener(text?.toString() ?: "")
             handleViewsVisibility(true)
             updateSearchViewConstraints(false)
             emptyInputHandler()

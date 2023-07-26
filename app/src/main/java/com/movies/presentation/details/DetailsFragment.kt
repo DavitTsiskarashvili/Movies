@@ -21,6 +21,10 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
     override val viewModelClass: KClass<DetailsViewModel>
         get() = DetailsViewModel::class
 
+    override fun onCreateFragment() {
+
+    }
+
     override fun onBind() {
         val model = args.MovieDetails
         navigationListener()

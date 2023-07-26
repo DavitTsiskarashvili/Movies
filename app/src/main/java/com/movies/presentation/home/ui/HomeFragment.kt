@@ -27,6 +27,9 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     override val viewModelClass: KClass<HomeViewModel>
         get() = HomeViewModel::class
 
+    override fun onCreateFragment() {
+        viewModel.getMovies()
+    }
     override fun onBind() {
         initRecycler()
         observe()
@@ -35,7 +38,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun initRecycler() {
-        viewModel.getMovies()
         binding.moviesRecyclerView.adapter = movieAdapter
     }
 
