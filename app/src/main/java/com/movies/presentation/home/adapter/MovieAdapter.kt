@@ -40,8 +40,8 @@ class MovieAdapter : BaseMovieAdapter<MovieUIModel, MovieAdapter.MoviesViewHolde
                     root.setOnClickListener {
                         onClickCallback?.invoke(item)
                     }
-                    binding.favouritesToggleButton.setOnClickListener {
-                        onFavouriteClick?.invoke(item, binding.favouritesToggleButton.isChecked)
+                    favouritesToggleButton.setOnClickListener {
+                        onFavouriteClick?.invoke(item, favouritesToggleButton.isChecked)
                     }
                 }
             }

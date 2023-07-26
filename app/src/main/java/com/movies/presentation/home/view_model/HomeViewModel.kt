@@ -4,12 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import com.movies.common.extensions.viewModelScope
 import com.movies.common.network.CategoryType
 import com.movies.common.utils.LiveDataDelegate
-import com.movies.domain.usecase.movies.DeleteFavouriteMovieUseCase
 import com.movies.domain.usecase.movies.GetFavouriteMoviesUseCase
 import com.movies.domain.usecase.movies.GetMoviesUseCase
-import com.movies.domain.usecase.movies.InsertFavouriteMovieUseCase
+import com.movies.domain.usecase.movies.UpdateFavouriteStatusMovieUseCase
 import com.movies.domain.usecase.search.SearchMoviesUseCase
 import com.movies.presentation.base.view_model.BaseViewModel
+import com.movies.presentation.home.ui.HomeFragmentDirections
 import com.movies.presentation.model.mapper.MovieDomainToUIMapper
 import com.movies.presentation.model.mapper.MovieUIToDomainMapper
 import com.movies.presentation.model.movie.MovieUIModel
@@ -19,8 +19,7 @@ class HomeViewModel(
     private val searchMoviesUseCase: SearchMoviesUseCase,
     private val moviesUIMapper: MovieDomainToUIMapper,
     private val movieUIToDomain: MovieUIToDomainMapper,
-    private val insertMovie: InsertFavouriteMovieUseCase,
-    private val deleteMovie: DeleteFavouriteMovieUseCase,
+    private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
     private val getFavouriteMovies: GetFavouriteMoviesUseCase,
 ) : BaseViewModel() {
 
@@ -55,15 +54,9 @@ class HomeViewModel(
         }
     }
 
-    fun insertFavouriteMovie(movie: MovieUIModel){
+    fun updateFavouriteMovieStatus(movie: MovieUIModel){
         viewModelScope {
-            insertMovie.invoke(movieUIToDomain(movie))
-        }
-    }
-
-    fun deleteFavouriteMovie(movie: MovieUIModel){
-        viewModelScope {
-            deleteMovie.invoke(movieUIToDomain(movie))
+            updateMovieStatus.invoke(movieUIToDomain(movie))
         }
     }
 
@@ -71,6 +64,10 @@ class HomeViewModel(
         viewModelScope {
             fetchFavouriteMoviesLivedata.addValue(moviesUIMapper.mapList(getFavouriteMovies.invoke()))
         }
+    }
+
+    fun navigateToDetails(film: MovieUIModel){
+        navigate(HomeFragmentDirections.actionGlobalDetailsFragment(film))
     }
 
 }

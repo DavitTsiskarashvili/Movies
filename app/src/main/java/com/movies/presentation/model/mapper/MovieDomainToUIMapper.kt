@@ -4,7 +4,7 @@ import com.movies.common.mapper.Mapper
 import com.movies.domain.model.MovieDomainModel
 import com.movies.presentation.model.movie.MovieUIModel
 
-class MovieUIMapper : Mapper<MovieDomainModel, MovieUIModel> {
+class MovieDomainToUIMapper : Mapper<MovieDomainModel, MovieUIModel> {
     override fun invoke(model: MovieDomainModel): MovieUIModel =
         with(model) {
             MovieUIModel(

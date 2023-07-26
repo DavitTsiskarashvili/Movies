@@ -78,6 +78,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         homeListener()
         favouritesListener()
         handleFavouriteButton()
+        setUpNavigation()
     }
 
     private fun filterMovies() {
@@ -135,12 +136,16 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun handleFavouriteButton() {
-        movieAdapter.onFavouriteClickListener { favouriteMovie, isChecked ->
-            if (isChecked) {
-                viewModel.insertFavouriteMovie(favouriteMovie)
-            } else {
-                viewModel.deleteFavouriteMovie(favouriteMovie)
-            }
+        movieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+                viewModel.updateFavouriteMovieStatus(favouriteMovie)
+
         }
     }
+
+    private fun setUpNavigation(){
+        movieAdapter.onItemClickListener {film ->
+            viewModel.navigateToDetails(film)
+        }
+    }
+
 }

@@ -8,4 +8,7 @@ interface FavouriteMovieRepository {
     suspend fun deleteFavouriteMovie(movie: MovieDomainModel)
 
     suspend fun getFavouriteMovies(): List<MovieDomainModel>
+
+    suspend fun isFavouriteMovie (id: Int): Boolean
+
 }
