@@ -55,4 +55,21 @@
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         tools:text="@tools:sample/lorem" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ratingTextView"
+        style="@style/normalMontserrat_ButtonFocused"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10_dp"
+        android:layout_marginEnd="@dimen/dimen_10_dp"
+        android:background="@drawable/background_filter_focused"
+        android:drawableStart="@drawable/ic_star_outline"
+        android:drawablePadding="@dimen/dimen_3_dp"
+        android:drawableTint="@color/neutral_01_black"
+        android:paddingHorizontal="@dimen/dimen_12_dp"
+        android:paddingVertical="@dimen/dimen_4_dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/posterImageView"
+        app:layout_constraintTop_toTopOf="@id/posterImageView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

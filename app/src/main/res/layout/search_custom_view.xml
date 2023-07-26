@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/neutral_01_black"
     android:paddingBottom="@dimen/dimen_4_dp">
 
@@ -34,49 +35,23 @@
         android:background="@drawable/ic_filter_selector"
         android:textOff=""
         android:textOn=""
+        android:checked="false"
         app:layout_constraintBottom_toBottomOf="@id/searchEditText"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/searchEditText" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/popularButton"
-        style="@style/smallMontserrat_ButtonFocused"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_21_dp"
-        android:layout_marginTop="@dimen/dimen_10_dp"
-        android:background="@drawable/background_filter_focused"
-        android:paddingHorizontal="@dimen/dimen_12_dp"
-        android:paddingVertical="@dimen/dimen_4_dp"
-        android:text="@string/popular"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toStartOf="@+id/topRatedButton"
-        app:layout_constraintStart_toStartOf="@id/searchEditText"
-        app:layout_constraintTop_toBottomOf="@id/searchEditText" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/topRatedButton"
-        style="@style/smallMontserrat_Button"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/dimen_8_dp"
-        android:background="@drawable/background_filter_unfocused"
-        android:paddingHorizontal="@dimen/dimen_12_dp"
-        android:paddingVertical="@dimen/dimen_4_dp"
-        android:text="@string/top_rated"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="@id/popularButton"
-        app:layout_constraintStart_toEndOf="@+id/popularButton"
-        app:layout_constraintTop_toTopOf="@id/popularButton"
-        app:layout_goneMarginStart="20dp" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/filterViewGroup"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoryRecyclerView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10_dp"
+        android:orientation="horizontal"
         android:visibility="gone"
-        app:constraint_referenced_ids="topRatedButton, popularButton" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/searchEditText"
+        app:layout_constraintStart_toStartOf="@id/searchEditText"
+        app:layout_constraintEnd_toEndOf="@id/filterToggleButton"
+        tools:listitem="@layout/category_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

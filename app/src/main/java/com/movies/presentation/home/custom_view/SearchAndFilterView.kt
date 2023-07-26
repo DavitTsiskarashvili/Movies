@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.movies.common.extensions.setVisibility
 import com.movies.databinding.SearchCustomViewBinding
+import com.movies.presentation.home.CategoryList
+import com.movies.presentation.home.adapter.CategoryAdapter
+import com.movies.presentation.model.category.Category
 
 class SearchAndFilterView @JvmOverloads constructor(
     context: Context,
@@ -15,15 +18,31 @@ class SearchAndFilterView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttrs, defStyleRes) {
 
     private val binding = SearchCustomViewBinding.inflate(LayoutInflater.from(context), this, true)
+    private val categoryAdapter by lazy { CategoryAdapter() }
 
     init {
         isFilterChecked()
+        initRecycler()
+    }
+
+    fun categoryButtonListener(callback: (Category) -> Unit) {
+        categoryAdapter.onItemClickListener {
+            callback(it)
+            CategoryList.editActiveCategories(it)
+            categoryAdapter.submitList(CategoryList.getCategories())
+            categoryAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun initRecycler() {
+        binding.categoryRecyclerView.adapter = categoryAdapter
+        categoryAdapter.submitList(CategoryList.getCategories())
     }
 
     private fun isFilterChecked() {
         with(binding) {
             filterToggleButton.setOnCheckedChangeListener { _, checked ->
-                filterViewGroup.setVisibility(checked)
+                categoryRecyclerView.setVisibility(checked)
             }
         }
     }
