@@ -10,9 +10,9 @@ class FavouriteMovieDomainToEntityMapper : Mapper<MovieDomainModel, FavouriteMov
             FavouriteMovieEntity(
                 id = id,
                 title = title,
-                rating = rating,
+                rating = getFormattedRating(),
                 releaseDate = releaseDate,
-                poster = poster,
+                poster = getFullPoster(),
                 overview = overview
             )
         }

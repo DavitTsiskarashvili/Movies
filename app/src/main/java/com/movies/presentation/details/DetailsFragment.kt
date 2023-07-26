@@ -28,9 +28,9 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
         handleFavouriteButton(model)
     }
 
-    private fun setMovieDetails(){
-        with(args.MovieDetails){
-            with(binding){
+    private fun setMovieDetails() {
+        with(args.MovieDetails) {
+            with(binding) {
                 posterImageView.loadImage(poster)
                 movieTitleTextView.text = title
                 ratingTextView.text = rating.toString()
@@ -41,7 +41,7 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
         }
     }
 
-    private fun navigationListener(){
+    private fun navigationListener() {
         binding.backImageButton.setOnClickListener {
             viewModel.navigateUp()
         }
@@ -52,7 +52,7 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
 
     private fun handleFavouriteButton(favouriteMovie: MovieUIModel) {
         binding.favouritesToggleButton.setOnClickListener {
-                viewModel.updateFavouriteMovieStatus(favouriteMovie)
+            viewModel.updateFavouriteMovieStatus(favouriteMovie)
         }
     }
 
