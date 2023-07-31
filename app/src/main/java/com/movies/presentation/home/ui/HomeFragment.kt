@@ -94,7 +94,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun homeListener() {
-        with(binding){
+        with(binding) {
             navigationButton.firstButtonListener {
                 handleBottomNavigation(false)
                 handleSearch(searchAndFilterView.searchInput)
@@ -108,7 +108,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             viewModel.fetchFavouriteMovies()
         }
     }
-
+    // constraint group
     private fun handleBottomNavigation(isClicked: Boolean) {
         with(binding) {
             moviesRecyclerView.hiddenIf(isClicked)
@@ -139,13 +139,12 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun handleFavouriteButton() {
         movieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
-                viewModel.updateFavouriteMovieStatus(favouriteMovie)
-
+            viewModel.updateFavouriteMovieStatus(favouriteMovie)
         }
     }
 
-    private fun setUpNavigation(){
-        movieAdapter.onItemClickListener {film ->
+    private fun setUpNavigation() {
+        movieAdapter.onItemClickListener { film ->
             viewModel.navigateToDetails(film)
         }
     }
