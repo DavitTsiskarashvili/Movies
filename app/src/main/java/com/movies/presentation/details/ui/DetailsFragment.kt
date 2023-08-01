@@ -1,4 +1,4 @@
-package com.movies.presentation.details
+package com.movies.presentation.details.ui
 
 import androidx.activity.addCallback
 import androidx.navigation.fragment.navArgs
@@ -7,6 +7,8 @@ import com.movies.common.extensions.loadImage
 import com.movies.common.extensions.viewBinding
 import com.movies.databinding.FragmentDetailsBinding
 import com.movies.presentation.base.fragment.BaseFragment
+import com.movies.presentation.details.DetailsFragmentArgs
+import com.movies.presentation.details.view_model.DetailsViewModel
 import com.movies.presentation.model.movie.MovieUIModel
 import kotlin.reflect.KClass
 

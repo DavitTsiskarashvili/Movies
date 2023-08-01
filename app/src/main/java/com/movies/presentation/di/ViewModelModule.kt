@@ -1,6 +1,6 @@
 package com.movies.presentation.di
 
-import com.movies.presentation.details.DetailsViewModel
+import com.movies.presentation.details.view_model.DetailsViewModel
 import com.movies.presentation.home.view_model.HomeViewModel
 import com.movies.presentation.loader.LoaderDialog
 import org.koin.androidx.viewmodel.dsl.viewModel

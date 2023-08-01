@@ -21,6 +21,7 @@
         android:drawablePadding="@dimen/dimen_6_dp"
         android:drawableTint="@color/neutral_05_light_grey"
         android:gravity="center_vertical"
+        android:singleLine="true"
         android:hint="@string/search"
         android:paddingHorizontal="@dimen/dimen_24_dp"
         android:textColorHint="@color/neutral_05_light_grey"
