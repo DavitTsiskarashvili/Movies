@@ -1,6 +1,8 @@
 package com.movies.presentation.home.view_model
 
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.movies.common.extensions.viewModelScope
 import com.movies.common.network.CategoryType
 import com.movies.common.utils.LiveDataDelegate
@@ -23,7 +25,7 @@ class HomeViewModel(
     private val getFavouriteMovies: GetFavouriteMoviesUseCase,
 ) : BaseViewModel() {
 
-    val fetchMoviesLiveData by LiveDataDelegate<List<MovieUIModel>>()
+    val fetchMoviesLiveData by LiveDataDelegate<PagingData<MovieUIModel>>()
     val loadingLiveData by LiveDataDelegate<Boolean>()
     val searchMoviesLiveData by LiveDataDelegate<List<MovieUIModel>>()
     val fetchFavouriteMoviesLivedata by LiveDataDelegate<List<MovieUIModel>>()
@@ -32,15 +34,14 @@ class HomeViewModel(
     init {
         getMovies()
     }
+
     fun getMovies() {
         viewModelScope {
             loadingLiveData.addValue(true)
             fetchMoviesLiveData.addValue(
-                moviesUIMapper.mapList(
-                    moviesUseCase.invoke(
-                        categoryStateLiveData.value
-                    )
-                )
+                moviesUseCase.invoke(categoryStateLiveData.value).value?.map {
+                    moviesUIMapper(it)
+                } ?: throw RuntimeException()
             )
             loadingLiveData.addValue(false)
         }
@@ -57,19 +58,19 @@ class HomeViewModel(
         }
     }
 
-    fun updateFavouriteMovieStatus(movie: MovieUIModel){
+    fun updateFavouriteMovieStatus(movie: MovieUIModel) {
         viewModelScope {
             updateMovieStatus.invoke(movieUIToDomain(movie))
         }
     }
 
-    fun fetchFavouriteMovies(){
+    fun fetchFavouriteMovies() {
         viewModelScope {
             fetchFavouriteMoviesLivedata.addValue(moviesUIMapper.mapList(getFavouriteMovies.invoke()))
         }
     }
 
-    fun navigateToDetails(film: MovieUIModel){
+    fun navigateToDetails(film: MovieUIModel) {
         navigate(HomeFragmentDirections.actionGlobalDetailsFragment(film))
     }
 

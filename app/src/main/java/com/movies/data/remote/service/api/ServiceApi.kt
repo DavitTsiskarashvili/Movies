@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface ServiceApi {
     @GET("{category}")
-    suspend fun getMovies(@Path("category") category: String): Response<MoviesDTO>
+    suspend fun getMovies(@Path("category") category: String, @Query("page") page: Int): Response<MoviesDTO>
 
     @GET(SEARCH)
     suspend fun searchMovies(@Query("query") query: String): Response<MoviesDTO>

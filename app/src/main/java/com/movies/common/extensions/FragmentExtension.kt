@@ -2,6 +2,7 @@ package com.movies.common.extensions
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -42,4 +43,10 @@ fun <T> Fragment.observeLiveData(
         block(it)
     }
     return liveData
+}
+
+fun <T: Any> LiveData<T>.asLiveDataDelegate() : LiveDataDelegate<T> {
+    val liveDataDelegate = LiveDataDelegate<T>()
+    this.value?.let { liveDataDelegate.addValue(it) }
+    return liveDataDelegate
 }

@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import com.movies.common.extensions.loadImage
 import com.movies.databinding.MovieItemBinding
 import com.movies.presentation.base.adapter.BaseMovieAdapter
+import com.movies.presentation.base.adapter.BasePagingMovieAdapter
 import com.movies.presentation.model.movie.MovieUIModel
 
-class MovieAdapter : BaseMovieAdapter<MovieUIModel, MovieAdapter.MoviesViewHolder>() {
+class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapter.MoviesViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -23,7 +24,7 @@ class MovieAdapter : BaseMovieAdapter<MovieUIModel, MovieAdapter.MoviesViewHolde
     }
 
     class MoviesViewHolder(val binding: MovieItemBinding) :
-        BaseMovieViewHolder<MovieUIModel>(binding) {
+        BaseMovieAdapter.BaseMovieViewHolder<MovieUIModel>(binding) {
         override fun onBindMovie(
             item: MovieUIModel,
             onClickCallback: ((MovieUIModel) -> Unit)?,
