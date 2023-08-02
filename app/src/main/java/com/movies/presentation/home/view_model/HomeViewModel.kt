@@ -1,5 +1,6 @@
 package com.movies.presentation.home.view_model
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
 import androidx.paging.map
@@ -17,7 +18,6 @@ import com.movies.presentation.model.mapper.MovieUIToDomainMapper
 import com.movies.presentation.model.movie.MovieUIModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 
 class HomeViewModel(
     private val moviesUseCase: GetMoviesUseCase,
@@ -34,34 +34,46 @@ class HomeViewModel(
     val fetchFavouriteMoviesLivedata by LiveDataDelegate<List<MovieUIModel>>()
     private val categoryStateLiveData = MutableLiveData(CategoryType.POPULAR)
 
+    private val _fetchMoviesStateFlow = MutableStateFlow<PagingData<MovieUIModel>?>(null)
+    val fetchMoviesStateFlow = _fetchMoviesStateFlow.asStateFlow()
+
     private val _categoryStateFlow = MutableStateFlow(CategoryType.POPULAR)
     val categoryStateFlow = _categoryStateFlow.asStateFlow()
 
-    init {
+    private val _searchStateFlow = MutableStateFlow<PagingData<MovieUIModel>?>(null)
+    val searchStateFlow = _searchStateFlow.asStateFlow()
 
+    init {
+        getMovies()
     }
 
-    fun getMovies() = flow {
-        loadingLiveData.addValue(true)
-        moviesUseCase.invoke(CategoryType.POPULAR).collect { pagingData ->
-            val mappedData = pagingData.map { moviesUIMapper(it) }
-            emit(mappedData)
+    fun getMovies() {
+        viewModelScope {
+            loadingLiveData.addValue(true)
+            moviesUseCase.invoke(CategoryType.POPULAR).flow
+                .collect { pagingData ->
+                    val mappedData = pagingData.map { moviesUIMapper(it) }
+                    _fetchMoviesStateFlow.emit(mappedData)
+                }
+            loadingLiveData.addValue(false)
         }
-      loadingLiveData.addValue(false)
     }
 
     fun selectCategory(categoryType: CategoryType) {
         _categoryStateFlow.value = categoryType
-//        getMovies()
+        getMovies()
     }
 
-    fun searchMovies(query: String) = flow {
-//        viewModelScope {
-//            searchMoviesLiveData.addValue(moviesUIMapper.mapList(searchMoviesUseCase.invoke(query)))
-//        }
-        searchMoviesUseCase.invoke(query).collect { searchedPagingData ->
-            val mappedSearchedData = searchedPagingData.map { moviesUIMapper(it) }
-            emit(mappedSearchedData)
+    fun searchMovies(query: String) {
+        viewModelScope {
+            searchMoviesUseCase.invoke(query).flow
+                .collect { searchedPagingData ->
+                    val mappedSearchedData = searchedPagingData.map {
+                        Log.d("daserchili", "$it ")
+                        moviesUIMapper(it)
+                    }
+                    _searchStateFlow.emit(mappedSearchedData)
+                }
         }
     }
 
