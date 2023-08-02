@@ -1,6 +1,5 @@
 package com.movies.presentation.home.view_model
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
 import androidx.paging.map
@@ -69,7 +68,6 @@ class HomeViewModel(
             searchMoviesUseCase.invoke(query).flow
                 .collect { searchedPagingData ->
                     val mappedSearchedData = searchedPagingData.map {
-                        Log.d("daserchili", "$it ")
                         moviesUIMapper(it)
                     }
                     _searchStateFlow.emit(mappedSearchedData)

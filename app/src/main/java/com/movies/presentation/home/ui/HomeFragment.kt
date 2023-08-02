@@ -2,13 +2,14 @@ package com.movies.presentation.home.ui
 
 import androidx.lifecycle.lifecycleScope
 import com.movies.R
+import com.movies.common.extensions.collectFlow
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.invisibleIf
 import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
-import com.movies.presentation.base.adapter.FavouriteMovieAdapter
+import com.movies.presentation.base.adapter.movie_adapter.FavouriteMovieAdapter
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.home.adapter.MoviePagingAdapter
 import com.movies.presentation.home.view_model.HomeViewModel
@@ -53,34 +54,20 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun observe() {
-        observeLiveData(viewModel.loadingLiveData) {}
+        observeLiveData(viewModel.loadingLiveData) { }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.fetchMoviesStateFlow.collect {
-                handleData(true)
-                it?.let {
-                    moviePagingAdapter.submitData(it)
-                }
+        collectFlow(viewModel.fetchMoviesStateFlow) {
+            handleData(true)
+            it?.let {
+                moviePagingAdapter.submitData(it)
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.searchStateFlow.collect {
-                handleData(true)
-                it?.let { moviePagingAdapter.submitData(it) }
-            }
+
+        collectFlow(viewModel.searchStateFlow) {
+            handleData(true)
+            it?.let { moviePagingAdapter.submitData(it) }
         }
-//        observeLiveData(viewModel.fetchMoviesLiveData) { movies ->
-//            handleData(true)
-//            lifecycleScope.launch {
-//                moviePagingAdapter.submitData(movies)
-//            }
-//        }
-//        observeLiveData(viewModel.searchMoviesLiveData) { searchedMovies ->
-//            handleData(searchedMovies.isNotEmpty())
-//            lifecycleScope.launch {
-//                moviePagingAdapter.submitData(searchedMovies)
-//            }
-//        }
+
         observeLiveData(viewModel.fetchFavouriteMoviesLivedata) { favouriteMovies ->
             handleFavouriteData(favouriteMovies.isNotEmpty())
             binding.moviesRecyclerView.adapter = favouriteMovieAdapter

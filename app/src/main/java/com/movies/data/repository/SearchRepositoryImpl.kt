@@ -13,11 +13,17 @@ class SearchRepositoryImpl(
     private val fetchSearchedMovies: ServiceApi,
     private val movieListDTOMapper: MovieListDTOMapper,
     private val favouriteMoviesDao: FavouriteMoviesDao,
-    ) : SearchRepository {
+) : SearchRepository {
     override suspend fun searchMovies(query: String): Pager<Int, MovieDomainModel> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            pagingSourceFactory = { MoviesPagingSource(fetchSearchedMovies, movieListDTOMapper, search = query) }
+            pagingSourceFactory = {
+                MoviesPagingSource(
+                    fetchSearchedMovies,
+                    movieListDTOMapper,
+                    search = query
+                )
+            }
         )
     }
 }

@@ -1,6 +1,7 @@
-package com.movies.presentation.base.adapter
+package com.movies.presentation.base.adapter.movie_adapter
 
 import androidx.viewbinding.ViewBinding
+import com.movies.presentation.base.adapter.base.BaseAdapter
 
 abstract class BaseMovieAdapter<MODEL : Any, VH : BaseMovieAdapter.BaseMovieViewHolder<MODEL>> :
     BaseAdapter<MODEL, VH>() {

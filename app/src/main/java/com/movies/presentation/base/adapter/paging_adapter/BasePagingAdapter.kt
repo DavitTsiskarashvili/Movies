@@ -1,10 +1,12 @@
-package com.movies.presentation.base.adapter
+package com.movies.presentation.base.adapter.paging_adapter
 
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.movies.presentation.base.adapter.base.BaseAdapter
+import com.movies.presentation.base.adapter.DiffUtilCallback
 
-abstract class BasePagingAdapter<MODEL : Any, VH:BaseAdapter.BaseViewHolder<MODEL>> :
+abstract class BasePagingAdapter<MODEL : Any, VH: BaseAdapter.BaseViewHolder<MODEL>> :
     PagingDataAdapter<MODEL, VH>(DiffUtilCallback<MODEL>()) {
 
     var onClickCallback: ((MODEL) -> Unit)? = null

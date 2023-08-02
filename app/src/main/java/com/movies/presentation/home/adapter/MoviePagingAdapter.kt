@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.movies.common.extensions.loadImage
 import com.movies.databinding.MovieItemBinding
-import com.movies.presentation.base.adapter.BaseMovieAdapter
-import com.movies.presentation.base.adapter.BasePagingMovieAdapter
+import com.movies.presentation.base.adapter.movie_adapter.BaseMovieAdapter
+import com.movies.presentation.base.adapter.paging_adapter.BasePagingMovieAdapter
 import com.movies.presentation.model.movie.MovieUIModel
 
 class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapter.MoviesViewHolder>() {

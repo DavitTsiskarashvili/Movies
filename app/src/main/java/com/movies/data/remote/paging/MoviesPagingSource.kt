@@ -27,7 +27,6 @@ class MoviesPagingSource(
             search?.let {
                 response = service.searchMovies(it, page)
             }
-
             LoadResult.Page(
                 data = movieDTOMapper(response.body() ?: throw IllegalArgumentException()),
                 prevKey = if (page != 1) page - 1 else null,
