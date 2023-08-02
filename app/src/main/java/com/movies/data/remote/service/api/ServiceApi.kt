@@ -11,7 +11,7 @@ interface ServiceApi {
     suspend fun getMovies(@Path("category") category: String, @Query("page") page: Int): Response<MoviesDTO>
 
     @GET(SEARCH)
-    suspend fun searchMovies(@Query("query") query: String): Response<MoviesDTO>
+    suspend fun searchMovies(@Query("query") query: String, @Query("page") page: Int): Response<MoviesDTO>
 
     companion object {
         const val SEARCH = "3/search/movie"

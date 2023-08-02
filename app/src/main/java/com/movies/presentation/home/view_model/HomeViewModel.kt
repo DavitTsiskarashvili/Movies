@@ -42,26 +42,26 @@ class HomeViewModel(
     }
 
     fun getMovies() = flow {
-
-//            loadingLiveData.addValue(true)
-
-                moviesUseCase.invoke(CategoryType.POPULAR).collect { pagingData ->
-                    val mappedData = pagingData.map { moviesUIMapper(it) }
-                    emit(mappedData)
-                } ?: throw RuntimeException()
-
-//            loadingLiveData.addValue(false)
+        loadingLiveData.addValue(true)
+        moviesUseCase.invoke(CategoryType.POPULAR).collect { pagingData ->
+            val mappedData = pagingData.map { moviesUIMapper(it) }
+            emit(mappedData)
         }
-
+      loadingLiveData.addValue(false)
+    }
 
     fun selectCategory(categoryType: CategoryType) {
         _categoryStateFlow.value = categoryType
 //        getMovies()
     }
 
-    fun searchMovies(query: String) {
-        viewModelScope {
-            searchMoviesLiveData.addValue(moviesUIMapper.mapList(searchMoviesUseCase.invoke(query)))
+    fun searchMovies(query: String) = flow {
+//        viewModelScope {
+//            searchMoviesLiveData.addValue(moviesUIMapper.mapList(searchMoviesUseCase.invoke(query)))
+//        }
+        searchMoviesUseCase.invoke(query).collect { searchedPagingData ->
+            val mappedSearchedData = searchedPagingData.map { moviesUIMapper(it) }
+            emit(mappedSearchedData)
         }
     }
 

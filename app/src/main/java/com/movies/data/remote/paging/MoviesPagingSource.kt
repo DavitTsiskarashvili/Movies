@@ -3,21 +3,31 @@ package com.movies.data.remote.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.movies.data.remote.mapper.MovieListDTOMapper
+import com.movies.data.remote.model.MoviesDTO
 import com.movies.data.remote.service.api.ServiceApi
 import com.movies.domain.model.MovieDomainModel
 import retrofit2.HttpException
+import retrofit2.Response
 import java.io.IOException
 
 class MoviesPagingSource(
     private val service: ServiceApi,
-    private val category: String,
-    private val movieDTOMapper: MovieListDTOMapper
+    private val movieDTOMapper: MovieListDTOMapper,
+    private val category: String? = null,
+    private val search: String? = null
 ) : PagingSource<Int, MovieDomainModel>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieDomainModel> {
         return try {
+            lateinit var response: Response<MoviesDTO>
             val page = params.key ?: 1
-            val response = service.getMovies(category, page)
+            category?.let {
+                response = service.getMovies(it, page)
+            }
+            search?.let {
+                response = service.searchMovies(it, page)
+            }
+
             LoadResult.Page(
                 data = movieDTOMapper(response.body() ?: throw IllegalArgumentException()),
                 prevKey = if (page != 1) page - 1 else null,

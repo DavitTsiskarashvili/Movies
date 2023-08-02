@@ -19,8 +19,8 @@ class MoviesRepositoryImpl(
 ) : MoviesRepository {
     override suspend fun fetchMovies(category: CategoryType): Flow<PagingData<MovieDomainModel>> {
         return Pager(
-            config = PagingConfig(pageSize = 1, enablePlaceholders = false),
-            pagingSourceFactory = { MoviesPagingSource(fetchMovies, category.value, movieListDTOMapper) }
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            pagingSourceFactory = { MoviesPagingSource(fetchMovies, movieListDTOMapper, category.value) }
         ).flow
     }
 

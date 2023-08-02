@@ -12,9 +12,7 @@ class GetMoviesUseCase(
 ) : BaseUseCase<CategoryType, Flow<PagingData<MovieDomainModel>>>() {
 
     override suspend fun invoke(params: CategoryType?): Flow<PagingData<MovieDomainModel>> {
-        return params.let {
-            moviesRepository.fetchMovies(it!!)
-        }
+        return moviesRepository.fetchMovies(params!!)
     }
 
 }

@@ -43,24 +43,23 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun observe() {
-        observeLiveData(viewModel.loadingLiveData) {
-
-        }
-        observeLiveData(viewModel.fetchMoviesLiveData) { movies ->
-            handleData(true)
-            lifecycleScope.launch {
-                moviePagingAdapter.submitData(movies)
-                Log.d("bachi", "$movies")
-            }
-        }
-
+        observeLiveData(viewModel.loadingLiveData) {}
         viewLifecycleOwner.lifecycleScope.launch {
-        viewModel.getMovies().collect{
-            handleData(true)
+            viewModel.getMovies().collect{
+                handleData(true)
                 moviePagingAdapter.submitData(it)
                 Log.d("bachi", "$it")
             }
         }
+
+//        observeLiveData(viewModel.fetchMoviesLiveData) { movies ->
+//            handleData(true)
+//            lifecycleScope.launch {
+//                moviePagingAdapter.submitData(movies)
+//                Log.d("bachi", "$movies")
+//            }
+//        }
+
 
 //        observeLiveData(viewModel.searchMoviesLiveData) { searchedMovies ->
 //            handleData(searchedMovies.isNotEmpty())
@@ -143,13 +142,19 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         with(binding.searchAndFilterView) {
             searchListener {
                 handleSearch(searchInput)
+
             }
         }
     }
 
     private fun handleSearch(searchInput: String) {
         if (searchInput.isNotEmpty()) {
-            viewModel.searchMovies(query = searchInput)
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.searchMovies(searchInput).collect{
+                    moviePagingAdapter.submitData(it)
+                }
+            }
+//            viewModel.searchMovies(query = searchInput)
         } else {
             handleData(true)
             viewModel.getMovies()
