@@ -42,6 +42,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         setUpNavigation()
         setListeners()
         searchMovies()
+
     }
 
     private fun initHomeRecycler() {
@@ -65,7 +66,9 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
         collectFlow(viewModel.searchStateFlow) {
             handleData(true)
-            it?.let { moviePagingAdapter.submitData(it) }
+            it?.let {
+                moviePagingAdapter.submitData(it)
+            }
         }
 
         observeLiveData(viewModel.fetchFavouriteMoviesLivedata) { favouriteMovies ->
@@ -110,6 +113,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun refresh() {
         binding.errorStateView.refreshButtonListener {
             viewModel.getMovies()
+
         }
     }
 
@@ -154,7 +158,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             viewModel.searchMovies(query = searchInput)
         } else {
             handleData(true)
-            viewModel.getMovies()
+                viewModel.getMovies()
+
         }
     }
 

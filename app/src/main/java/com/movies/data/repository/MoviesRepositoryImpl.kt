@@ -20,7 +20,7 @@ class MoviesRepositoryImpl(
                 MoviesPagingSource(
                     fetchMovies,
                     movieListDTOMapper,
-                    category.value
+                    category = category.value
                 )
             }
         )

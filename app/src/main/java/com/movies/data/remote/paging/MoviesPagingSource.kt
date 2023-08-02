@@ -1,5 +1,6 @@
 package com.movies.data.remote.paging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.movies.data.remote.mapper.MovieListDTOMapper
@@ -27,10 +28,17 @@ class MoviesPagingSource(
             search?.let {
                 response = service.searchMovies(it, page)
             }
+
+            val movies = movieDTOMapper(response.body() ?: throw IllegalArgumentException())
+            val nextKey = if (movies.isEmpty()) {
+                null
+            } else {
+                page + (params.loadSize / 20)
+            }
             LoadResult.Page(
-                data = movieDTOMapper(response.body() ?: throw IllegalArgumentException()),
-                prevKey = if (page != 1) page - 1 else null,
-                nextKey = page.plus(1)
+                data = movies,
+                prevKey = if (page == 1) null else page - 1,
+                nextKey = nextKey
             )
         } catch (exception: IOException) {
             LoadResult.Error(exception)
@@ -48,6 +56,7 @@ class MoviesPagingSource(
         // We need to get the previous key (or next key if previous is null) of the page
         // that was closest to the most recently accessed index.
         // Anchor position is the most recently accessed index.
+        Log.d("TAG", "getMovies: ${state.pages}")
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)

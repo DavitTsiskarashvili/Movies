@@ -21,7 +21,7 @@ class SearchRepositoryImpl(
                 MoviesPagingSource(
                     fetchSearchedMovies,
                     movieListDTOMapper,
-                    search = query
+                    search = query,
                 )
             }
         )
