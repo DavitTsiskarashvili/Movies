@@ -19,7 +19,7 @@ class MoviesPagingSource(
             val page = params.key ?: 1
             val response = service.getMovies(category, page)
             LoadResult.Page(
-                data = movieDTOMapper(response.body()  ?: throw IllegalArgumentException()),
+                data = movieDTOMapper(response.body() ?: throw IllegalArgumentException()),
                 prevKey = if (page != 1) page - 1 else null,
                 nextKey = page.plus(1)
             )

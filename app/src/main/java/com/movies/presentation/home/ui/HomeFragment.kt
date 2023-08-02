@@ -53,6 +53,15 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
                 Log.d("bachi", "$movies")
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+        viewModel.getMovies().collect{
+            handleData(true)
+                moviePagingAdapter.submitData(it)
+                Log.d("bachi", "$it")
+            }
+        }
+
 //        observeLiveData(viewModel.searchMoviesLiveData) { searchedMovies ->
 //            handleData(searchedMovies.isNotEmpty())
 //            lifecycleScope.launch {

@@ -15,6 +15,9 @@ import com.movies.presentation.home.ui.HomeFragmentDirections
 import com.movies.presentation.model.mapper.MovieDomainToUIMapper
 import com.movies.presentation.model.mapper.MovieUIToDomainMapper
 import com.movies.presentation.model.movie.MovieUIModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
 
 class HomeViewModel(
     private val moviesUseCase: GetMoviesUseCase,
@@ -31,25 +34,29 @@ class HomeViewModel(
     val fetchFavouriteMoviesLivedata by LiveDataDelegate<List<MovieUIModel>>()
     private val categoryStateLiveData = MutableLiveData(CategoryType.POPULAR)
 
+    private val _categoryStateFlow = MutableStateFlow(CategoryType.POPULAR)
+    val categoryStateFlow = _categoryStateFlow.asStateFlow()
+
     init {
-        getMovies()
+
     }
 
-    fun getMovies() {
-        viewModelScope {
-            loadingLiveData.addValue(true)
-            fetchMoviesLiveData.addValue(
-                moviesUseCase.invoke(categoryStateLiveData.value).value?.map {
-                    moviesUIMapper(it)
+    fun getMovies() = flow {
+
+//            loadingLiveData.addValue(true)
+
+                moviesUseCase.invoke(CategoryType.POPULAR).collect { pagingData ->
+                    val mappedData = pagingData.map { moviesUIMapper(it) }
+                    emit(mappedData)
                 } ?: throw RuntimeException()
-            )
-            loadingLiveData.addValue(false)
+
+//            loadingLiveData.addValue(false)
         }
-    }
+
 
     fun selectCategory(categoryType: CategoryType) {
-        categoryStateLiveData.value = categoryType
-        getMovies()
+        _categoryStateFlow.value = categoryType
+//        getMovies()
     }
 
     fun searchMovies(query: String) {
