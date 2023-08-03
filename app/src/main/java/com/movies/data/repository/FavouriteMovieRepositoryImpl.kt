@@ -1,8 +1,8 @@
 package com.movies.data.repository
 
 import com.movies.data.local.dao.FavouriteMoviesDao
-import com.movies.data.mapper.entity.FavouriteMovieDomainToEntityMapper
-import com.movies.data.mapper.entity.FavouriteMovieEntityToDomainMapper
+import com.movies.data.local.mapper.entity.FavouriteMovieDomainToEntityMapper
+import com.movies.data.local.mapper.entity.FavouriteMovieEntityToDomainMapper
 import com.movies.domain.model.MovieDomainModel
 import com.movies.domain.repository.FavouriteMovieRepository
 

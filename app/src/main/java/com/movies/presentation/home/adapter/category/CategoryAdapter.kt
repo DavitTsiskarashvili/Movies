@@ -1,4 +1,4 @@
-package com.movies.presentation.home.adapter
+package com.movies.presentation.home.adapter.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

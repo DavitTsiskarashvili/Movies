@@ -1,17 +1,17 @@
 package com.movies.presentation.home.ui
 
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.movies.R
-import com.movies.common.extensions.collectFlow
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.invisibleIf
 import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
-import com.movies.presentation.base.adapter.movie_adapter.FavouriteMovieAdapter
 import com.movies.presentation.base.fragment.BaseFragment
-import com.movies.presentation.home.adapter.MoviePagingAdapter
+import com.movies.presentation.home.adapter.favourite.FavouriteMovieAdapter
+import com.movies.presentation.home.adapter.movie.MoviePagingAdapter
 import com.movies.presentation.home.view_model.HomeViewModel
 import com.movies.presentation.model.movie.MovieUIModel
 import kotlinx.coroutines.launch
@@ -57,17 +57,37 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun observe() {
         observeLiveData(viewModel.loadingLiveData) { }
 
-        collectFlow(viewModel.fetchMoviesStateFlow) {
-            handleData(true)
-            it?.let {
-                moviePagingAdapter.submitData(it)
+//        collectFlow(viewModel.fetchMoviesStateFlow) {
+//            handleData(true)
+//            it?.let {
+//                moviePagingAdapter.submitData(it)
+//            }
+//        }
+
+        viewModel.fetchMoviesStateFlow.observe(viewLifecycleOwner) {
+            viewModel.viewModelScope.launch {
+                handleData(true)
+                it?.let {
+                    moviePagingAdapter.submitData(it)
+                }
             }
         }
 
-        collectFlow(viewModel.searchStateFlow) {
-            handleData(true)
-            it?.let {
-                moviePagingAdapter.submitData(it)
+//        collectFlow(viewModel.searchStateFlow) {
+//            handleData(true)
+//            it?.let {
+//                moviePagingAdapter.submitData(it)
+//            }
+//        }
+
+        viewModel.searchStateFlow.observe(viewLifecycleOwner){
+            viewModel.viewModelScope.launch {
+                handleData(true)
+                it.let {
+                    if (it != null) {
+                        moviePagingAdapter.submitData(it)
+                    }
+                }
             }
         }
 
@@ -158,7 +178,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             viewModel.searchMovies(query = searchInput)
         } else {
             handleData(true)
-                viewModel.getMovies()
+            viewModel.getMovies()
 
         }
     }
@@ -172,6 +192,9 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun setUpNavigation() {
         moviePagingAdapter.onItemClickListener { film ->
+            viewModel.navigateToDetails(film)
+        }
+        favouriteMovieAdapter.onItemClickListener { film ->
             viewModel.navigateToDetails(film)
         }
     }

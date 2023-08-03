@@ -1,4 +1,4 @@
-package com.movies.domain.usecase.movies
+package com.movies.domain.usecase.favourites
 
 import com.movies.domain.model.MovieDomainModel
 import com.movies.domain.repository.FavouriteMovieRepository

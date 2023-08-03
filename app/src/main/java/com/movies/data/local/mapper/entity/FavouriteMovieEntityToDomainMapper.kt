@@ -1,4 +1,4 @@
-package com.movies.data.mapper.entity
+package com.movies.data.local.mapper.entity
 
 import com.movies.common.mapper.Mapper
 import com.movies.data.local.entity.FavouriteMovieEntity

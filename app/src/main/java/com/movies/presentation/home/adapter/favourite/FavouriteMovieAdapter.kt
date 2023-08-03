@@ -1,14 +1,13 @@
-package com.movies.presentation.home.adapter
+package com.movies.presentation.home.adapter.favourite
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.movies.common.extensions.loadImage
 import com.movies.databinding.MovieItemBinding
 import com.movies.presentation.base.adapter.movie_adapter.BaseMovieAdapter
-import com.movies.presentation.base.adapter.paging_adapter.BasePagingMovieAdapter
 import com.movies.presentation.model.movie.MovieUIModel
 
-class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapter.MoviesViewHolder>() {
+class FavouriteMovieAdapter : BaseMovieAdapter<MovieUIModel, FavouriteMovieAdapter.MoviesViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -24,7 +23,7 @@ class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapt
     }
 
     class MoviesViewHolder(val binding: MovieItemBinding) :
-        BaseMovieAdapter.BaseMovieViewHolder<MovieUIModel>(binding) {
+        BaseMovieViewHolder<MovieUIModel>(binding) {
         override fun onBindMovie(
             item: MovieUIModel,
             onClickCallback: ((MovieUIModel) -> Unit)?,

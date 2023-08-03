@@ -10,7 +10,7 @@ import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.SearchCustomViewBinding
 import com.movies.presentation.home.CategoryList
-import com.movies.presentation.home.adapter.CategoryAdapter
+import com.movies.presentation.home.adapter.category.CategoryAdapter
 import com.movies.presentation.model.category.Category
 
 class SearchAndFilterView @JvmOverloads constructor(
