@@ -1,7 +1,7 @@
 package com.movies.data.remote.mapper
 
 import com.movies.common.mapper.Mapper
-import com.movies.data.remote.dto.MoviesDTO
+import com.movies.data.remote.dto.movies.MoviesDTO
 import com.movies.domain.model.MovieDomainModel
 
 class MovieListDTOMapper : Mapper<MoviesDTO, List<MovieDomainModel>> {

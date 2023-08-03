@@ -3,7 +3,7 @@ package com.movies.data.remote.paging
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.movies.data.remote.dto.MoviesDTO
+import com.movies.data.remote.dto.movies.MoviesDTO
 import com.movies.data.remote.mapper.MovieListDTOMapper
 import com.movies.data.remote.service.api.ServiceApi
 import com.movies.domain.model.MovieDomainModel

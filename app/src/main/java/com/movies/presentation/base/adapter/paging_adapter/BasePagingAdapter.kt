@@ -4,7 +4,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.movies.presentation.base.adapter.base.BaseAdapter
-import com.movies.presentation.base.adapter.DiffUtilCallback
+import com.movies.presentation.base.adapter.diff_util.DiffUtilCallback
 
 abstract class BasePagingAdapter<MODEL : Any, VH: BaseAdapter.BaseViewHolder<MODEL>> :
     PagingDataAdapter<MODEL, VH>(DiffUtilCallback<MODEL>()) {

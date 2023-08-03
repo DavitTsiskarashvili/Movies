@@ -1,8 +1,8 @@
 package com.movies.presentation.home.ui
 
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import com.movies.R
+import com.movies.common.extensions.collectLatestInLifecycle
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.invisibleIf
 import com.movies.common.extensions.observeLiveData
@@ -55,38 +55,18 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun observe() {
-        observeLiveData(viewModel.loadingLiveData) { }
-
-//        collectFlow(viewModel.fetchMoviesStateFlow) {
-//            handleData(true)
-//            it?.let {
-//                moviePagingAdapter.submitData(it)
-//            }
-//        }
-
-        viewModel.fetchMoviesStateFlow.observe(viewLifecycleOwner) {
-            viewModel.viewModelScope.launch {
-                handleData(true)
-                it?.let {
-                    moviePagingAdapter.submitData(it)
-                }
+        viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
+            handleData(true)
+            it?.let {
+                moviePagingAdapter.submitData(it)
             }
         }
 
-//        collectFlow(viewModel.searchStateFlow) {
-//            handleData(true)
-//            it?.let {
-//                moviePagingAdapter.submitData(it)
-//            }
-//        }
-
-        viewModel.searchStateFlow.observe(viewLifecycleOwner){
-            viewModel.viewModelScope.launch {
-                handleData(true)
-                it.let {
-                    if (it != null) {
-                        moviePagingAdapter.submitData(it)
-                    }
+        viewModel.searchStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
+            handleData(true)
+            it.let {
+                if(it != null) {
+                    moviePagingAdapter.submitData(it)
                 }
             }
         }
@@ -98,6 +78,9 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
                 initFavouriteRecycler(favouriteMovies)
             }
         }
+
+        observeLiveData(viewModel.loadingLiveData) { }
+
     }
 
     private fun handleData(isLoaded: Boolean) {

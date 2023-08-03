@@ -1,6 +1,5 @@
 package com.movies.presentation.home.view_model
 
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -9,8 +8,8 @@ import com.movies.common.extensions.viewModelScope
 import com.movies.common.network.CategoryType
 import com.movies.common.utils.LiveDataDelegate
 import com.movies.domain.usecase.favourites.GetFavouriteMoviesUseCase
-import com.movies.domain.usecase.movies.GetMoviesUseCase
 import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
+import com.movies.domain.usecase.movies.GetMoviesUseCase
 import com.movies.domain.usecase.search.SearchMoviesUseCase
 import com.movies.presentation.base.view_model.BaseViewModel
 import com.movies.presentation.home.ui.HomeFragmentDirections
@@ -33,19 +32,14 @@ class HomeViewModel(
     val fetchFavouriteMoviesLivedata by LiveDataDelegate<List<MovieUIModel>>()
 
     private val _fetchMoviesStateFlow = MutableStateFlow<PagingData<MovieUIModel>?>(null)
-
-    //    val fetchMoviesStateFlow get() = _fetchMoviesStateFlow.asStateFlow()
-    val fetchMoviesStateFlow
-        get() = _fetchMoviesStateFlow.asLiveData()
+    val fetchMoviesStateFlow get() = _fetchMoviesStateFlow.asStateFlow()
 
     private val _categoryStateFlow = MutableStateFlow(CategoryType.POPULAR)
-    val categoryStateFlow = _categoryStateFlow.asStateFlow()
+    private val categoryStateFlow = _categoryStateFlow.asStateFlow()
 
     private val _searchStateFlow = MutableStateFlow<PagingData<MovieUIModel>?>(null)
+    val searchStateFlow = _searchStateFlow.asStateFlow()
 
-    //    val searchStateFlow = _searchStateFlow.asStateFlow()
-    val searchStateFlow
-        get() = _searchStateFlow.asLiveData()
 
     init {
         getMovies()
@@ -69,9 +63,6 @@ class HomeViewModel(
     fun selectCategory(categoryType: CategoryType) {
         _categoryStateFlow.value = categoryType
         getMovies()
-//        viewModelScope {
-//            _categoryStateFlow.emit(categoryType)
-//        }
     }
 
     fun searchMovies(query: String) {
