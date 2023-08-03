@@ -1,6 +1,5 @@
 package com.movies.data.remote.paging
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.movies.data.remote.dto.movies.MoviesDTO
@@ -56,7 +55,6 @@ class MoviesPagingSource(
         // We need to get the previous key (or next key if previous is null) of the page
         // that was closest to the most recently accessed index.
         // Anchor position is the most recently accessed index.
-        Log.d("TAG", "getMovies: ${state.pages}")
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)

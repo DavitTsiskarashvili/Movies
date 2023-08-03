@@ -56,16 +56,16 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun observe() {
         viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-            handleData(true)
+            handleDataVisibility(true)
             it?.let {
                 moviePagingAdapter.submitData(it)
             }
         }
 
         viewModel.searchStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-            handleData(true)
+            handleDataVisibility(true)
             it.let {
-                if(it != null) {
+                if (it != null) {
                     moviePagingAdapter.submitData(it)
                 }
             }
@@ -83,7 +83,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     }
 
-    private fun handleData(isLoaded: Boolean) {
+    private fun handleDataVisibility(isLoaded: Boolean) {
         with(binding) {
             errorStateView.hiddenIf(isLoaded)
             moviesRecyclerView.visibleIf(isLoaded)
@@ -160,7 +160,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         if (searchInput.isNotEmpty()) {
             viewModel.searchMovies(query = searchInput)
         } else {
-            handleData(true)
+            handleDataVisibility(true)
             viewModel.getMovies()
 
         }
