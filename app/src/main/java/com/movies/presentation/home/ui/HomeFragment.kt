@@ -79,6 +79,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }
 
         observeLiveData(viewModel.loadingLiveData) {
+
         }
 
     }

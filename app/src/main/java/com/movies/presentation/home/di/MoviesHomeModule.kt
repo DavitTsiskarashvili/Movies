@@ -20,6 +20,7 @@ val homeViewModelModule = module {
             movieUIToDomain = get(),
             updateMovieStatus = get(),
             getFavouriteMovies = get(),
+            context = get()
         )
     }
 }

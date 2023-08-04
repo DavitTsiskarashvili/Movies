@@ -1,5 +1,6 @@
 package com.movies.presentation.home.view_model
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingData
@@ -29,6 +30,7 @@ class HomeViewModel(
     private val movieUIToDomain: MovieUIToDomainMapper,
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
     private val getFavouriteMovies: GetFavouriteMoviesUseCase,
+    private val context: Context
 ) : BaseViewModel() {
 
     val loadingLiveData by LiveDataDelegate<Boolean>()
@@ -43,10 +45,11 @@ class HomeViewModel(
     private val _searchStateFlow = MutableStateFlow<PagingData<MovieUIModel>?>(null)
     val searchStateFlow = _searchStateFlow.asStateFlow()
 
-
     init {
         startNetworkCall()
     }
+
+
 
     fun startNetworkCall() {
         launchNetwork<Pager<Int, MovieDomainModel>> {
@@ -55,7 +58,6 @@ class HomeViewModel(
                 moviesUseCase.invoke(categoryType)
             }
             success {
-                loadingLiveData.addValue(true)
                 viewModelScope.launch {
                     it.flow.collect { pagingData ->
                         val mappedData = pagingData.map {
@@ -64,12 +66,6 @@ class HomeViewModel(
                         _fetchMoviesStateFlow.emit(mappedData)
                     }
                 }
-            }
-            error {
-
-            }
-            loading {
-
             }
         }
     }
