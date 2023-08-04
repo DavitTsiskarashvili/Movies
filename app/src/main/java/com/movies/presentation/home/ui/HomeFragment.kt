@@ -46,6 +46,10 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun initHomeRecycler() {
         binding.moviesRecyclerView.adapter = moviePagingAdapter
+        observeLiveData(viewModel.checkFavouriteStatusLiveData){ favouriteMovies ->
+            moviePagingAdapter.
+
+        }
     }
 
     private fun initFavouriteRecycler(list: List<MovieUIModel>) {

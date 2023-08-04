@@ -9,6 +9,11 @@ import com.movies.presentation.base.adapter.paging_adapter.BasePagingMovieAdapte
 import com.movies.presentation.base.data.MovieUIModel
 
 class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapter.MoviesViewHolder>() {
+    var favouriteMovies: List<MovieUIModel> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -30,6 +35,8 @@ class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapt
             onClickCallback: ((MovieUIModel) -> Unit)?,
             onFavouriteClick: ((MovieUIModel, Boolean) -> Unit)?,
         ) {
+            val isFavourite = favour
+
             with(item) {
                 with(binding) {
                     posterImageView.loadImage(poster)

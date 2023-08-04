@@ -11,6 +11,7 @@ import com.movies.common.network.CategoryType
 import com.movies.common.utils.LiveDataDelegate
 import com.movies.data.remote.network.NetworkLauncherApi
 import com.movies.domain.model.MovieDomainModel
+import com.movies.domain.usecase.favourites.CheckFavouriteStatusUseCase
 import com.movies.domain.usecase.favourites.GetFavouriteMoviesUseCase
 import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
 import com.movies.domain.usecase.movies.GetMoviesUseCase
@@ -32,8 +33,11 @@ class HomeViewModel(
     private val movieUIToDomain: MovieUIToDomainMapper,
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
     private val getFavouriteMovies: GetFavouriteMoviesUseCase,
+    private val checkFavouriteStatus: CheckFavouriteStatusUseCase,
     private val networkLauncher: NetworkLauncherApi
 ) : BaseViewModel() {
+
+    val checkFavouriteStatusLiveData by LiveDataDelegate<List<MovieUIModel>>()
 
     val loadingLiveData by LiveDataDelegate<Boolean>()
     val fetchFavouriteMoviesLivedata by LiveDataDelegate<List<MovieUIModel>>()
@@ -115,6 +119,12 @@ class HomeViewModel(
     fun fetchFavouriteMovies() {
         viewModelScope {
             fetchFavouriteMoviesLivedata.addValue(moviesUIMapper.mapList(getFavouriteMovies.invoke()))
+        }
+    }
+
+    fun checkFavouriteStatus(){
+        viewModelScope {
+            checkFavouriteStatusLiveData.addValue(moviesUIMapper.mapList(checkFavouriteStatus.invoke()))
         }
     }
 
