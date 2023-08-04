@@ -1,6 +1,5 @@
 package com.movies.presentation.home.view_model
 
-import android.util.Log.d
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingData
@@ -9,7 +8,6 @@ import androidx.paging.map
 import com.movies.common.extensions.viewModelScope
 import com.movies.common.network.CategoryType
 import com.movies.common.utils.LiveDataDelegate
-import com.movies.data.remote.network.NetworkLauncherApi
 import com.movies.domain.model.MovieDomainModel
 import com.movies.domain.usecase.favourites.GetFavouriteMoviesUseCase
 import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
@@ -20,10 +18,9 @@ import com.movies.presentation.base.view_model.BaseViewModel
 import com.movies.presentation.home.ui.HomeFragmentDirections
 import com.movies.presentation.home.ui.mapper.MovieDomainToUIMapper
 import com.movies.presentation.home.ui.mapper.MovieUIToDomainMapper
-import com.movies.presentation.view.loader.LoaderDialog
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.koin.java.KoinJavaComponent.get
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val moviesUseCase: GetMoviesUseCase,
@@ -32,7 +29,6 @@ class HomeViewModel(
     private val movieUIToDomain: MovieUIToDomainMapper,
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
     private val getFavouriteMovies: GetFavouriteMoviesUseCase,
-    private val networkLauncher: NetworkLauncherApi
 ) : BaseViewModel() {
 
     val loadingLiveData by LiveDataDelegate<Boolean>()
@@ -47,51 +43,34 @@ class HomeViewModel(
     private val _searchStateFlow = MutableStateFlow<PagingData<MovieUIModel>?>(null)
     val searchStateFlow = _searchStateFlow.asStateFlow()
 
-    private val loader = get<LoaderDialog>(LoaderDialog::class.java)
-
 
     init {
-//        getMovies()
         startNetworkCall()
     }
 
     fun startNetworkCall() {
-        networkLauncher.startNetwork<Pager<Int, MovieDomainModel>>(scope = viewModelScope, networkStage = {
-            loading = {
-                d("giorgi", "loader")
-                loader.initiateDialog(true)
-            }
-            execute = {
+        launchNetwork<Pager<Int, MovieDomainModel>> {
+            executeApi {
                 val categoryType = categoryStateFlow.value
                 moviesUseCase.invoke(categoryType)
             }
-            success = {
-                d("giorgi", "vm")
-            }
-            error = {
-                loader.initiateDialog(true)
-            }
-        })
-    }
-
-    fun getMovies() {
-        viewModelScope {
-            loadingLiveData.addValue(true)
-            val categoryType = categoryStateFlow.value
-            moviesUseCase.invoke(categoryType).flow.cachedIn(viewModelScope)
-                .collect { pagingData ->
-                    val mappedData = pagingData.map {
-                        moviesUIMapper(it)
+            success {
+                loadingLiveData.addValue(true)
+                viewModelScope.launch {
+                    it.flow.collect { pagingData ->
+                        val mappedData = pagingData.map {
+                            moviesUIMapper(it)
+                        }
+                        _fetchMoviesStateFlow.emit(mappedData)
                     }
-                    _fetchMoviesStateFlow.emit(mappedData)
                 }
-            loadingLiveData.addValue(false)
+            }
         }
     }
 
     fun selectCategory(categoryType: CategoryType) {
         _categoryStateFlow.value = categoryType
-        getMovies()
+        startNetworkCall()
     }
 
     fun searchMovies(query: String) {
