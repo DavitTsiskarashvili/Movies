@@ -3,8 +3,8 @@ package com.movies.presentation.details.view_model
 import com.movies.common.extensions.viewModelScope
 import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
 import com.movies.presentation.base.view_model.BaseViewModel
-import com.movies.presentation.model.mapper.MovieUIToDomainMapper
-import com.movies.presentation.model.movie.MovieUIModel
+import com.movies.presentation.home.ui.mapper.MovieUIToDomainMapper
+import com.movies.presentation.base.data.MovieUIModel
 
 class DetailsViewModel(
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,

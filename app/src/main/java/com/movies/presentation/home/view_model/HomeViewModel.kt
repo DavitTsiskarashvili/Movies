@@ -13,9 +13,9 @@ import com.movies.domain.usecase.movies.GetMoviesUseCase
 import com.movies.domain.usecase.search.SearchMoviesUseCase
 import com.movies.presentation.base.view_model.BaseViewModel
 import com.movies.presentation.home.ui.HomeFragmentDirections
-import com.movies.presentation.model.mapper.MovieDomainToUIMapper
-import com.movies.presentation.model.mapper.MovieUIToDomainMapper
-import com.movies.presentation.model.movie.MovieUIModel
+import com.movies.presentation.home.ui.mapper.MovieDomainToUIMapper
+import com.movies.presentation.home.ui.mapper.MovieUIToDomainMapper
+import com.movies.presentation.base.data.MovieUIModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
