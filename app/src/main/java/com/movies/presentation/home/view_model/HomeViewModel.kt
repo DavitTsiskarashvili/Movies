@@ -65,6 +65,12 @@ class HomeViewModel(
                     }
                 }
             }
+            error {
+
+            }
+            loading {
+
+            }
         }
     }
 
