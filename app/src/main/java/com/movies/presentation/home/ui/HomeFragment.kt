@@ -52,13 +52,17 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         favouriteMovieAdapter.submitList(list)
     }
 
-    private fun observe() {
+    private fun observeDefaultMovies(){
         viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
             handleDataVisibility(true)
             it?.let {
                 moviePagingAdapter.submitData(it)
             }
         }
+    }
+
+    private fun observe() {
+        observeDefaultMovies()
 
         viewModel.searchStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
             handleDataVisibility(true)
@@ -90,6 +94,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         navigateToFavouritesListener()
         handleFavouriteButton()
         setUpNavigation()
+        cancelSearch()
     }
 
     private fun handleDataVisibility(isLoaded: Boolean) {
@@ -160,7 +165,12 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             viewModel.searchMovies(query = searchInput)
         } else {
             handleDataVisibility(true)
-            viewModel.startNetworkCall()
+        }
+    }
+
+    private fun cancelSearch(){
+        binding.searchAndFilterView.clearSearchInput {
+            observeDefaultMovies()
         }
     }
 
