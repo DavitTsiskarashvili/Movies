@@ -27,7 +27,7 @@ fun View.changeBackgroundColor(@ColorRes colorRes: Int) {
     backgroundTintList = ContextCompat.getColorStateList(context, colorRes)
 }
 
-fun Button.setCategoryStyle(style: CategoryStyle) {
+fun Button.setStyle(style: CategoryStyle) {
     setTextAppearance(style.style)
     backgroundTintList = ContextCompat.getColorStateList(context, style.backgroundColor)
 }
