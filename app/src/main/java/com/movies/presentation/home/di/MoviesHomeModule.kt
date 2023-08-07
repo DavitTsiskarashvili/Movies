@@ -1,15 +1,10 @@
 package com.movies.presentation.home.di
 
-import com.movies.presentation.home.ui.mapper.MovieDomainToUIMapper
-import com.movies.presentation.home.ui.mapper.MovieUIToDomainMapper
+import com.movies.presentation.details.view_model.DetailsViewModel
 import com.movies.presentation.home.view_model.HomeViewModel
+import com.movies.presentation.view.loader.LoaderDialog
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-
-val homeMapperModule = module {
-    single { MovieDomainToUIMapper() }
-    single { MovieUIToDomainMapper() }
-}
 
 val homeViewModelModule = module {
     viewModel {
@@ -23,4 +18,14 @@ val homeViewModelModule = module {
             checkFavouriteStatusUseCase = get()
         )
     }
+
+    viewModel {
+        DetailsViewModel(
+            updateMovieStatus = get(),
+            movieUIToDomain = get()
+        )
+    }
+
+    single { LoaderDialog(context = get()) }
+
 }
