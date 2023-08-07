@@ -25,8 +25,7 @@ class FavouriteMovieRepositoryImpl(
         return favouriteMoviesDao.getFavouriteMovies().map { favouriteMovieEntityMapper(it) }
     }
 
-    override suspend fun isFavouriteMovie(): List<MovieDomainModel> {
-        return favouriteMoviesDao.isFavouriteMovie().map { favouriteMovieEntityMapper(it) }
+    override suspend fun isFavouriteMovie(id: Int): Boolean {
+        return favouriteMoviesDao.isFavouriteMovie(id)
     }
-
 }

@@ -46,10 +46,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun initHomeRecycler() {
         binding.moviesRecyclerView.adapter = moviePagingAdapter
-        observeLiveData(viewModel.checkFavouriteStatusLiveData){ favouriteMovies ->
-            moviePagingAdapter.
-
-        }
     }
 
     private fun initFavouriteRecycler(list: List<MovieUIModel>) {
@@ -82,7 +78,9 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             }
         }
 
-        observeLiveData(viewModel.loadingLiveData) { }
+        observeLiveData(viewModel.loadingLiveData) {
+
+        }
 
     }
 
@@ -118,8 +116,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun refresh() {
         binding.errorStateView.refreshButtonListener {
-            viewModel.getMovies()
-
+            viewModel.startNetworkCall()
         }
     }
 
@@ -164,8 +161,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             viewModel.searchMovies(query = searchInput)
         } else {
             handleDataVisibility(true)
-            viewModel.getMovies()
-
+            viewModel.startNetworkCall()
         }
     }
 
