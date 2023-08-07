@@ -9,11 +9,11 @@ import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
+import com.movies.presentation.base.data.MovieUIModel
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.home.ui.adapter.favourite.FavouriteMovieAdapter
 import com.movies.presentation.home.ui.adapter.movie.MoviePagingAdapter
 import com.movies.presentation.home.view_model.HomeViewModel
-import com.movies.presentation.base.data.MovieUIModel
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
@@ -52,20 +52,16 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         favouriteMovieAdapter.submitList(list)
     }
 
-    private fun observeDefaultMovies(){
+    private fun observe() {
         viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-            handleDataVisibility(true)
+            handleDataVisibility()
             it?.let {
                 moviePagingAdapter.submitData(it)
             }
         }
-    }
 
-    private fun observe() {
-        observeDefaultMovies()
-
-        viewModel.searchStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-            handleDataVisibility(true)
+        viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
+            handleDataVisibility()
             it?.let {
                 moviePagingAdapter.submitData(it)
             }
@@ -94,10 +90,10 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         cancelSearch()
     }
 
-    private fun handleDataVisibility(isLoaded: Boolean) {
+    private fun handleDataVisibility() {
         with(binding) {
-            errorStateView.hiddenIf(isLoaded)
-            moviesRecyclerView.visibleIf(isLoaded)
+            errorStateView.hiddenIf(true)
+            moviesRecyclerView.visibleIf(true)
         }
     }
 
@@ -161,13 +157,13 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         if (searchInput.isNotEmpty()) {
             viewModel.searchMovies(query = searchInput)
         } else {
-            handleDataVisibility(true)
+            handleDataVisibility()
         }
     }
 
     private fun cancelSearch(){
         binding.searchAndFilterView.clearSearchInput {
-            observeDefaultMovies()
+            viewModel.startNetworkCall()
         }
     }
 

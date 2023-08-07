@@ -42,9 +42,6 @@ class HomeViewModel(
     private val _categoryStateFlow = MutableStateFlow(CategoryType.POPULAR)
     private val categoryStateFlow = _categoryStateFlow.asStateFlow()
 
-    private val _searchStateFlow = MutableStateFlow<PagingData<MovieUIModel>?>(null)
-    val searchStateFlow = _searchStateFlow.asStateFlow()
-
     init {
         startNetworkCall()
     }
@@ -88,7 +85,7 @@ class HomeViewModel(
                         it.isFavourite = checkFavouriteStatusUseCase(it.id)
                         moviesUIMapper(it)
                     }
-                    _searchStateFlow.emit(mappedSearchedData)
+                    _fetchMoviesStateFlow.emit(mappedSearchedData)
                 }
         }
     }
