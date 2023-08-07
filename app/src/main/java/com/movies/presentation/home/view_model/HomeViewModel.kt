@@ -66,6 +66,12 @@ class HomeViewModel(
                     }
                 }
             }
+            error {
+
+            }
+            loading {
+
+            }
         }
     }
 
@@ -87,15 +93,15 @@ class HomeViewModel(
         }
     }
 
-    fun updateFavouriteMovieStatus(movie: MovieUIModel) {
-        viewModelScope {
-            updateMovieStatus.invoke(movieUIToDomain(movie))
-        }
-    }
-
     fun fetchFavouriteMovies() {
         viewModelScope {
             fetchFavouriteMoviesLivedata.addValue(moviesUIMapper.mapList(getFavouriteMovies.invoke()))
+        }
+    }
+
+    fun updateFavouriteMovieStatus(movie: MovieUIModel) {
+        viewModelScope {
+            updateMovieStatus.invoke(movieUIToDomain(movie))
         }
     }
 

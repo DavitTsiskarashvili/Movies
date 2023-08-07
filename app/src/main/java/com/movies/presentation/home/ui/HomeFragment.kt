@@ -41,7 +41,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         setUpNavigation()
         setListeners()
         searchMovies()
-
     }
 
     private fun initHomeRecycler() {
@@ -84,6 +83,15 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     }
 
+    private fun setListeners() {
+        filterMovies()
+        refresh()
+        navigateToHomeListener()
+        navigateToFavouritesListener()
+        handleFavouriteButton()
+        setUpNavigation()
+    }
+
     private fun handleDataVisibility(isLoaded: Boolean) {
         with(binding) {
             errorStateView.hiddenIf(isLoaded)
@@ -99,15 +107,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }
     }
 
-    private fun setListeners() {
-        filterMovies()
-        refresh()
-        homeListener()
-        favouritesListener()
-        handleFavouriteButton()
-        setUpNavigation()
-    }
-
     private fun filterMovies() {
         binding.searchAndFilterView.categoryButtonListener {
             viewModel.selectCategory(it)
@@ -120,24 +119,24 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }
     }
 
-    private fun homeListener() {
+    private fun navigateToHomeListener() {
         with(binding) {
             navigationButton.firstButtonListener {
-                handleBottomNavigation(false)
+                handleBottomNavigationVisibility(false)
                 handleSearch(searchAndFilterView.searchInput)
                 initHomeRecycler()
             }
         }
     }
 
-    private fun favouritesListener() {
+    private fun navigateToFavouritesListener() {
         binding.navigationButton.secondButtonListener {
-            handleBottomNavigation(true)
+            handleBottomNavigationVisibility(true)
             viewModel.fetchFavouriteMovies()
         }
     }
 
-    private fun handleBottomNavigation(isClicked: Boolean) {
+    private fun handleBottomNavigationVisibility(isClicked: Boolean) {
         with(binding) {
             moviesRecyclerView.hiddenIf(isClicked)
             searchAndFilterView.hiddenIf(isClicked)
@@ -166,11 +165,14 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun handleFavouriteButton() {
-        moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
-            viewModel.updateFavouriteMovieStatus(favouriteMovie)
-        }
-        favouriteMovieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
-                viewModel.updateFavouriteMovieStatus(favouriteMovie)
+        with(viewModel){
+            moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+                updateFavouriteMovieStatus(favouriteMovie)
+            }
+            favouriteMovieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+                updateFavouriteMovieStatus(favouriteMovie)
+                fetchFavouriteMovies()
+            }
         }
     }
 
