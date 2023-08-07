@@ -36,13 +36,11 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         get() = HomeViewModel::class
 
     override fun onBind() {
-//        LoaderDialog(requireContext()).apply { initiateDialog(true) }
         initHomeRecycler()
         observe()
         setUpNavigation()
         setListeners()
         searchMovies()
-
     }
 
     private fun initHomeRecycler() {
@@ -70,7 +68,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
                 }
             }
         }
-
         observeLiveData(viewModel.fetchFavouriteMoviesLivedata) { favouriteMovies ->
             handleFavouriteData(favouriteMovies.isNotEmpty())
             binding.moviesRecyclerView.adapter = favouriteMovieAdapter
@@ -116,7 +113,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun refresh() {
         binding.errorStateView.refreshButtonListener {
             viewModel.getMovies()
-
         }
     }
 
@@ -125,7 +121,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             navigationButton.firstButtonListener {
                 handleBottomNavigation(false)
                 handleSearch(searchAndFilterView.searchInput)
-                initHomeRecycler()
             }
         }
     }
@@ -136,7 +131,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             viewModel.fetchFavouriteMovies()
         }
     }
-
+    // constraint group
     private fun handleBottomNavigation(isClicked: Boolean) {
         with(binding) {
             moviesRecyclerView.hiddenIf(isClicked)
@@ -162,14 +157,12 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         } else {
             handleDataVisibility(true)
             viewModel.getMovies()
-
         }
     }
 
     private fun handleFavouriteButton() {
         moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
             viewModel.updateFavouriteMovieStatus(favouriteMovie)
-
         }
     }
 

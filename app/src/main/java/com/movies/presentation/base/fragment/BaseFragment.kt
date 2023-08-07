@@ -20,12 +20,6 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
     protected abstract val layout: Int
 
     abstract fun onBind()
-//    abstract fun onCreateFragment()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        onCreateFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -34,14 +34,14 @@ class SearchAndFilterView @JvmOverloads constructor(
                 listener(text.toString())
                 handleViewsVisibility(true)
                 updateSearchViewConstraints(false)
-                emptyInputHandler()
+                handleEmptyInput()
             }
         }
         clearSearchInput()
     }
 
-    private fun emptyInputHandler() {
-        if (binding.searchEditText.text?.isEmpty() == true) {
+    private fun handleEmptyInput() {
+        if (binding.searchEditText.text.isNullOrBlank()) {
             handleViewsVisibility(false)
             updateSearchViewConstraints(true)
         }
