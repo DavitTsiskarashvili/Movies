@@ -62,10 +62,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
         viewModel.searchStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
             handleDataVisibility(true)
-            it.let {
-                if (it != null) {
-                    moviePagingAdapter.submitData(it)
-                }
+            it?.let {
+                moviePagingAdapter.submitData(it)
             }
         }
         observeLiveData(viewModel.fetchFavouriteMoviesLivedata) { favouriteMovies ->
@@ -131,6 +129,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             viewModel.fetchFavouriteMovies()
         }
     }
+
     // constraint group
     private fun handleBottomNavigation(isClicked: Boolean) {
         with(binding) {
