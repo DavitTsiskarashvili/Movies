@@ -1,6 +1,7 @@
 package com.movies.presentation.base.data
 
 import android.os.Parcelable
+import com.movies.presentation.home.ui.ui_state.BaseUiState
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -12,4 +13,4 @@ data class MovieUIModel(
     val poster: String,
     val overview: String,
     val isFavourite: Boolean
-) : Parcelable
+) : Parcelable, BaseUiState

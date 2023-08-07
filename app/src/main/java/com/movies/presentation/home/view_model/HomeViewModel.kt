@@ -2,12 +2,10 @@ package com.movies.presentation.home.view_model
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.movies.common.extensions.viewModelScope
 import com.movies.common.network.CategoryType
-import com.movies.common.utils.LiveDataDelegate
 import com.movies.domain.model.MovieDomainModel
 import com.movies.domain.usecase.favourites.CheckFavouriteStatusUseCase
 import com.movies.domain.usecase.favourites.GetFavouriteMoviesUseCase
@@ -15,12 +13,13 @@ import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
 import com.movies.domain.usecase.movies.GetMoviesUseCase
 import com.movies.domain.usecase.search.SearchMoviesUseCase
 import com.movies.presentation.base.data.MovieUIModel
+import com.movies.presentation.base.data.ui_state.UIState
 import com.movies.presentation.base.view_model.BaseViewModel
 import com.movies.presentation.home.ui.HomeFragmentDirections
 import com.movies.presentation.home.ui.mapper.MovieDomainToUIMapper
 import com.movies.presentation.home.ui.mapper.MovieUIToDomainMapper
+import com.movies.presentation.home.ui.ui_state.HomeUIState
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -31,16 +30,15 @@ class HomeViewModel(
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
     private val getFavouriteMovies: GetFavouriteMoviesUseCase,
     private val checkFavouriteStatusUseCase: CheckFavouriteStatusUseCase
-) : BaseViewModel() {
+) : BaseViewModel<HomeUIState>() {
 
-    val loadingLiveData by LiveDataDelegate<Boolean>()
-    val fetchFavouriteMoviesLivedata by LiveDataDelegate<List<MovieUIModel>>()
-
-    private val _fetchMoviesStateFlow = MutableStateFlow<PagingData<MovieUIModel>?>(null)
-    val fetchMoviesStateFlow get() = _fetchMoviesStateFlow.asStateFlow()
-
-    private val _categoryStateFlow = MutableStateFlow(CategoryType.POPULAR)
-    private val categoryStateFlow = _categoryStateFlow.asStateFlow()
+    //    val loadingLiveData by LiveDataDelegate<Boolean>()
+//    val fetchFavouriteMoviesLivedata by LiveDataDelegate<List<MovieUIModel>>()
+//
+//    private val _fetchMoviesStateFlow = MutableStateFlow<PagingData<MovieUIModel>?>(null)
+//    val fetchMoviesStateFlow get() = _fetchMoviesStateFlow.asStateFlow()
+//
+    private val categoryStateFlow = MutableStateFlow(CategoryType.POPULAR)
 
     init {
         startNetworkCall()
@@ -48,6 +46,11 @@ class HomeViewModel(
 
     fun startNetworkCall() {
         launchNetwork<Pager<Int, MovieDomainModel>> {
+            loading {
+                if (it) {
+                    _uiStateFlow.emit(UIState.Loading)
+                }
+            }
             executeApi {
                 val categoryType = categoryStateFlow.value
                 moviesUseCase.invoke(categoryType)
@@ -59,21 +62,19 @@ class HomeViewModel(
                             it.isFavourite = checkFavouriteStatusUseCase(it.id)
                             moviesUIMapper(it)
                         }
-                        _fetchMoviesStateFlow.emit(mappedData)
+                        _uiStateFlow.emit(UIState.Success(HomeUIState(pagingData = mappedData)))
                     }
                 }
             }
             error {
-
+                _uiStateFlow.emit(UIState.Error(it))
             }
-            loading {
 
-            }
         }
     }
 
     fun selectCategory(categoryType: CategoryType) {
-        _categoryStateFlow.value = categoryType
+        categoryStateFlow.value = categoryType
         startNetworkCall()
     }
 
@@ -85,18 +86,26 @@ class HomeViewModel(
                         it.isFavourite = checkFavouriteStatusUseCase(it.id)
                         moviesUIMapper(it)
                     }
-                    _fetchMoviesStateFlow.emit(mappedSearchedData)
+                    _uiStateFlow.emit(UIState.Success(HomeUIState(pagingData = mappedSearchedData)))
                 }
         }
     }
 
     fun fetchFavouriteMovies() {
         viewModelScope {
-            fetchFavouriteMoviesLivedata.addValue(moviesUIMapper.mapList(getFavouriteMovies.invoke()))
+            _uiStateFlow.emit(
+                UIState.Success(
+                    HomeUIState(
+                        favouritesData = moviesUIMapper.mapList(
+                            getFavouriteMovies.invoke()
+                        )
+                    )
+                )
+            )
         }
     }
 
-    fun updateFavouriteMovieStatus(movie: MovieUIModel, callback: (()-> Unit)? = null) {
+    fun updateFavouriteMovieStatus(movie: MovieUIModel, callback: (() -> Unit)? = null) {
         viewModelScope {
             updateMovieStatus.invoke(movieUIToDomain(movie))
             callback?.invoke()

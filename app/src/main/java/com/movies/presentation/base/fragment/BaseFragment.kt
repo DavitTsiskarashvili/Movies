@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.movies.common.navigation.NavigationCommand
 import com.movies.common.navigation.observeNonNull
 import com.movies.presentation.base.view_model.BaseViewModel
-import com.movies.common.navigation.NavigationCommand
 import org.koin.androidx.viewmodel.ext.android.viewModelForClass
 import kotlin.reflect.KClass
 
-abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
+abstract class BaseFragment<T: Any , VM : BaseViewModel<T>> : Fragment() {
 
     abstract val viewModelClass: KClass<VM>
     protected val viewModel: VM by viewModelForClass(clazz = viewModelClass)

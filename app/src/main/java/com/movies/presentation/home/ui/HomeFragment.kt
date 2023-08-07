@@ -1,12 +1,11 @@
 package com.movies.presentation.home.ui
 
 import android.annotation.SuppressLint
-import androidx.lifecycle.lifecycleScope
 import com.movies.R
 import com.movies.common.extensions.collectLatestInLifecycle
+import com.movies.common.extensions.executeScope
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.invisibleIf
-import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
@@ -14,13 +13,18 @@ import com.movies.presentation.base.data.MovieUIModel
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.home.ui.adapter.favourite.FavouriteMovieAdapter
 import com.movies.presentation.home.ui.adapter.movie.MoviePagingAdapter
+import com.movies.presentation.home.ui.ui_state.HomeUIState
+import com.movies.presentation.home.ui.ui_state.UIStateHandler
 import com.movies.presentation.home.view_model.HomeViewModel
-import kotlinx.coroutines.launch
+import com.movies.presentation.view.loader.LoaderDialog
 import kotlin.reflect.KClass
 
-class HomeFragment : BaseFragment<HomeViewModel>() {
+class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<HomeUIState> {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
+    private val loader by lazy {
+        LoaderDialog(requireContext(), binding.root)
+    }
 
     private val moviePagingAdapter by lazy {
         MoviePagingAdapter()
@@ -44,6 +48,30 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         searchMovies()
     }
 
+    override fun onDataLoaded(data: HomeUIState) {
+        data.pagingData?.let {
+            handleDataVisibility()
+            executeScope {
+                moviePagingAdapter.submitData(it)
+            }
+        }
+        data.favouritesData?.let {
+            handleFavouriteData(it.isNotEmpty())
+            binding.moviesRecyclerView.adapter = favouriteMovieAdapter
+            executeScope {
+                initFavouriteRecycler(it)
+            }
+        }
+    }
+
+    override fun onLoading(loading: Boolean) {
+        loader.initiateDialog(loading)
+    }
+
+    override fun onError(error: Throwable) {
+
+    }
+
     private fun initHomeRecycler() {
         binding.moviesRecyclerView.adapter = moviePagingAdapter
     }
@@ -54,30 +82,34 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun observe() {
-        viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-            handleDataVisibility()
-            it?.let {
-                moviePagingAdapter.submitData(it)
-            }
+        viewModel.uiStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
+            it?.let { handleUIState(it) }
         }
 
-        viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-            handleDataVisibility()
-            it?.let {
-                moviePagingAdapter.submitData(it)
-            }
-        }
-        observeLiveData(viewModel.fetchFavouriteMoviesLivedata) { favouriteMovies ->
-            handleFavouriteData(favouriteMovies.isNotEmpty())
-            binding.moviesRecyclerView.adapter = favouriteMovieAdapter
-            lifecycleScope.launch {
-                initFavouriteRecycler(favouriteMovies)
-            }
-        }
-
-        observeLiveData(viewModel.loadingLiveData) {
-
-        }
+//        viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
+//            handleDataVisibility()
+//            it?.let {
+//                moviePagingAdapter.submitData(it)
+//            }
+//        }
+//
+//        viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
+//            handleDataVisibility()
+//            it?.let {
+//                moviePagingAdapter.submitData(it)
+//            }
+//        }
+//        observeLiveData(viewModel.fetchFavouriteMoviesLivedata) { favouriteMovies ->
+//            handleFavouriteData(favouriteMovies.isNotEmpty())
+//            binding.moviesRecyclerView.adapter = favouriteMovieAdapter
+//            lifecycleScope.launch {
+//                initFavouriteRecycler(favouriteMovies)
+//            }
+//        }
+//
+//        observeLiveData(viewModel.loadingLiveData) {
+//
+//        }
 
     }
 
@@ -192,5 +224,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             viewModel.navigateToDetails(film)
         }
     }
+
 
 }
