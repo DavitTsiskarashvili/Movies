@@ -27,7 +27,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         get() = HomeViewModel::class
 
     override fun onBind() {
-//        LoaderDialog(requireContext()).apply { initiateDialog(true) }
         initRecycler()
         observe()
         setUpNavigation()
