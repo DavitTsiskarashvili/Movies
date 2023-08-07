@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.movies.common.extensions.setCategoryStyle
+import com.movies.common.extensions.setStyle
 import com.movies.common.network.CategoryType
 import com.movies.databinding.CategoryItemBinding
 import com.movies.presentation.view.search_and_filter.adapter.model.CategoryStyle
@@ -61,7 +61,7 @@ class CategoryAdapter(
         ) {
             with(binding.categoryButton) {
                 text = context.getString(item.name)
-                setCategoryStyle(
+                setStyle(
                     when (selectedIndex == bindingAdapterPosition) {
                         true -> CategoryStyle.ACTIVE
                         false -> CategoryStyle.INACTIVE
