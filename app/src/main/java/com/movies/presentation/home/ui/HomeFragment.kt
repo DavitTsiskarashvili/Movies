@@ -168,7 +168,9 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun handleFavouriteButton() {
         moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
             viewModel.updateFavouriteMovieStatus(favouriteMovie)
-
+        }
+        favouriteMovieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+                viewModel.updateFavouriteMovieStatus(favouriteMovie)
         }
     }
 

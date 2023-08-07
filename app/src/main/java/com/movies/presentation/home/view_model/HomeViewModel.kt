@@ -9,6 +9,7 @@ import com.movies.common.extensions.viewModelScope
 import com.movies.common.network.CategoryType
 import com.movies.common.utils.LiveDataDelegate
 import com.movies.domain.model.MovieDomainModel
+import com.movies.domain.usecase.favourites.CheckFavouriteStatusUseCase
 import com.movies.domain.usecase.favourites.GetFavouriteMoviesUseCase
 import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
 import com.movies.domain.usecase.movies.GetMoviesUseCase
@@ -29,6 +30,7 @@ class HomeViewModel(
     private val movieUIToDomain: MovieUIToDomainMapper,
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
     private val getFavouriteMovies: GetFavouriteMoviesUseCase,
+    private val checkFavouriteStatusUseCase: CheckFavouriteStatusUseCase
 ) : BaseViewModel() {
 
     val loadingLiveData by LiveDataDelegate<Boolean>()
@@ -47,8 +49,6 @@ class HomeViewModel(
         startNetworkCall()
     }
 
-
-
     fun startNetworkCall() {
         launchNetwork<Pager<Int, MovieDomainModel>> {
             executeApi {
@@ -57,8 +57,9 @@ class HomeViewModel(
             }
             success {
                 viewModelScope.launch {
-                    it.flow.collect { pagingData ->
+                    it.flow.cachedIn(viewModelScope).collect { pagingData ->
                         val mappedData = pagingData.map {
+                            it.isFavourite = checkFavouriteStatusUseCase(it.id)
                             moviesUIMapper(it)
                         }
                         _fetchMoviesStateFlow.emit(mappedData)
@@ -78,6 +79,7 @@ class HomeViewModel(
             searchMoviesUseCase.invoke(query).flow.cachedIn(viewModelScope)
                 .collect { searchedPagingData ->
                     val mappedSearchedData = searchedPagingData.map {
+                        it.isFavourite = checkFavouriteStatusUseCase(it.id)
                         moviesUIMapper(it)
                     }
                     _searchStateFlow.emit(mappedSearchedData)
