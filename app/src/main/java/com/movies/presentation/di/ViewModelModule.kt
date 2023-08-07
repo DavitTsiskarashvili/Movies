@@ -25,6 +25,6 @@ val viewModelModule = module {
         )
     }
 
-    single { LoaderDialog(get()) }
+    single { LoaderDialog(context = get()) }
 
 }
