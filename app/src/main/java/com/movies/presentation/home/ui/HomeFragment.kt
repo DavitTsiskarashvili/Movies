@@ -1,6 +1,8 @@
 package com.movies.presentation.home.ui
 
+import androidx.lifecycle.lifecycleScope
 import com.movies.R
+import com.movies.common.extensions.collectLatestInLifecycle
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.invisibleIf
 import com.movies.common.extensions.observeLiveData
@@ -34,7 +36,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         get() = HomeViewModel::class
 
     override fun onBind() {
-//        LoaderDialog(requireContext()).apply { initiateDialog(true) }
         initHomeRecycler()
         observe()
         setUpNavigation()
