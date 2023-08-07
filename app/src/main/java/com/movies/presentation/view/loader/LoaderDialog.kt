@@ -27,8 +27,8 @@ class LoaderDialog(
     }
 
     fun initiateDialog(isLoading: Boolean) {
-//        val inflater = LayoutInflater.from(context)
-//        val view = inflater.inflate(R.layout.loader_dialog, null)
+        val inflater = LayoutInflater.from(context)
+        val view = inflater.inflate(R.layout.loader_dialog, null)
         alertDialog = AlertDialog.Builder(context).create()
         if (isLoading) alertDialog.show() else alertDialog.dismiss()
     }

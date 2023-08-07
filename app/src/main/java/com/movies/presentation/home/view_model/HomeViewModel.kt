@@ -96,9 +96,10 @@ class HomeViewModel(
         }
     }
 
-    fun updateFavouriteMovieStatus(movie: MovieUIModel) {
+    fun updateFavouriteMovieStatus(movie: MovieUIModel, callback: (()-> Unit)? = null) {
         viewModelScope {
             updateMovieStatus.invoke(movieUIToDomain(movie))
+            callback?.invoke()
         }
     }
 

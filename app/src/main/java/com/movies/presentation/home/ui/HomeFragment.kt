@@ -1,5 +1,6 @@
 package com.movies.presentation.home.ui
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.lifecycleScope
 import com.movies.R
 import com.movies.common.extensions.collectLatestInLifecycle
@@ -120,6 +121,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private fun navigateToHomeListener() {
         with(binding) {
             navigationButton.firstButtonListener {
+                viewModel.startNetworkCall()
                 handleBottomNavigationVisibility(false)
                 handleSearch(searchAndFilterView.searchInput)
                 initHomeRecycler()
@@ -161,20 +163,23 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }
     }
 
-    private fun cancelSearch(){
+    private fun cancelSearch() {
         binding.searchAndFilterView.clearSearchInput {
             viewModel.startNetworkCall()
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun handleFavouriteButton() {
-        with(viewModel){
+        with(viewModel) {
             moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
                 updateFavouriteMovieStatus(favouriteMovie)
             }
             favouriteMovieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
-                updateFavouriteMovieStatus(favouriteMovie)
-                fetchFavouriteMovies()
+                updateFavouriteMovieStatus(favouriteMovie) {
+                    fetchFavouriteMovies()
+                    favouriteMovieAdapter.notifyDataSetChanged()
+                }
             }
         }
     }
