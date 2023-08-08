@@ -6,7 +6,7 @@ import com.movies.common.extensions.loadImage
 import com.movies.databinding.MovieItemBinding
 import com.movies.presentation.base.adapter.movie_adapter.BaseMovieAdapter
 import com.movies.presentation.base.adapter.paging_adapter.BasePagingMovieAdapter
-import com.movies.presentation.base.data.MovieUIModel
+import com.movies.presentation.base.data.model.MovieUIModel
 
 class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapter.MoviesViewHolder>() {
     override fun onCreateViewHolder(
@@ -35,6 +35,7 @@ class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapt
                     titleTextView.text = title
                     releaseYearTextView.text = releaseDate
                     ratingTextView.text = rating.toString()
+                    genreTextView.text = genreString
                     favouritesToggleButton.isChecked = isFavourite
 
                     root.setOnClickListener {

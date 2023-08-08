@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.movies.common.extensions.loadImage
 import com.movies.databinding.MovieItemBinding
 import com.movies.presentation.base.adapter.movie_adapter.BaseMovieAdapter
-import com.movies.presentation.base.data.MovieUIModel
+import com.movies.presentation.base.data.model.MovieUIModel
 
 class FavouriteMovieAdapter : BaseMovieAdapter<MovieUIModel, FavouriteMovieAdapter.MoviesViewHolder>() {
 
@@ -35,6 +35,7 @@ class FavouriteMovieAdapter : BaseMovieAdapter<MovieUIModel, FavouriteMovieAdapt
                     titleTextView.text = title
                     releaseYearTextView.text = releaseDate
                     ratingTextView.text = rating.toString()
+                    genreTextView.text = genreString
                     favouritesToggleButton.isChecked = isFavourite
 
                     root.setOnClickListener {

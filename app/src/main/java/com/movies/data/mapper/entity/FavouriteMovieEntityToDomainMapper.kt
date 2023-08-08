@@ -14,7 +14,8 @@ class FavouriteMovieEntityToDomainMapper : Mapper<FavouriteMovieEntity, MovieDom
                 poster = poster,
                 overview = overview,
                 rating = rating,
-                isFavourite = true
+                isFavourite = true,
+                genreString = genreString
             )
         }
 }

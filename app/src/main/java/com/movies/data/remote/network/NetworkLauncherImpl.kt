@@ -14,10 +14,11 @@ class NetworkLauncherImpl : NetworkLauncher {
                 builder.loading?.invoke(true)
                 val execute = builder.execute?.invoke()!!
                 builder.success?.invoke(execute)
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 builder.error?.invoke(e)
+            } finally {
+                builder.loading?.invoke(false)
             }
-            builder.loading?.invoke(false)
         }
     }
 }

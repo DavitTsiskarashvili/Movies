@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_details" >
         <argument
             android:name="MovieDetails"
-            app:argType="com.movies.presentation.base.data.MovieUIModel" />
+            app:argType="com.movies.presentation.base.data.model.MovieUIModel" />
     </fragment>
     <action
         android:id="@+id/action_global_detailsFragment"

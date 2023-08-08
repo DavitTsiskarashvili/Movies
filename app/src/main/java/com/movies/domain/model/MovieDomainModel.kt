@@ -10,6 +10,8 @@ data class MovieDomainModel(
     val releaseDate: String,
     val overview: String,
     var isFavourite: Boolean,
+    val genreInt: Int? = null,
+    var genreString: String? = null,
     private val rating: Double,
     private val poster: String,
 ){

@@ -1,4 +1,4 @@
-package com.movies.presentation.base.data
+package com.movies.presentation.base.data.model
 
 import android.os.Parcelable
 import com.movies.presentation.home.ui.ui_state.BaseUiState
@@ -12,5 +12,6 @@ data class MovieUIModel(
     val releaseDate: String,
     val poster: String,
     val overview: String,
-    val isFavourite: Boolean
+    val isFavourite: Boolean,
+    val genreString: String? = null,
 ) : Parcelable, BaseUiState

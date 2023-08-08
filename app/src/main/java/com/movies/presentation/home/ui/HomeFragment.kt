@@ -9,7 +9,7 @@ import com.movies.common.extensions.invisibleIf
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
-import com.movies.presentation.base.data.MovieUIModel
+import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.home.ui.adapter.favourite.FavouriteMovieAdapter
 import com.movies.presentation.home.ui.adapter.movie.MoviePagingAdapter
