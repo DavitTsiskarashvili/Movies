@@ -16,15 +16,11 @@ import com.movies.presentation.home.ui.adapter.movie.MoviePagingAdapter
 import com.movies.presentation.home.ui.ui_state.HomeUIState
 import com.movies.presentation.home.ui.ui_state.UIStateHandler
 import com.movies.presentation.home.view_model.HomeViewModel
-import com.movies.presentation.view.loader.LoaderDialog
 import kotlin.reflect.KClass
 
 class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<HomeUIState> {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
-    private val loader by lazy {
-        LoaderDialog(requireContext(), binding.root)
-    }
 
     private val moviePagingAdapter by lazy {
         MoviePagingAdapter()
@@ -65,7 +61,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
     }
 
     override fun onLoading(loading: Boolean) {
-        loader.initiateDialog(loading)
+        binding.loaderView.initiateDialog(loading)
     }
 
     override fun onError(error: Throwable) {
@@ -85,32 +81,6 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
         viewModel.uiStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
             it?.let { handleUIState(it) }
         }
-
-//        viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-//            handleDataVisibility()
-//            it?.let {
-//                moviePagingAdapter.submitData(it)
-//            }
-//        }
-//
-//        viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-//            handleDataVisibility()
-//            it?.let {
-//                moviePagingAdapter.submitData(it)
-//            }
-//        }
-//        observeLiveData(viewModel.fetchFavouriteMoviesLivedata) { favouriteMovies ->
-//            handleFavouriteData(favouriteMovies.isNotEmpty())
-//            binding.moviesRecyclerView.adapter = favouriteMovieAdapter
-//            lifecycleScope.launch {
-//                initFavouriteRecycler(favouriteMovies)
-//            }
-//        }
-//
-//        observeLiveData(viewModel.loadingLiveData) {
-//
-//        }
-
     }
 
     private fun setListeners() {

@@ -4,16 +4,22 @@ import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.ViewGroup
-import com.movies.R
+import android.widget.FrameLayout
+import com.movies.databinding.LoaderDialogBinding
 
 class LoaderDialog(
-    val context: Context,
-    val root: ViewGroup
-) {
-    private lateinit var alertDialog: AlertDialog
+    context: Context,
+    attributeSet: AttributeSet,
+) : FrameLayout(context, attributeSet) {
+     private val binding: LoaderDialogBinding =
+         LoaderDialogBinding.inflate(LayoutInflater.from(context), this, false)
+
+     private val alertDialog: AlertDialog by lazy{
+         AlertDialog.Builder(context).setView(binding.root).create()
+     }
 
     init {
         setupDialog().apply {
@@ -22,16 +28,16 @@ class LoaderDialog(
     }
 
     private fun setupDialog(): AlertDialog {
-        val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.loader_dialog, root)
-        alertDialog = AlertDialog.Builder(context).setView(view).create()
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return alertDialog
     }
 
     fun initiateDialog(isLoading: Boolean) {
         Log.d("TAG_LOADER", isLoading.toString())
-        if (isLoading) alertDialog.show() else alertDialog.dismiss()
+        if (isLoading)
+            alertDialog.show()
+        else
+            alertDialog.dismiss()
     }
 
 }
