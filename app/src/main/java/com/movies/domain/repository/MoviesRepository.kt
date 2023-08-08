@@ -8,4 +8,5 @@ import com.movies.domain.model.MovieDomainModel
 interface MoviesRepository {
     suspend fun fetchMovies(category: CategoryType): Pager<Int, MovieDomainModel>
     suspend fun fetchMovieGenre(): List<GenreDomainModel>
+    suspend fun fetchMovieDetails(id: Int): MovieDomainModel
 }

@@ -1,5 +1,6 @@
 package com.movies.data.remote.service.api
 
+import com.movies.data.remote.dto.details.MovieDetailsDTO
 import com.movies.data.remote.dto.genres.GenresDTO
 import com.movies.data.remote.dto.movies.MoviesDTO
 import retrofit2.Response
@@ -17,6 +18,9 @@ interface ServiceApi {
     @GET(PREFIX+GENRE)
     suspend fun getMovieGenre(): Response<GenresDTO>
 
+    @GET(PREFIX+DETAILS)
+    suspend fun getMoviesDetails(@Path("movie_id") id: Int): Response<MovieDetailsDTO>
+
     companion object {
         const val PREFIX = "3/"
         const val CATEGORY_PREFIX = "movie/"
@@ -27,5 +31,6 @@ interface ServiceApi {
         const val TOP_RATED = "top_rated"
 
         const val GENRE = "genre/movie/list"
+        const val DETAILS = "movie/{movie_id}"
     }
 }

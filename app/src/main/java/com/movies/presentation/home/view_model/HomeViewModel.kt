@@ -51,7 +51,7 @@ class HomeViewModel(
                 it.forEach { genre ->
                     genreMap[genre.id] = genre.name
                 }
-                startNetworkCall()
+                fetchMovies()
             }
             error {
                 _uiStateFlow.emit(UIState.Error(it))
@@ -64,7 +64,7 @@ class HomeViewModel(
         }
     }
 
-    fun startNetworkCall() {
+    fun fetchMovies() {
         launchNetwork<Pager<Int, MovieDomainModel>> {
             loading {
                 if (it) {
@@ -97,7 +97,7 @@ class HomeViewModel(
 
     fun selectCategory(categoryType: CategoryType) {
         categoryStateFlow.value = categoryType
-        startNetworkCall()
+        fetchMovies()
     }
 
     fun searchMovies(query: String) {
@@ -137,8 +137,8 @@ class HomeViewModel(
         }
     }
 
-    fun navigateToDetails(film: MovieUIModel) {
-        navigate(HomeFragmentDirections.actionGlobalDetailsFragment(film))
+    fun navigateToDetails(id: Int) {
+        navigate(HomeFragmentDirections.actionGlobalDetailsFragment(id))
     }
 
 }

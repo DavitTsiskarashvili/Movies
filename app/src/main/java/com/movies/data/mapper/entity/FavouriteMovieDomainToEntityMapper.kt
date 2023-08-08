@@ -14,7 +14,8 @@ class FavouriteMovieDomainToEntityMapper : Mapper<MovieDomainModel, FavouriteMov
                 releaseDate = releaseDate,
                 poster = getFullPoster(),
                 overview = overview,
-                genreString = genreString!!
+                genreString = genreString!!,
+                runtime = getFormattedRuntime()
             )
         }
 }

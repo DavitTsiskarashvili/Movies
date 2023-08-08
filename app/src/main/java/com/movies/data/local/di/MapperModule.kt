@@ -7,4 +7,5 @@ import org.koin.dsl.module
 val entityMapperModule =  module {
     single { FavouriteMovieEntityToDomainMapper() }
     single { FavouriteMovieDomainToEntityMapper() }
+    single {  }
 }

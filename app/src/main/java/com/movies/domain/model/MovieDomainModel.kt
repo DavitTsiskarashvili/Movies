@@ -1,5 +1,6 @@
 package com.movies.domain.model
 
+import com.movies.common.extensions.toHoursAndMinutes
 import com.movies.data.remote.NetworkConstants.IMAGE_BASE_URL
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -10,6 +11,7 @@ data class MovieDomainModel(
     val releaseDate: String,
     val overview: String,
     var isFavourite: Boolean,
+    val runtime: Int? = null,
     val genreInt: Int? = null,
     var genreString: String? = null,
     private val rating: Double,
@@ -22,5 +24,7 @@ data class MovieDomainModel(
     fun getFullPoster(): String {
         return IMAGE_BASE_URL + poster
     }
+
+    fun getFormattedRuntime(): String = runtime?.toHoursAndMinutes() ?: ""
 
 }
