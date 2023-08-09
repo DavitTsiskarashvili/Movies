@@ -24,7 +24,7 @@ class DetailsViewModel(
         launchNetwork<MovieDomainModel> {
             loading {
                 if (it) {
-                    _uiStateFlow.tryEmit(UIState.Loading)
+                    _uiStateLiveData.postValue(UIState.Loading)
                 }
             }
             executeApi {
@@ -33,7 +33,7 @@ class DetailsViewModel(
             success {
                 viewModelScope {
                     it.isFavourite = checkFavouriteStatusUseCase(it.id)
-                    _uiStateFlow.tryEmit(
+                    _uiStateLiveData.postValue(
                         UIState.Success(
                             data = DetailsUIState(
                                 movieDomainToUIMapper(
@@ -45,7 +45,7 @@ class DetailsViewModel(
                 }
             }
             error {
-                _uiStateFlow.tryEmit(UIState.Error(it))
+                _uiStateLiveData.postValue(UIState.Error(it))
             }
         }
     }

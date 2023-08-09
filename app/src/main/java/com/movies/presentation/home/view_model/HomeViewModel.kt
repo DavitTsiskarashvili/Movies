@@ -41,10 +41,14 @@ class HomeViewModel(
     private val genreMap = mutableMapOf<Int, String>()
 
     override fun onCreate() {
-        fetchMovieGenre()
+        fetchAllMovies()
     }
 
-    fun fetchMovieGenre() {
+    fun fetchAllMovies(){
+        if (genreMap.isEmpty()) fetchMovieGenre() else fetchMovies()
+    }
+
+    private fun fetchMovieGenre() {
         launchNetwork<List<GenreDomainModel>> {
             executeApi {
                 genresUseCase.invoke()
@@ -56,11 +60,11 @@ class HomeViewModel(
                 fetchMovies()
             }
             error {
-                _uiStateFlow.tryEmit(UIState.Error(it))
+                _uiStateLiveData.postValue(UIState.Error(it))
             }
             loading {
                 if (it) {
-                    _uiStateFlow.tryEmit(UIState.Loading)
+                    _uiStateLiveData.postValue(UIState.Loading)
                 }
             }
         }
@@ -69,7 +73,7 @@ class HomeViewModel(
     private fun fetchMovies() {
         launchNetwork<Pager<Int, MovieDomainModel>> {
             loading {
-                if (it) _uiStateFlow.tryEmit(UIState.Loading)
+                if (it) _uiStateLiveData.postValue(UIState.Loading)
             }
             executeApi {
                 val categoryType = categoryStateFlow.value
@@ -79,7 +83,7 @@ class HomeViewModel(
                 handleSuccessCase(it.flow)
             }
             error {
-                _uiStateFlow.tryEmit(UIState.Error(it))
+                _uiStateLiveData.postValue(UIState.Error(it))
             }
 
         }
@@ -95,7 +99,7 @@ class HomeViewModel(
                     }
                     moviesUIMapper(it)
                 }
-                _uiStateFlow.emit(UIState.Success(HomeUIState(pagingData = mappedData)))
+                _uiStateLiveData.postValue(UIState.Success(HomeUIState(pagingData = mappedData)))
             }
         }
     }
@@ -108,7 +112,7 @@ class HomeViewModel(
     fun searchMovies(query: String) {
         launchNetwork<Pager<Int, MovieDomainModel>> {
             loading {
-                if (it) _uiStateFlow.tryEmit(UIState.Loading)
+                if (it) _uiStateLiveData.postValue(UIState.Loading)
             }
             executeApi {
                 searchMoviesUseCase.invoke(query)
@@ -117,14 +121,14 @@ class HomeViewModel(
                 handleSuccessCase(it.flow)
             }
             error {
-                _uiStateFlow.tryEmit(UIState.Error(it))
+                _uiStateLiveData.postValue(UIState.Error(it))
             }
         }
     }
 
     fun fetchFavouriteMovies() {
         viewModelScope {
-            _uiStateFlow.emit(
+            _uiStateLiveData.postValue(
                 UIState.Success(
                     HomeUIState(
                         favouritesData = moviesUIMapper.mapList(

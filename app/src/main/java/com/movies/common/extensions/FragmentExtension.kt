@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.movies.common.utils.LiveDataDelegate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,17 +46,11 @@ fun <T> StateFlow<T>.collectLatestInLifecycle(lifecycleOwner: LifecycleOwner, ac
 }
 
 fun <T> Fragment.observeLiveData(
-    liveData: LiveDataDelegate<T>,
+    liveData: LiveData<T>,
     block: (T) -> Unit
-): LiveDataDelegate<T> {
+): LiveData<T> {
     liveData.observe(viewLifecycleOwner) {
         block(it)
     }
     return liveData
-}
-
-fun <T: Any> LiveData<T>.asLiveDataDelegate() : LiveDataDelegate<T> {
-    val liveDataDelegate = LiveDataDelegate<T>()
-    this.value?.let { liveDataDelegate.addValue(it) }
-    return liveDataDelegate
 }

@@ -8,7 +8,7 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
-import com.movies.common.extensions.collectFlow
+import com.movies.common.extensions.observeLiveData
 import com.movies.common.navigation.NavigationCommand
 import com.movies.common.navigation.observeNonNull
 import com.movies.presentation.base.data.ui_state.UIStateHandler
@@ -78,8 +78,8 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
     }
 
     private fun observeUIState() {
-        collectFlow(viewModel.uiStateFlow) {
-            it?.let { handleUIState(it) }
+        observeLiveData(viewModel.uiStateLiveData){
+            handleUIState(it)
         }
     }
 
@@ -89,7 +89,7 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
         }
     }
 
-    private fun onBackPress(){
+    private fun onBackPress() {
         requireActivity().onBackPressedDispatcher.addCallback {
             viewModel.navigateUp()
         }

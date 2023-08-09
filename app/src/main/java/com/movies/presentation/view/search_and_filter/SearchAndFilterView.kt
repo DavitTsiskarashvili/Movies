@@ -24,40 +24,41 @@ class SearchAndFilterView @JvmOverloads constructor(
     private lateinit var categoryAdapter: CategoryAdapter
     val searchInput get() = binding.searchEditText.text.toString()
 
+    private var searchCallback: ((String) -> Unit)? = null
+    fun setOnSearchListener(callback: (String) -> Unit) {
+        searchCallback = callback
+    }
+
     init {
         isFilterChecked()
+        setListeners()
     }
 
-    fun searchListener(listener: (String) -> Unit) {
-        binding.searchEditText.doOnTextChanged { text, _, _, _ ->
-            if (text.isNullOrBlank().not()) {
-                listener(text.toString())
-                handleViewsVisibility(true)
+    fun queryIsNotBlank() = binding.searchEditText.text?.isNotBlank()
+
+    private fun setListeners() {
+        with(binding) {
+            with(searchEditText) {
+                setOnFocusChangeListener { _, isFocused ->
+                    handleViewsVisibility(isFocused)
+                }
+                doOnTextChanged { query, _, _, _ ->
+                    searchCallback?.invoke(query.toString())
+                }
+            }
+            cancelTextView.setOnClickListener {
+                searchEditText.text?.clear()
+                handleViewsVisibility(false)
             }
         }
-        emptyInputHandler()
     }
 
-    private fun emptyInputHandler() {
-        if (binding.searchEditText.text?.isEmpty() == true) {
-            handleViewsVisibility(false)
-        }
-    }
-
-    fun clearSearchInput(callBack: () -> Unit) {
-        binding.cancelTextView.setOnClickListener {
-            binding.searchEditText.text?.clear()
-            handleViewsVisibility(false)
-            callBack.invoke()
-        }
-    }
-
-    private fun handleViewsVisibility(searchIsClicked: Boolean) {
+    private fun handleViewsVisibility(searchFocused: Boolean) {
         with(binding) {
-            filterToggleButton.hiddenIf(searchIsClicked)
-            cancelTextView.visibleIf(searchIsClicked)
+            filterToggleButton.hiddenIf(searchFocused)
+            cancelTextView.visibleIf(searchFocused)
             categoryRecyclerView.hiddenIf(true)
-            updateSearchViewConstraints(!searchIsClicked)
+            updateSearchViewConstraints(!searchFocused)
         }
     }
 
@@ -69,7 +70,7 @@ class SearchAndFilterView @JvmOverloads constructor(
         }
     }
 
-    fun categoryButtonListener(callBack: (CategoryType) -> Unit) {
+    fun onCategoryButtonClicked(callBack: (CategoryType) -> Unit) {
         categoryAdapter = CategoryAdapter {
             callBack(it)
         }
