@@ -53,10 +53,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
         }
         data.favouritesData?.let {
             handleFavouriteData(it.isNotEmpty())
-            binding.moviesRecyclerView.adapter = favouriteMovieAdapter
-            executeScope {
-                initFavouriteRecycler(it)
-            }
+            initFavouriteRecycler(it)
         }
     }
 
