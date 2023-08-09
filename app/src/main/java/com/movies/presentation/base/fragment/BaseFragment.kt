@@ -15,11 +15,17 @@ import kotlin.reflect.KClass
 abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
     abstract val viewModelClass: KClass<VM>
-    protected val viewModel: VM by viewModelForClass(clazz = viewModelClass)
+    lateinit var viewModel: VM
 
     protected abstract val layout: Int
 
     abstract fun onBind()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = viewModelForClass(clazz = viewModelClass).value
+        viewModel.onCreate()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -21,7 +21,7 @@ class NavigationView @JvmOverloads constructor(
         setDefaultButtonTypes()
     }
 
-    fun firstButtonListener(callback: () -> Unit) {
+    fun leftButtonListener(callback: () -> Unit) {
         with(binding) {
             leftButton.setOnClickListener {
                 callback()
@@ -30,7 +30,7 @@ class NavigationView @JvmOverloads constructor(
         }
     }
 
-    fun secondButtonListener(callback: () -> Unit) {
+    fun rightButtonListener(callback: () -> Unit) {
         with(binding) {
             rightButton.setOnClickListener {
                 callback()
