@@ -15,6 +15,8 @@ import org.koin.java.KoinJavaComponent.inject
 
 abstract class BaseViewModel<T> : ViewModel() {
 
+    open fun onCreate() {}
+
     val navigationLiveData by LiveDataDelegate<Event<NavigationCommand>>()
     protected  val _uiStateFlow = MutableStateFlow<UIState<T>?>(null)
     val uiStateFlow get() = _uiStateFlow.asStateFlow()
