@@ -21,6 +21,7 @@ class MoviesPagingSource(
         return try {
             lateinit var response: Response<MoviesDTO>
             val page = params.key ?: 1
+
             category?.let {
                 response = service.getMovies(it, page)
             }
@@ -29,11 +30,8 @@ class MoviesPagingSource(
             }
 
             val movies = movieDTOMapper(response.body() ?: throw IllegalArgumentException())
-            val nextKey = if (movies.isEmpty()) {
-                null
-            } else {
-                page + (params.loadSize / 20)
-            }
+            val nextKey = if (movies.isEmpty()) null else page + (params.loadSize / 20)
+
             LoadResult.Page(
                 data = movies,
                 prevKey = if (page == 1) null else page - 1,
