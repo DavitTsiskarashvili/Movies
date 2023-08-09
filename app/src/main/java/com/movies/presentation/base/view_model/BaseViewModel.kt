@@ -10,6 +10,8 @@ import org.koin.java.KoinJavaComponent.get
 
 abstract class BaseViewModel : ViewModel() {
 
+    open fun onCreate() {}
+
     val navigationLiveData by LiveDataDelegate<Event<NavigationCommand>>()
     protected val loader: LoaderDialog = get(LoaderDialog::class.java)
 

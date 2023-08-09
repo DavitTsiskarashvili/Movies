@@ -41,7 +41,7 @@ class HomeViewModel(
     val searchStateFlow = _searchStateFlow.asStateFlow()
 
 
-    init {
+    override fun onCreate() {
         getMovies()
     }
 
