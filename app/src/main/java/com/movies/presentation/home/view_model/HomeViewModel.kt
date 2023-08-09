@@ -37,12 +37,6 @@ class HomeViewModel(
     private val genresUseCase: GetGenresUseCase
 ) : BaseViewModel<HomeUIState>() {
 
-    //    val loadingLiveData by LiveDataDelegate<Boolean>()
-//    val fetchFavouriteMoviesLivedata by LiveDataDelegate<List<MovieUIModel>>()
-//
-//    private val _fetchMoviesStateFlow = MutableStateFlow<PagingData<MovieUIModel>?>(null)
-//    val fetchMoviesStateFlow get() = _fetchMoviesStateFlow.asStateFlow()
-//
     private val categoryStateFlow = MutableStateFlow(CategoryType.POPULAR)
     private val genreMap = mutableMapOf<Int, String>()
 
@@ -62,11 +56,11 @@ class HomeViewModel(
                 fetchMovies()
             }
             error {
-                _uiStateFlow.emit(UIState.Error(it))
+                _uiStateFlow.tryEmit(UIState.Error(it))
             }
             loading {
                 if (it) {
-                    _uiStateFlow.emit(UIState.Loading)
+                    _uiStateFlow.tryEmit(UIState.Loading)
                 }
             }
         }
@@ -75,7 +69,7 @@ class HomeViewModel(
     fun fetchMovies() {
         launchNetwork<Pager<Int, MovieDomainModel>> {
             loading {
-                if (it) _uiStateFlow.emit(UIState.Loading)
+                if (it) _uiStateFlow.tryEmit(UIState.Loading)
             }
             executeApi {
                 val categoryType = categoryStateFlow.value
@@ -85,13 +79,13 @@ class HomeViewModel(
                 handleSuccessCase(it.flow)
             }
             error {
-                _uiStateFlow.emit(UIState.Error(it))
+                _uiStateFlow.tryEmit(UIState.Error(it))
             }
 
         }
     }
 
-    private suspend fun handleSuccessCase(flow: Flow<PagingData<MovieDomainModel>>) {
+    private fun handleSuccessCase(flow: Flow<PagingData<MovieDomainModel>>) {
         viewModelScope.launch {
             flow.cachedIn(viewModelScope).collect { pagingData ->
                 val mappedData = pagingData.map {
@@ -112,15 +106,19 @@ class HomeViewModel(
     }
 
     fun searchMovies(query: String) {
-        viewModelScope {
-            searchMoviesUseCase.invoke(query).flow.cachedIn(viewModelScope)
-                .collect { searchedPagingData ->
-                    val mappedSearchedData = searchedPagingData.map {
-                        it.isFavourite = checkFavouriteStatusUseCase(it.id)
-                        moviesUIMapper(it)
-                    }
-                    _uiStateFlow.emit(UIState.Success(HomeUIState(pagingData = mappedSearchedData)))
-                }
+        launchNetwork<Pager<Int, MovieDomainModel>> {
+            loading {
+                if (it) _uiStateFlow.tryEmit(UIState.Loading)
+            }
+            executeApi {
+                searchMoviesUseCase.invoke(query)
+            }
+            success {
+                handleSuccessCase(it.flow)
+            }
+            error {
+                _uiStateFlow.tryEmit(UIState.Error(it))
+            }
         }
     }
 

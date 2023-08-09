@@ -4,40 +4,35 @@ import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
-import android.widget.FrameLayout
-import com.movies.databinding.LoaderDialogBinding
+import android.view.View
+import android.view.ViewGroup
+import com.movies.R
 
 class LoaderDialog(
-    context: Context,
-    attributeSet: AttributeSet,
-) : FrameLayout(context, attributeSet) {
-     private val binding: LoaderDialogBinding =
-         LoaderDialogBinding.inflate(LayoutInflater.from(context), this, false)
-
-     private val alertDialog: AlertDialog by lazy{
-         AlertDialog.Builder(context).setView(binding.root).create()
-     }
+    val context: Context,
+    val root: ViewGroup
+) {
+    private var alertDialog: AlertDialog? = null
+    private val loaderView: View =
+        LayoutInflater.from(context).inflate(R.layout.loader_dialog, root, false)
 
     init {
-        setupDialog().apply {
-            setCancelable(false)
-        }
+        setupDialog()
     }
 
-    private fun setupDialog(): AlertDialog {
-        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        return alertDialog
+    private fun setupDialog() {
+        alertDialog = AlertDialog.Builder(context)
+            .setView(loaderView)
+            .create().apply {
+                setCancelable(false)
+                window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            }
     }
 
-    fun initiateDialog(isLoading: Boolean) {
-        Log.d("TAG_LOADER", isLoading.toString())
-        if (isLoading)
-            alertDialog.show()
-        else
-            alertDialog.dismiss()
+    fun handleLoaderVisibility(isLoading: Boolean) {
+        if (isLoading) alertDialog?.show()
+        else alertDialog?.dismiss()
     }
 
 }

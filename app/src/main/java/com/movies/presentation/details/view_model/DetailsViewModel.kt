@@ -25,18 +25,28 @@ class DetailsViewModel(
         launchNetwork<MovieDomainModel> {
             loading {
                 if (it) {
-                    _uiStateFlow.emit(UIState.Loading)
+                    _uiStateFlow.tryEmit(UIState.Loading)
                 }
             }
             executeApi {
                 getMovieDetailsUseCase.invoke(movieId)
             }
             success {
-                it.isFavourite = checkFavouriteStatusUseCase(it.id)
-                _uiStateFlow.emit(UIState.Success(data = DetailsUIState(movieDomainToUIMapper(it))))
+                viewModelScope {
+                    it.isFavourite = checkFavouriteStatusUseCase(it.id)
+                    _uiStateFlow.tryEmit(
+                        UIState.Success(
+                            data = DetailsUIState(
+                                movieDomainToUIMapper(
+                                    it
+                                )
+                            )
+                        )
+                    )
+                }
             }
             error {
-                _uiStateFlow.emit(UIState.Error(it))
+                _uiStateFlow.tryEmit(UIState.Error(it))
             }
         }
     }
