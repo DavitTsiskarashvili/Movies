@@ -104,7 +104,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun filterMovies() {
         binding.searchAndFilterView.categoryButtonListener {
-            viewModel.selectCategory(it)
+
         }
     }
 
