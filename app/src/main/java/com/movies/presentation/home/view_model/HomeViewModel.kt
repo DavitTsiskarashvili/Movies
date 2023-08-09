@@ -40,7 +40,7 @@ class HomeViewModel(
 //
     private val categoryStateFlow = MutableStateFlow(CategoryType.POPULAR)
 
-    init {
+    override fun onCreate() {
         startNetworkCall()
     }
 
