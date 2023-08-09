@@ -12,7 +12,7 @@ import com.movies.presentation.details.ui.ui_state.DetailsUIState
 import com.movies.presentation.details.view_model.DetailsViewModel
 import kotlin.reflect.KClass
 
-class DetailsFragment : BaseFragment<DetailsUIState,DetailsViewModel>() {
+class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
 
     override val binding by viewBinding(FragmentDetailsBinding::bind)
     private val args: DetailsFragmentArgs by navArgs()
@@ -29,8 +29,12 @@ class DetailsFragment : BaseFragment<DetailsUIState,DetailsViewModel>() {
         navigationListener()
     }
 
+    override fun onRefresh() {
+        viewModel.fetchMovieDetails(args.MovieId)
+    }
+
     override fun onDataLoaded(data: DetailsUIState) {
-        with(data.movieDetailsData){
+        with(data.movieDetailsData) {
             handleFavouriteButton(this)
             with(binding) {
                 posterImageView.loadImage(poster)

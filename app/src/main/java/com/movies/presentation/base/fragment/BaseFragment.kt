@@ -25,11 +25,12 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
     lateinit var viewModel: VM
 
     private val loader by lazy { LoaderDialog(requireContext(), binding.root as ViewGroup) }
-    private val errorView by lazy { ErrorView(requireContext()) }
+    private val errorView by lazy { ErrorView(requireContext(), binding.root as ViewGroup) }
 
     protected abstract val layout: Int
 
     abstract fun onBind()
+    abstract fun onRefresh()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,14 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
         onBind()
         observeNavigation()
         observeUIState()
+    }
+
+    override fun onError(error: Throwable) {
+        errorView.handleErrorVisibility(true)
+    }
+
+    override fun onLoading(loading: Boolean) {
+        loader.handleLoaderVisibility(loading)
     }
 
     private fun observeNavigation() {
@@ -73,11 +82,10 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
         }
     }
 
-    override fun onError(error: Throwable) {
-        errorView.handleErrorVisibility(true)
+    private fun refresh() {
+        errorView.refreshButtonListener {
+            onRefresh()
+        }
     }
 
-    override fun onLoading(loading: Boolean) {
-        loader.handleLoaderVisibility(loading)
-    }
 }

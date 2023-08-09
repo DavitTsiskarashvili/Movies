@@ -11,7 +11,7 @@ import com.movies.R
 
 class LoaderDialog(
     val context: Context,
-    val root: ViewGroup
+    root: ViewGroup
 ) {
     private var alertDialog: AlertDialog? = null
     private val loaderView: View =

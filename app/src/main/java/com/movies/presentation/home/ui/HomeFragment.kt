@@ -37,7 +37,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
 
     override fun onDataLoaded(data: HomeUIState) {
         data.pagingData?.let {
-            handleDataVisibility()
+            binding.moviesRecyclerView.visibleIf(true)
             executeScope {
                 moviePagingAdapter.submitData(it)
             }
@@ -47,6 +47,10 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
             binding.moviesRecyclerView.adapter = favouriteMovieAdapter
             initFavouriteRecycler(it)
         }
+    }
+
+    override fun onRefresh() {
+        viewModel.fetchMovieGenre()
     }
 
     private fun initHomeRecycler() {
@@ -60,19 +64,11 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
 
     private fun setListeners() {
         filterMovies()
-        refresh()
         navigateToHomeListener()
         navigateToFavouritesListener()
         handleFavouriteButton()
         setUpNavigation()
         cancelSearch()
-    }
-
-    private fun handleDataVisibility() {
-        with(binding) {
-            errorStateView.hiddenIf(true)
-            moviesRecyclerView.visibleIf(true)
-        }
     }
 
     private fun handleFavouriteData(isLoaded: Boolean) {
@@ -89,16 +85,10 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
         }
     }
 
-    private fun refresh() {
-        binding.errorStateView.refreshButtonListener {
-            viewModel.fetchMovies()
-        }
-    }
-
     private fun navigateToHomeListener() {
         with(binding) {
             navigationButton.leftButtonListener {
-                viewModel.fetchMovies()
+                viewModel.fetchMovieGenre()
                 handleBottomNavigationVisibility(false)
                 handleSearch(searchAndFilterView.searchInput)
                 initHomeRecycler()
@@ -136,13 +126,13 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
         if (searchInput.isNotEmpty()) {
             viewModel.searchMovies(query = searchInput)
         } else {
-            handleDataVisibility()
+            binding.moviesRecyclerView.visibleIf(true)
         }
     }
 
     private fun cancelSearch() {
         binding.searchAndFilterView.clearSearchInput {
-            viewModel.fetchMovies()
+            viewModel.fetchMovieGenre()
         }
     }
 

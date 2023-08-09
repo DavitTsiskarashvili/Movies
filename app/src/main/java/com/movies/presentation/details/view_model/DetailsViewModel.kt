@@ -20,7 +20,6 @@ class DetailsViewModel(
     private val checkFavouriteStatusUseCase: CheckFavouriteStatusUseCase
 ) : BaseViewModel<DetailsUIState>() {
 
-
     fun fetchMovieDetails(movieId: Int) {
         launchNetwork<MovieDomainModel> {
             loading {
@@ -50,7 +49,6 @@ class DetailsViewModel(
             }
         }
     }
-
 
     fun updateFavouriteMovieStatus(movie: MovieUIModel) {
         viewModelScope {

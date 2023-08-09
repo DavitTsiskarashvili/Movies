@@ -44,7 +44,7 @@ class HomeViewModel(
         fetchMovieGenre()
     }
 
-    private fun fetchMovieGenre() {
+    fun fetchMovieGenre() {
         launchNetwork<List<GenreDomainModel>> {
             executeApi {
                 genresUseCase.invoke()
