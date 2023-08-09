@@ -53,10 +53,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
         }
         data.favouritesData?.let {
             handleFavouriteData(it.isNotEmpty())
-            binding.moviesRecyclerView.adapter = favouriteMovieAdapter
-            executeScope {
-                initFavouriteRecycler(it)
-            }
+            initFavouriteRecycler(it)
         }
     }
 
@@ -122,7 +119,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
 
     private fun navigateToHomeListener() {
         with(binding) {
-            navigationButton.firstButtonListener {
+            navigationButton.leftButtonListener {
                 viewModel.startNetworkCall()
                 handleBottomNavigationVisibility(false)
                 handleSearch(searchAndFilterView.searchInput)
@@ -132,7 +129,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
     }
 
     private fun navigateToFavouritesListener() {
-        binding.navigationButton.secondButtonListener {
+        binding.navigationButton.rightButtonListener {
             handleBottomNavigationVisibility(true)
             viewModel.fetchFavouriteMovies()
         }
