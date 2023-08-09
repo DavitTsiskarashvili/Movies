@@ -1,6 +1,5 @@
 package com.movies.presentation.details.ui
 
-import androidx.activity.addCallback
 import androidx.navigation.fragment.navArgs
 import com.movies.R
 import com.movies.common.extensions.loadImage
@@ -51,9 +50,6 @@ class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
 
     private fun navigationListener() {
         binding.backImageButton.setOnClickListener {
-            viewModel.navigateUp()
-        }
-        requireActivity().onBackPressedDispatcher.addCallback {
             viewModel.navigateUp()
         }
     }

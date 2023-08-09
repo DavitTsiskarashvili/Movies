@@ -66,7 +66,7 @@ class HomeViewModel(
         }
     }
 
-    fun fetchMovies() {
+    private fun fetchMovies() {
         launchNetwork<Pager<Int, MovieDomainModel>> {
             loading {
                 if (it) _uiStateFlow.tryEmit(UIState.Loading)
@@ -102,7 +102,7 @@ class HomeViewModel(
 
     fun selectCategory(categoryType: CategoryType) {
         categoryStateFlow.value = categoryType
-        fetchMovies()
+        fetchMovieGenre()
     }
 
     fun searchMovies(query: String) {
