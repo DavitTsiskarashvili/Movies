@@ -122,7 +122,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
 
     private fun navigateToHomeListener() {
         with(binding) {
-            navigationButton.firstButtonListener {
+            navigationButton.leftButtonListener {
                 viewModel.fetchMovies()
                 handleBottomNavigationVisibility(false)
                 handleSearch(searchAndFilterView.searchInput)
@@ -132,7 +132,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
     }
 
     private fun navigateToFavouritesListener() {
-        binding.navigationButton.secondButtonListener {
+        binding.navigationButton.rightButtonListener {
             handleBottomNavigationVisibility(true)
             viewModel.fetchFavouriteMovies()
         }
