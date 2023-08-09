@@ -12,5 +12,5 @@ data class FavouriteMovieEntity(
     val releaseDate: String,
     val poster: String,
     val overview: String,
-    val genreString: String,
+    val genre: String,
 )
