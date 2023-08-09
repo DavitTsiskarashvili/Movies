@@ -27,9 +27,7 @@ abstract class BaseViewModel<T> : ViewModel() {
         navigationLiveData.addValue(Event(NavigationCommand.ToDirection(navDirections)))
     }
 
-    fun navigateUp() {
-        navigationLiveData.addValue(Event(NavigationCommand.Back))
-    }
+    fun navigateUp() { navigationLiveData.addValue(Event(NavigationCommand.Back)) }
 
     protected fun <T> Any.launchNetwork(networkStage: NetworkBuilder<T>.() -> Unit) {
         networkLauncher.startNetwork<T>(scope = viewModelScope, networkStage = networkStage)

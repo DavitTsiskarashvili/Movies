@@ -17,9 +17,7 @@ class LoaderDialog(
     private val loaderView: View =
         LayoutInflater.from(context).inflate(R.layout.loader_dialog, root, false)
 
-    init {
-        setupDialog()
-    }
+    init { setupDialog() }
 
     private fun setupDialog() {
         alertDialog = AlertDialog.Builder(context)

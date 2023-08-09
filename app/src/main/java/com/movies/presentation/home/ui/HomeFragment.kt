@@ -1,10 +1,7 @@
 package com.movies.presentation.home.ui
 
 import android.annotation.SuppressLint
-import android.util.Log
-import android.view.View
 import com.movies.R
-import com.movies.common.extensions.collectLatestInLifecycle
 import com.movies.common.extensions.executeScope
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.invisibleIf
@@ -12,45 +9,27 @@ import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
 import com.movies.presentation.base.data.model.MovieUIModel
-import com.movies.presentation.base.data.ui_state.UIStateHandler
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.home.ui.adapter.favourite.FavouriteMovieAdapter
 import com.movies.presentation.home.ui.adapter.movie.MoviePagingAdapter
 import com.movies.presentation.home.ui.ui_state.HomeUIState
 import com.movies.presentation.home.view_model.HomeViewModel
-import com.movies.presentation.view.error.ErrorView
-import com.movies.presentation.view.loader.LoaderDialog
 import kotlin.reflect.KClass
 
-class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<HomeUIState> {
+class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
 
-    private val binding by viewBinding(FragmentHomeBinding::bind)
+    override val binding by viewBinding(FragmentHomeBinding::bind)
 
-    private val loader by lazy {
-        LoaderDialog(requireContext(), binding.root)
-    }
+    private val moviePagingAdapter by lazy { MoviePagingAdapter() }
 
-    private val errorView by lazy {
-        ErrorView(requireContext())
-    }
+    private val favouriteMovieAdapter by lazy { FavouriteMovieAdapter() }
 
-    private val moviePagingAdapter by lazy {
-        MoviePagingAdapter()
-    }
+    override val layout: Int get() = R.layout.fragment_home
 
-    private val favouriteMovieAdapter by lazy {
-        FavouriteMovieAdapter()
-    }
-
-    override val layout: Int
-        get() = R.layout.fragment_home
-
-    override val viewModelClass: KClass<HomeViewModel>
-        get() = HomeViewModel::class
+    override val viewModelClass: KClass<HomeViewModel> get() = HomeViewModel::class
 
     override fun onBind() {
         initHomeRecycler()
-        observe()
         setUpNavigation()
         setListeners()
         searchMovies()
@@ -67,20 +46,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
             handleFavouriteData(it.isNotEmpty())
             binding.moviesRecyclerView.adapter = favouriteMovieAdapter
             initFavouriteRecycler(it)
-
         }
-    }
-
-    override fun onLoading(loading: Boolean) {
-        loader.handleLoaderVisibility(loading)
-        if (loading) binding.contentGroup.visibility = View.GONE
-        else binding.contentGroup.visibility = View.VISIBLE
-        Log.d("isLoading", "$loading: ")
-    }
-
-    override fun onError(error: Throwable) {
-        errorView.handleErrorVisibility(true)
-
     }
 
     private fun initHomeRecycler() {
@@ -90,12 +56,6 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
     private fun initFavouriteRecycler(list: List<MovieUIModel>) {
         binding.moviesRecyclerView.adapter = favouriteMovieAdapter
         favouriteMovieAdapter.submitList(list)
-    }
-
-    private fun observe() {
-        viewModel.uiStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-            it?.let { handleUIState(it) }
-        }
     }
 
     private fun setListeners() {

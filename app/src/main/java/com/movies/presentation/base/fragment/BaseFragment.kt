@@ -6,16 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.viewbinding.ViewBinding
+import com.movies.common.extensions.collectFlow
 import com.movies.common.navigation.NavigationCommand
 import com.movies.common.navigation.observeNonNull
+import com.movies.presentation.base.data.ui_state.UIStateHandler
 import com.movies.presentation.base.view_model.BaseViewModel
+import com.movies.presentation.view.error.ErrorView
+import com.movies.presentation.view.loader.LoaderDialog
 import org.koin.androidx.viewmodel.ext.android.viewModelForClass
 import kotlin.reflect.KClass
 
-abstract class BaseFragment<T: Any , VM : BaseViewModel<T>> : Fragment() {
+abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStateHandler<T> {
 
     abstract val viewModelClass: KClass<VM>
+    abstract val binding: ViewBinding
+
     lateinit var viewModel: VM
+
+    private val loader by lazy { LoaderDialog(requireContext(), binding.root as ViewGroup) }
+    private val errorView by lazy { ErrorView(requireContext()) }
 
     protected abstract val layout: Int
 
@@ -39,6 +49,7 @@ abstract class BaseFragment<T: Any , VM : BaseViewModel<T>> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         onBind()
         observeNavigation()
+        observeUIState()
     }
 
     private fun observeNavigation() {
@@ -56,4 +67,17 @@ abstract class BaseFragment<T: Any , VM : BaseViewModel<T>> : Fragment() {
         }
     }
 
+    private fun observeUIState() {
+        collectFlow(viewModel.uiStateFlow) {
+            it?.let { handleUIState(it) }
+        }
+    }
+
+    override fun onError(error: Throwable) {
+        errorView.handleErrorVisibility(true)
+    }
+
+    override fun onLoading(loading: Boolean) {
+        loader.handleLoaderVisibility(loading)
+    }
 }

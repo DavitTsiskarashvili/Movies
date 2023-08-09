@@ -98,11 +98,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchAndFilterView" />
 
-    <androidx.constraintlayout.widget.Group
-        android:layout_width="0dp"
-        android:id="@+id/contentGroup"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:constraint_referenced_ids="searchAndFilterView, titleTextView,moviesRecyclerView,navigationButton"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
