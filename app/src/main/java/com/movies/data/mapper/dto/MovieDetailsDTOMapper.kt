@@ -14,7 +14,7 @@ class MovieDetailsDTOMapper : Mapper<MovieDetailsDTO, MovieDomainModel> {
                 overview = overview ?: "",
                 poster = posterPath ?: "",
                 rating = voteAverage ?: 0.0,
-                runtime = runtime,
+                duration = runtime,
                 isFavourite = false,
                 genreString = genres?.getOrNull(0)?.name ?: ""
             )

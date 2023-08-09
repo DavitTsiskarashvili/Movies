@@ -42,7 +42,7 @@ class DetailsFragment : BaseFragment<DetailsUIState,DetailsViewModel>(), UIState
                 yearTextView.text = releaseDate
                 descriptionTextView.text = overview
                 categoryTextView.text = genreString
-                durationTextView.text = runtime
+                durationTextView.text = duration
                 favouritesToggleButton.isChecked = isFavourite
             }
         }

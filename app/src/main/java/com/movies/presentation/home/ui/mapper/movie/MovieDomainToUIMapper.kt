@@ -16,7 +16,7 @@ class MovieDomainToUIMapper : Mapper<MovieDomainModel, MovieUIModel> {
                 overview = overview,
                 isFavourite = isFavourite,
                 genreString = genreString,
-                runtime = getFormattedRuntime()
+                duration = getFormattedDuration()
             )
         }
 

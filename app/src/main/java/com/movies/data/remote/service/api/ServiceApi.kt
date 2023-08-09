@@ -1,5 +1,6 @@
 package com.movies.data.remote.service.api
 
+import com.movies.data.remote.dto.details.MovieDetailsDTO
 import com.movies.data.remote.dto.genres.GenresDTO
 import com.movies.data.remote.dto.movies.MoviesDTO
 import retrofit2.Response
@@ -14,11 +15,11 @@ interface ServiceApi {
     @GET(SEARCH)
     suspend fun searchMovies(@Query("query") query: String, @Query("page") page: Int): Response<MoviesDTO>
 
-    @GET(GENRE)
-    suspend fun getMovieGenre(): Response<GenresDTO>
-
     @GET("$PREFIX{movie_id}")
     suspend fun getMoviesDetails(@Path("movie_id") id: Int): Response<MovieDetailsDTO>
+
+    @GET(GENRE)
+    suspend fun getMovieGenre(): Response<GenresDTO>
 
     companion object {
         const val POPULAR = "popular"

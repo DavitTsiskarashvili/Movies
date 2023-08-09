@@ -11,7 +11,7 @@ data class MovieDomainModel(
     val releaseDate: String,
     val overview: String,
     var isFavourite: Boolean,
-    val runtime: Int? = null,
+    val duration: Int? = null,
     val genreInt: Int? = null,
     var genreString: String? = null,
     private val rating: Double,
@@ -25,6 +25,6 @@ data class MovieDomainModel(
         return IMAGE_BASE_URL + poster
     }
 
-    fun getFormattedRuntime(): String = runtime?.toHoursAndMinutes() ?: ""
+    fun getFormattedDuration(): String = duration?.toHoursAndMinutes() ?: ""
 
 }
