@@ -4,7 +4,7 @@ import com.movies.R
 import com.movies.common.extensions.changeScreen
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
-import com.movies.databinding.FavouriteLayoutBinding
+import com.movies.databinding.FragmentFavouritesBinding
 import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.details.ui.DetailsFragment
@@ -16,8 +16,8 @@ import com.movies.presentation.view.navigation.NavigationButtons
 class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>() {
 
     override val viewModelClass = FavouriteViewModel::class
-    override val binding by viewBinding(FavouriteLayoutBinding::bind)
-    override val layout = R.layout.favourite_layout
+    override val binding by viewBinding(FragmentFavouritesBinding::bind)
+    override val layout = R.layout.fragment_favourites
 
     private val favouriteMovieAdapter by lazy { FavouriteMovieAdapter() }
 
