@@ -4,12 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
-import com.movies.common.navigation.NavigationCommand
-import com.movies.common.navigation.observeNonNull
 import com.movies.presentation.base.data.ui_state.UIStateHandler
 import com.movies.presentation.base.view_model.BaseViewModel
 import com.movies.presentation.view.error.ErrorView
@@ -49,7 +45,6 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onBind()
-        observeNavigation()
         observeUIState()
     }
 
@@ -61,21 +56,6 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
         loader.handleLoaderVisibility(loading)
     }
 
-    private fun observeNavigation() {
-        viewModel.navigationLiveData.observeNonNull(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { navigationCommand ->
-                handleNavigation(navigationCommand)
-            }
-        }
-    }
-
-    private fun handleNavigation(navCommand: NavigationCommand) {
-        when (navCommand) {
-            is NavigationCommand.ToDirection -> findNavController().navigate(navCommand.directions)
-            is NavigationCommand.Back -> findNavController().navigateUp()
-        }
-    }
-
     private fun observeUIState() {
         viewModel.uiStateLiveData.observe(viewLifecycleOwner){
             handleUIState(it)
@@ -85,12 +65,6 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
     private fun refresh() {
         errorView.refreshButtonListener {
             onRefresh()
-        }
-    }
-
-    private fun onBackPress() {
-        requireActivity().onBackPressedDispatcher.addCallback {
-            viewModel.navigateUp()
         }
     }
 

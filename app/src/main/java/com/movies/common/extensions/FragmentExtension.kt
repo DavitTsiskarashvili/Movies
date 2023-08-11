@@ -60,18 +60,6 @@ fun <T> Fragment.observeLiveData(
     return liveData
 }
 
-//fun <T> Fragment.observeLiveData(
-//    liveData: LiveData<T>,
-//    block: (T) -> Unit
-//): LiveData<T> {
-//    if (!liveData.isInitialized) {
-//        liveData.observe(viewLifecycleOwner) {
-//            block(it)
-//        }
-//    }
-//    return liveData
-//}
-
 fun <T> Fragment.changeScreen(fragment: Fragment, args: T? = null) {
     val bundle = Bundle().apply {
         putArguments(args)

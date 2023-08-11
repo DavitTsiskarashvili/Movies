@@ -21,7 +21,7 @@ class DetailsViewModel(
 ) : BaseViewModel<DetailsUIState>() {
 
     fun fetchMovieDetails(movieId: Int) {
-        launchNetwork<MovieDomainModel> {
+        launchNetwork {
             loading { if (it) _uiStateLiveData.postValue(UIState.Loading) }
 
             executeApi { getMovieDetailsUseCase.invoke(movieId) }

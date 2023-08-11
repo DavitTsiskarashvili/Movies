@@ -18,7 +18,6 @@ import com.movies.domain.usecase.search.SearchMoviesUseCase
 import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.data.ui_state.UIState
 import com.movies.presentation.base.view_model.BaseViewModel
-import com.movies.presentation.home.ui.HomeFragmentDirections
 import com.movies.presentation.home.ui.mapper.movie.MovieDomainToUIMapper
 import com.movies.presentation.home.ui.mapper.movie.MovieUIToDomainMapper
 import com.movies.presentation.home.ui.ui_state.HomeUIState
@@ -88,10 +87,6 @@ class HomeViewModel(
             updateMovieStatus.invoke(movieUIToDomain(movie))
             callback?.invoke()
         }
-    }
-
-    fun navigateToDetails(id: Int) {
-        navigate(HomeFragmentDirections.actionGlobalDetailsFragment(id))
     }
 
     private fun fetchMovieGenre() {
