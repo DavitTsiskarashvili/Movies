@@ -37,7 +37,10 @@ fun <T : Any?> Fragment.collectFlow(
     }
 }
 
-fun <T> StateFlow<T>.collectLatestInLifecycle(lifecycleOwner: LifecycleOwner, action: suspend (T) -> Unit) {
+fun <T> StateFlow<T>.collectLatestInLifecycle(
+    lifecycleOwner: LifecycleOwner,
+    action: suspend (T) -> Unit
+) {
     lifecycleOwner.lifecycleScope.launch {
         this@collectLatestInLifecycle.collectLatest { data ->
             action(data)
@@ -54,3 +57,15 @@ fun <T> Fragment.observeLiveData(
     }
     return liveData
 }
+
+//fun <T> Fragment.observeLiveData(
+//    liveData: LiveData<T>,
+//    block: (T) -> Unit
+//): LiveData<T> {
+//    if (!liveData.isInitialized) {
+//        liveData.observe(viewLifecycleOwner) {
+//            block(it)
+//        }
+//    }
+//    return liveData
+//}

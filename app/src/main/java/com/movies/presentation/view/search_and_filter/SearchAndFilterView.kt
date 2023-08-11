@@ -23,9 +23,10 @@ class SearchAndFilterView @JvmOverloads constructor(
     private val binding = SearchCustomViewBinding.inflate(LayoutInflater.from(context), this, true)
     private lateinit var categoryAdapter: CategoryAdapter
     val searchInput get() = binding.searchEditText.text.toString()
+    var isSearched: Boolean = false
 
-    private var searchCallback: ((String) -> Unit)? = null
-    fun setOnSearchListener(callback: (String) -> Unit) {
+    private var searchCallback: ((String, Boolean) -> Unit)? = null
+    fun setOnSearchListener(callback: (String, Boolean) -> Unit) {
         searchCallback = callback
     }
 
@@ -36,50 +37,11 @@ class SearchAndFilterView @JvmOverloads constructor(
 
     fun queryIsNotBlank() = binding.searchEditText.text?.isNotBlank()
 
-    private fun setListeners() {
-        with(binding) {
-            with(searchEditText) {
-                setOnFocusChangeListener { _, isFocused ->
-                    handleViewsVisibility(isFocused)
-                }
-                doOnTextChanged { query, _, _, _ ->
-                    searchCallback?.invoke(query.toString())
-                }
-            }
-            cancelTextView.setOnClickListener {
-                searchEditText.text?.clear()
-                handleViewsVisibility(false)
-            }
-        }
-    }
-
-    private fun handleViewsVisibility(searchFocused: Boolean) {
-        with(binding) {
-            filterToggleButton.hiddenIf(searchFocused)
-            cancelTextView.visibleIf(searchFocused)
-            categoryRecyclerView.hiddenIf(true)
-            updateSearchViewConstraints(!searchFocused)
-        }
-    }
-
-    private fun updateSearchViewConstraints(isFilterVisible: Boolean) {
-        with(binding) {
-            val params = searchEditText.layoutParams as ConstraintLayout.LayoutParams
-            params.endToStart = if (isFilterVisible) filterToggleButton.id else cancelTextView.id
-            searchEditText.layoutParams = params
-        }
-    }
-
     fun onCategoryButtonClicked(callBack: (CategoryType) -> Unit) {
         categoryAdapter = CategoryAdapter {
             callBack(it)
         }
         initRecycler()
-    }
-
-    private fun initRecycler() {
-        binding.categoryRecyclerView.adapter = categoryAdapter
-        categoryAdapter.setAdapterList(CategoryUIModel.getCategoryList())
     }
 
     private fun isFilterChecked() {
@@ -89,4 +51,52 @@ class SearchAndFilterView @JvmOverloads constructor(
             }
         }
     }
+
+    private fun setListeners() {
+        with(binding) {
+            searchEditText.doOnTextChanged { query, _, _, _ ->
+                if (searchEditText.text.isNullOrBlank())
+                isSearched = true
+                searchCallback?.invoke(query.toString(), isSearched)
+                handleEmptySearchInput()
+            }
+            cancelTextView.setOnClickListener {
+                searchEditText.text?.clear()
+                handleEmptySearchInput()
+            }
+        }
+    }
+
+    private fun handleEmptySearchInput() {
+        with(binding.searchEditText) {
+            if (text!!.isBlank()) {
+                setFilterVisibility(true)
+            } else {
+                setFilterVisibility(false)
+            }
+        }
+    }
+
+    private fun setFilterVisibility(isVisible: Boolean) {
+        with(binding) {
+            cancelTextView.hiddenIf(isVisible)
+            filterToggleButton.visibleIf(isVisible)
+            categoryRecyclerView.visibleIf(false)
+            updateSearchViewConstraints(!isVisible)
+        }
+    }
+
+    private fun updateSearchViewConstraints(searchFocused: Boolean) {
+        with(binding) {
+            val params = searchEditText.layoutParams as ConstraintLayout.LayoutParams
+            params.endToStart = if (searchFocused) cancelTextView.id else filterToggleButton.id
+            searchEditText.layoutParams = params
+        }
+    }
+
+    private fun initRecycler() {
+        binding.categoryRecyclerView.adapter = categoryAdapter
+        categoryAdapter.setAdapterList(CategoryUIModel.getCategoryList())
+    }
+
 }

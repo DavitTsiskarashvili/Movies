@@ -14,13 +14,11 @@ import kotlin.reflect.KClass
 class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
 
     override val binding by viewBinding(FragmentDetailsBinding::bind)
+    override val layout: Int get() = R.layout.fragment_details
+    override val viewModelClass: KClass<DetailsViewModel> get() = DetailsViewModel::class
     private val args: DetailsFragmentArgs by navArgs()
 
-    override val layout: Int
-        get() = R.layout.fragment_details
-
-    override val viewModelClass: KClass<DetailsViewModel>
-        get() = DetailsViewModel::class
+    override fun onRefresh() =viewModel.fetchMovieDetails(args.MovieId)
 
     override fun onBind() {
         val movieId = args.MovieId
@@ -28,13 +26,13 @@ class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
         navigationListener()
     }
 
-    override fun onRefresh() {
-        viewModel.fetchMovieDetails(args.MovieId)
+    override fun onDataLoaded(data: DetailsUIState) {
+        handleFavouriteButton(data.movieDetailsData)
+        setMovieDetailsViews(data)
     }
 
-    override fun onDataLoaded(data: DetailsUIState) {
+    private fun setMovieDetailsViews(data: DetailsUIState){
         with(data.movieDetailsData) {
-            handleFavouriteButton(this)
             with(binding) {
                 posterImageView.loadImage(poster)
                 movieTitleTextView.text = title
@@ -48,15 +46,15 @@ class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
         }
     }
 
-    private fun navigationListener() {
-        binding.backImageButton.setOnClickListener {
-            viewModel.navigateUp()
-        }
-    }
-
     private fun handleFavouriteButton(favouriteMovie: MovieUIModel) {
         binding.favouritesToggleButton.setOnClickListener {
             viewModel.updateFavouriteMovieStatus(favouriteMovie)
+        }
+    }
+
+    private fun navigationListener() {
+        binding.backImageButton.setOnClickListener {
+            viewModel.navigateUp()
         }
     }
 

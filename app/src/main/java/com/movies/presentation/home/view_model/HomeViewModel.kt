@@ -24,7 +24,6 @@ import com.movies.presentation.home.ui.mapper.movie.MovieUIToDomainMapper
 import com.movies.presentation.home.ui.ui_state.HomeUIState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val moviesUseCase: GetMoviesUseCase,
@@ -44,64 +43,8 @@ class HomeViewModel(
         fetchAllMovies()
     }
 
-    fun fetchAllMovies(){
+    fun fetchAllMovies() {
         if (genreMap.isEmpty()) fetchMovieGenre() else fetchMovies()
-    }
-
-    private fun fetchMovieGenre() {
-        launchNetwork<List<GenreDomainModel>> {
-            executeApi {
-                genresUseCase.invoke()
-            }
-            success {
-                it.forEach { genre ->
-                    genreMap[genre.id] = genre.name
-                }
-                fetchMovies()
-            }
-            error {
-                _uiStateLiveData.postValue(UIState.Error(it))
-            }
-            loading {
-                if (it) {
-                    _uiStateLiveData.postValue(UIState.Loading)
-                }
-            }
-        }
-    }
-
-    private fun fetchMovies() {
-        launchNetwork<Pager<Int, MovieDomainModel>> {
-            loading {
-                if (it) _uiStateLiveData.postValue(UIState.Loading)
-            }
-            executeApi {
-                val categoryType = categoryStateFlow.value
-                moviesUseCase.invoke(categoryType)
-            }
-            success {
-                handleSuccessCase(it.flow)
-            }
-            error {
-                _uiStateLiveData.postValue(UIState.Error(it))
-            }
-
-        }
-    }
-
-    private fun handleSuccessCase(flow: Flow<PagingData<MovieDomainModel>>) {
-        viewModelScope.launch {
-            flow.cachedIn(viewModelScope).collect { pagingData ->
-                val mappedData = pagingData.map {
-                    with(it) {
-                        isFavourite = checkFavouriteStatusUseCase(id)
-                        genreString = genreMap[genreInt]
-                    }
-                    moviesUIMapper(it)
-                }
-                _uiStateLiveData.postValue(UIState.Success(HomeUIState(pagingData = mappedData)))
-            }
-        }
     }
 
     fun selectCategory(categoryType: CategoryType) {
@@ -149,6 +92,52 @@ class HomeViewModel(
 
     fun navigateToDetails(id: Int) {
         navigate(HomeFragmentDirections.actionGlobalDetailsFragment(id))
+    }
+
+    private fun fetchMovieGenre() {
+        launchNetwork<List<GenreDomainModel>> {
+            executeApi { genresUseCase.invoke() }
+
+            success {
+                it.forEach { genre ->
+                    genreMap[genre.id] = genre.name
+                }
+                fetchMovies()
+            }
+
+            error { _uiStateLiveData.postValue(UIState.Error(it)) }
+
+            loading { if (it) _uiStateLiveData.postValue(UIState.Loading) }
+        }
+    }
+
+    private fun fetchMovies() {
+        launchNetwork<Pager<Int, MovieDomainModel>> {
+            executeApi {
+                val categoryType = categoryStateFlow.value
+                moviesUseCase.invoke(categoryType)
+            }
+            loading { if (it) _uiStateLiveData.postValue(UIState.Loading) }
+
+            success { handleSuccessCase(it.flow) }
+
+            error { _uiStateLiveData.postValue(UIState.Error(it)) }
+        }
+    }
+
+    private fun handleSuccessCase(flow: Flow<PagingData<MovieDomainModel>>) {
+        viewModelScope {
+            flow.cachedIn(viewModelScope).collect { pagingData ->
+                val mappedData = pagingData.map {
+                    with(it) {
+                        isFavourite = checkFavouriteStatusUseCase(id)
+                        genreString = genreMap[genreInt]
+                    }
+                    moviesUIMapper(it)
+                }
+                _uiStateLiveData.postValue(UIState.Success(HomeUIState(pagingData = mappedData)))
+            }
+        }
     }
 
 }

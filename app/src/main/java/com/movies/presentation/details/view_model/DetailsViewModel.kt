@@ -22,31 +22,20 @@ class DetailsViewModel(
 
     fun fetchMovieDetails(movieId: Int) {
         launchNetwork<MovieDomainModel> {
-            loading {
-                if (it) {
-                    _uiStateLiveData.postValue(UIState.Loading)
-                }
-            }
-            executeApi {
-                getMovieDetailsUseCase.invoke(movieId)
-            }
-            success {
-                viewModelScope {
-                    it.isFavourite = checkFavouriteStatusUseCase(it.id)
-                    _uiStateLiveData.postValue(
-                        UIState.Success(
-                            data = DetailsUIState(
-                                movieDomainToUIMapper(
-                                    it
-                                )
-                            )
-                        )
-                    )
-                }
-            }
-            error {
-                _uiStateLiveData.postValue(UIState.Error(it))
-            }
+            loading { if (it) _uiStateLiveData.postValue(UIState.Loading) }
+
+            executeApi { getMovieDetailsUseCase.invoke(movieId) }
+
+            success { handleSuccessCase(it) }
+
+            error { _uiStateLiveData.postValue(UIState.Error(it)) }
+        }
+    }
+
+    private fun handleSuccessCase(movie: MovieDomainModel) {
+        viewModelScope {
+            movie.isFavourite = checkFavouriteStatusUseCase(movie.id)
+            _uiStateLiveData.postValue(UIState.Success(data = DetailsUIState(movieDomainToUIMapper(movie))))
         }
     }
 

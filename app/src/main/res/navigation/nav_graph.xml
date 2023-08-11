@@ -21,5 +21,8 @@
     </fragment>
     <action
         android:id="@+id/action_global_detailsFragment"
-        app:destination="@id/detailsFragment" />
+        app:destination="@id/detailsFragment"
+        app:restoreState="true"
+        app:launchSingleTop="true"
+        app:popUpToInclusive="false" />
 </navigation>
