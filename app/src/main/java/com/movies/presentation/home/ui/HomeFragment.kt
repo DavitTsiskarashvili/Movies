@@ -1,15 +1,15 @@
 package com.movies.presentation.home.ui
 
-import android.annotation.SuppressLint
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.RecyclerView
 import com.movies.R
+import com.movies.common.extensions.changeScreen
 import com.movies.common.extensions.executeScope
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
 import com.movies.presentation.base.fragment.BaseFragment
+import com.movies.presentation.details.ui.DetailsFragment
 import com.movies.presentation.home.ui.adapter.favourite.FavouriteMovieAdapter
 import com.movies.presentation.home.ui.adapter.movie.MoviePagingAdapter
 import com.movies.presentation.home.ui.ui_state.HomeUIState
@@ -41,7 +41,6 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun setListeners() {
         with(binding) {
             searchAndFilterView.onCategoryButtonClicked {
@@ -57,38 +56,32 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
                 handleFavouriteData(true)
             }
             // Search
-            searchAndFilterView.setOnSearchListener { query, isSearched ->
-                if (searchAndFilterView.queryIsNotBlank() == true && isSearched) {
-                    viewModel.searchMovies(query)
-                } else {
-//                    viewModel.fetchAllMovies()
-                }
+            searchAndFilterView.setOnSearchListener {
+                viewModel.searchMovies(it)
+            }
+            // Cancel Search
+            searchAndFilterView.searchCancelListener {
+                viewModel.fetchAllMovies()
             }
         }
         with(viewModel) {
-            // Add or Remove in Favourites from Home Screen
-            with(moviePagingAdapter) {
-                onFavouriteClickListener { favouriteMovie, _ ->
-                    updateFavouriteMovieStatus(favouriteMovie)
-                    favouritesIsUpdated = true
-                }
-                onItemClickListener { film ->
-                    viewModel.navigateToDetails(film.id)
+            // Add or Remove from favourites
+            moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+                updateFavouriteMovieStatus(favouriteMovie)
+            }
+            // Navigate to Details Screen
+            moviePagingAdapter.onItemClickListener { film ->
+                changeScreen(DetailsFragment(), film.id)
+            }
+            // Add or Remove from favourites
+            favouriteMovieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+                updateFavouriteMovieStatus(favouriteMovie) {
+                    fetchFavouriteMovies()
                 }
             }
-            // Add or Remove in Favourites from Favourites Screen
-            with(favouriteMovieAdapter) {
-                onFavouriteClickListener { favouriteMovie, _ ->
-                    updateFavouriteMovieStatus(favouriteMovie) {
-                        fetchFavouriteMovies()
-                        favouriteMovieAdapter.notifyDataSetChanged()
-                        favouritesIsUpdated = true
-                    }
-                }
-                // Navigate to Details Screen
-                onItemClickListener { film ->
-                    viewModel.navigateToDetails(film.id)
-                }
+            // Navigate to Details Screen
+            favouriteMovieAdapter.onItemClickListener { film ->
+                changeScreen(DetailsFragment(), film.id)
             }
         }
     }
@@ -96,21 +89,13 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
     private fun setHomeScreen() {
         handleHomeScreenComponentsVisibility(true)
         updateRecyclerViewConstraint(false)
-        moviePagingAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
         binding.moviesRecyclerView.adapter = moviePagingAdapter
-        if (moviePagingAdapter.itemCount == 0) viewModel.fetchAllMovies()
-        // If movie was searched and then navigation happened, last search results
-        // will reappear when navigating back
-        if (binding.searchAndFilterView.queryIsNotBlank() == true) {
-            viewModel.searchMovies(binding.searchAndFilterView.searchInput)
-        }
     }
 
     private fun setFavouritesScreen() {
         handleHomeScreenComponentsVisibility(false)
         updateRecyclerViewConstraint(true)
         binding.moviesRecyclerView.adapter = favouriteMovieAdapter
-        favouriteMovieAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
         if (favouriteMovieAdapter.itemCount == 0 || favouritesIsUpdated) viewModel.fetchFavouriteMovies()
         favouritesIsUpdated = false
     }

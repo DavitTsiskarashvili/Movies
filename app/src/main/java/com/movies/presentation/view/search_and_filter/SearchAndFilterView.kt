@@ -23,10 +23,10 @@ class SearchAndFilterView @JvmOverloads constructor(
     private val binding = SearchCustomViewBinding.inflate(LayoutInflater.from(context), this, true)
     private lateinit var categoryAdapter: CategoryAdapter
     val searchInput get() = binding.searchEditText.text.toString()
-    var isSearched: Boolean = false
 
-    private var searchCallback: ((String, Boolean) -> Unit)? = null
-    fun setOnSearchListener(callback: (String, Boolean) -> Unit) {
+    private var searchCallback: ((String) -> Unit)? = null
+
+    fun setOnSearchListener(callback: (String) -> Unit) {
         searchCallback = callback
     }
 
@@ -34,8 +34,6 @@ class SearchAndFilterView @JvmOverloads constructor(
         isFilterChecked()
         setListeners()
     }
-
-    fun queryIsNotBlank() = binding.searchEditText.text?.isNotBlank()
 
     fun onCategoryButtonClicked(callBack: (CategoryType) -> Unit) {
         categoryAdapter = CategoryAdapter {
@@ -55,15 +53,19 @@ class SearchAndFilterView @JvmOverloads constructor(
     private fun setListeners() {
         with(binding) {
             searchEditText.doOnTextChanged { query, _, _, _ ->
-                if (searchEditText.text.isNullOrBlank())
-                isSearched = true
-                searchCallback?.invoke(query.toString(), isSearched)
+                searchCallback?.invoke(query.toString())
                 handleEmptySearchInput()
             }
-            cancelTextView.setOnClickListener {
-                searchEditText.text?.clear()
-                handleEmptySearchInput()
-            }
+
+        }
+    }
+
+    fun searchCancelListener(callBack: () -> Unit) = with(binding) {
+        cancelTextView.setOnClickListener {
+            searchEditText.text?.clear()
+            searchEditText.clearFocus()
+            handleEmptySearchInput()
+            callBack.invoke()
         }
     }
 

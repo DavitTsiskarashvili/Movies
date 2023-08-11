@@ -1,6 +1,5 @@
 package com.movies.presentation.details.ui
 
-import androidx.navigation.fragment.navArgs
 import com.movies.R
 import com.movies.common.extensions.loadImage
 import com.movies.common.extensions.viewBinding
@@ -16,13 +15,13 @@ class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
     override val binding by viewBinding(FragmentDetailsBinding::bind)
     override val layout: Int get() = R.layout.fragment_details
     override val viewModelClass: KClass<DetailsViewModel> get() = DetailsViewModel::class
-    private val args: DetailsFragmentArgs by navArgs()
 
-    override fun onRefresh() =viewModel.fetchMovieDetails(args.MovieId)
+    private val args by lazy { arguments?.getInt("movieId")!! }
+
+    override fun onRefresh() = viewModel.fetchMovieDetails(args)
 
     override fun onBind() {
-        val movieId = args.MovieId
-        viewModel.fetchMovieDetails(movieId)
+        viewModel.fetchMovieDetails(args)
         navigationListener()
     }
 
@@ -31,7 +30,7 @@ class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
         setMovieDetailsViews(data)
     }
 
-    private fun setMovieDetailsViews(data: DetailsUIState){
+    private fun setMovieDetailsViews(data: DetailsUIState) {
         with(data.movieDetailsData) {
             with(binding) {
                 posterImageView.loadImage(poster)
@@ -54,7 +53,7 @@ class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
 
     private fun navigationListener() {
         binding.backImageButton.setOnClickListener {
-            viewModel.navigateUp()
+            parentFragmentManager.popBackStack()
         }
     }
 

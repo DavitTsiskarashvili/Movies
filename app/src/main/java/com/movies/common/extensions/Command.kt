@@ -11,7 +11,6 @@ class Command<T> {
         liveData.observe(lifecycleOwner) {
             if (it != null) {
                 callback(it)
-                liveData.value = null
             }
         }
     }
