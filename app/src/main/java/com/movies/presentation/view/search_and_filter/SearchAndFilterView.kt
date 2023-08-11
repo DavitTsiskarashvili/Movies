@@ -22,7 +22,6 @@ class SearchAndFilterView @JvmOverloads constructor(
 
     private val binding = SearchCustomViewBinding.inflate(LayoutInflater.from(context), this, true)
     private lateinit var categoryAdapter: CategoryAdapter
-    val searchInput get() = binding.searchEditText.text.toString()
 
     private var searchCallback: ((String) -> Unit)? = null
 

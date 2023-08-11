@@ -17,15 +17,14 @@ class NavigationView @JvmOverloads constructor(
         NavigationCustomViewBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        setButtonsActiveStatus(NavigationButtons.LEFT_BUTTON)
         setDefaultButtonTypes()
     }
 
     fun leftButtonListener(callback: () -> Unit) {
         with(binding) {
             leftButton.setOnClickListener {
-                callback()
                 setButtonsActiveStatus(NavigationButtons.LEFT_BUTTON)
+                callback()
             }
         }
     }
@@ -33,8 +32,8 @@ class NavigationView @JvmOverloads constructor(
     fun rightButtonListener(callback: () -> Unit) {
         with(binding) {
             rightButton.setOnClickListener {
-                callback()
                 setButtonsActiveStatus(NavigationButtons.RIGHT_BUTTON)
+                callback()
             }
         }
     }
@@ -46,7 +45,7 @@ class NavigationView @JvmOverloads constructor(
         }
     }
 
-    private fun setButtonsActiveStatus(buttonType: NavigationButtons) {
+    fun setButtonsActiveStatus(buttonType: NavigationButtons) {
         with(binding) {
             when (buttonType) {
                 NavigationButtons.LEFT_BUTTON -> {

@@ -8,6 +8,6 @@ data class MovieUIModel(
     val poster: String,
     val overview: String,
     val duration: String,
-    val isFavourite: Boolean,
+    var isFavourite: Boolean,
     val genreString: String? = null,
 )

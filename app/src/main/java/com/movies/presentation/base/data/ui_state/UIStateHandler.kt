@@ -1,10 +1,7 @@
 package com.movies.presentation.base.data.ui_state
 
-import android.util.Log
-
 interface UIStateHandler<in T> {
     fun handleUIState(uiState: UIState<T>) {
-        Log.d("TAG",uiState.toString())
         when (uiState) {
             is UIState.Success -> {
                 onDataLoaded(uiState.data)

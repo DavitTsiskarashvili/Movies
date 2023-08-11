@@ -9,6 +9,7 @@ import com.movies.presentation.base.adapter.paging_adapter.BasePagingMovieAdapte
 import com.movies.presentation.base.data.model.MovieUIModel
 
 class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapter.MoviesViewHolder>() {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -19,7 +20,14 @@ class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapt
                 parent,
                 false
             )
-        )
+        ).apply {
+            binding.favouritesToggleButton.setOnClickListener {
+                val currentItem = getItem(bindingAdapterPosition)!!
+                currentItem.isFavourite = !currentItem.isFavourite
+                onFavouriteClick?.invoke(currentItem, binding.favouritesToggleButton.isChecked)
+                notifyItemChanged(bindingAdapterPosition)
+            }
+        }
     }
 
     class MoviesViewHolder(val binding: MovieItemBinding) :
@@ -40,9 +48,6 @@ class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapt
 
                     root.setOnClickListener {
                         onClickCallback?.invoke(item)
-                    }
-                    favouritesToggleButton.setOnClickListener {
-                        onFavouriteClick?.invoke(item, favouritesToggleButton.isChecked)
                     }
                 }
             }

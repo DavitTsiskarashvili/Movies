@@ -13,7 +13,7 @@ abstract class BaseViewModel<T> : ViewModel() {
 
     open fun onCreate() {}
 
-    protected  val _uiStateLiveData =  MutableLiveData<UIState<T>>()
+    protected val _uiStateLiveData = MutableLiveData<UIState<T>>()
     val uiStateLiveData: LiveData<UIState<T>> get() = _uiStateLiveData
 
     private val networkLauncher = inject<NetworkLauncher>(NetworkLauncher::class.java).value
