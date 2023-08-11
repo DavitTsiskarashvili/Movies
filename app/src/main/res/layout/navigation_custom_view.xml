@@ -9,8 +9,8 @@
         android:id="@+id/leftButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_8_dp"
-        android:layout_marginEnd="@dimen/dimen_16_dp"
+        android:layout_marginStart="@dimen/dimen_16_dp"
+        android:layout_marginEnd="@dimen/dimen_8_dp"
         android:layout_weight="1" />
 
     <com.movies.presentation.view.navigation.NavigationViewItem

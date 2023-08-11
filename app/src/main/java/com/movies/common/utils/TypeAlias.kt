@@ -4,3 +4,4 @@ import com.movies.R
 
 typealias C = R.color
 typealias S = R.style
+typealias D = R.drawable
