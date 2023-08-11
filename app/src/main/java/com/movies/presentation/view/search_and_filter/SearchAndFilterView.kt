@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
 import com.movies.common.extensions.hiddenIf
+import com.movies.common.extensions.hideKeyboard
 import com.movies.common.extensions.visibleIf
 import com.movies.common.network.CategoryType
 import com.movies.databinding.SearchCustomViewBinding
@@ -61,6 +62,7 @@ class SearchAndFilterView @JvmOverloads constructor(
 
     fun searchCancelListener(callBack: () -> Unit) = with(binding) {
         cancelTextView.setOnClickListener {
+            searchEditText.hideKeyboard()
             searchEditText.text?.clear()
             searchEditText.clearFocus()
             handleEmptySearchInput()
