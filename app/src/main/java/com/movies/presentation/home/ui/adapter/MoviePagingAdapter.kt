@@ -1,16 +1,15 @@
-package com.movies.presentation.favourite.ui.adapter
+package com.movies.presentation.home.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.PagingDataAdapter
 import com.movies.common.extensions.loadImage
 import com.movies.databinding.MovieItemBinding
 import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.diff_util.DiffUtilCallback
 
-class FavouriteMovieAdapter :
-    ListAdapter<MovieUIModel, FavouriteMovieAdapter.MoviesViewHolder>(DiffUtilCallback()) {
+class MoviePagingAdapter :
+    PagingDataAdapter<MovieUIModel, MoviePagingAdapter.MoviesViewHolder>(DiffUtilCallback()) {
 
     private var onClickCallback: ((MovieUIModel) -> Unit)? = null
     private var onFavouriteClick: ((MovieUIModel, Boolean) -> Unit)? = null
@@ -25,24 +24,31 @@ class FavouriteMovieAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val binding = MovieItemBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+            LayoutInflater.from(parent.context), parent, false
         )
-        return MoviesViewHolder(binding)
+        return MoviesViewHolder(binding).apply {
+            binding.favouritesToggleButton.setOnClickListener {
+                val currentItem = getItem(bindingAdapterPosition)
+                currentItem?.let {
+                    val newIsFavourite = !it.isFavourite
+                    onFavouriteClick?.invoke(it, newIsFavourite)
+                    it.isFavourite = newIsFavourite
+                    notifyItemChanged(bindingAdapterPosition)
+                }
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        holder.bind(getItem(position), onClickCallback, onFavouriteClick)
+        getItem(position)?.let { holder.bind(it, onClickCallback) }
     }
 
     class MoviesViewHolder(private val binding: MovieItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             item: MovieUIModel,
             onClickCallback: ((MovieUIModel) -> Unit)?,
-            onFavouriteClick: ((MovieUIModel, Boolean) -> Unit)?
         ) {
             with(item) {
                 with(binding) {
@@ -55,9 +61,6 @@ class FavouriteMovieAdapter :
 
                     root.setOnClickListener {
                         onClickCallback?.invoke(item)
-                    }
-                    favouritesToggleButton.setOnClickListener {
-                        onFavouriteClick?.invoke(item, favouritesToggleButton.isChecked)
                     }
                 }
             }

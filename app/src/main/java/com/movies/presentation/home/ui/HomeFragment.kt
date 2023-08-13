@@ -8,7 +8,7 @@ import com.movies.databinding.FragmentHomeBinding
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.details.ui.DetailsFragment
 import com.movies.presentation.favourite.ui.FavouriteFragment
-import com.movies.presentation.home.ui.adapter.movie.MoviePagingAdapter
+import com.movies.presentation.home.ui.adapter.MoviePagingAdapter
 import com.movies.presentation.home.ui.ui_state.HomeUIState
 import com.movies.presentation.home.view_model.HomeViewModel
 import com.movies.presentation.view.navigation.NavigationButtons
