@@ -16,13 +16,14 @@ class ErrorView(
     private val binding =
         ErrorCustomViewBinding.inflate(LayoutInflater.from(context), root, false)
 
-    init { setupDialog() }
+    init {
+        setupDialog()
+    }
 
     private fun setupDialog() {
         alertDialog = AlertDialog.Builder(context)
             .setView(binding.root)
             .create().apply {
-                setCancelable(false)
                 window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             }
     }

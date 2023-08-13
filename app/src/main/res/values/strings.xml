@@ -13,7 +13,7 @@
     <string name="favourite_movies">Favourite Movies</string>
     <string name="no_movies">No movies added yet</string>
     <string name="no_data">Data can\'t be loaded</string>
-    <string name="no_internet">internet connection error</string>
+    <string name="no_internet">internet connection or some other server error</string>
     <string name="server_error">some server error</string>
     <string name="refresh">Refresh</string>
 </resources>
