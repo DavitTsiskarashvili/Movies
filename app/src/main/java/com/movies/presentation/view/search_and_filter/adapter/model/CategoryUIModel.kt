@@ -13,7 +13,9 @@ data class CategoryUIModel(
         fun getCategoryList(): List<CategoryUIModel> {
             return listOf(
                 CategoryUIModel(R.string.popular, CategoryType.POPULAR, true),
-                CategoryUIModel(R.string.top_rated, CategoryType.TOP_RATED, false)
+                CategoryUIModel(R.string.top_rated, CategoryType.TOP_RATED, false),
+                CategoryUIModel(R.string.now_playing, CategoryType.NOW_PLAYING, false),
+                CategoryUIModel(R.string.upcoming, CategoryType.UPCOMING, false),
             )
         }
     }

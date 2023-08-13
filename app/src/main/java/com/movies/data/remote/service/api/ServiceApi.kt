@@ -24,6 +24,8 @@ interface ServiceApi {
     companion object {
         const val POPULAR = "popular"
         const val TOP_RATED = "top_rated"
+        const val UPCOMING = "upcoming"
+        const val NOW_PLAYING = "now_playing"
 
         private const val PREFIX = "3/movie/"
         private const val SEARCH = "3/search/movie"

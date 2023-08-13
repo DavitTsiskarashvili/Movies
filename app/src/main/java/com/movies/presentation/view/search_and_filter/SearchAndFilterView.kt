@@ -17,9 +17,7 @@ import com.movies.presentation.view.search_and_filter.adapter.model.CategoryUIMo
 class SearchAndFilterView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttrs: Int = 0,
-    defStyleRes: Int = 0
-) : FrameLayout(context, attrs, defStyleAttrs, defStyleRes) {
+) : FrameLayout(context, attrs) {
 
     private val binding = SearchCustomViewBinding.inflate(LayoutInflater.from(context), this, true)
     private lateinit var categoryAdapter: CategoryAdapter
