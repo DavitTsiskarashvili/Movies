@@ -63,6 +63,7 @@ class SearchAndFilterView @JvmOverloads constructor(
             searchEditText.text?.clear()
             searchEditText.clearFocus()
             handleEmptySearchInput()
+            filterToggleButton.isChecked = false
             callBack.invoke()
         }
     }
