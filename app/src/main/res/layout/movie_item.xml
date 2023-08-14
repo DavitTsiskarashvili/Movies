@@ -19,7 +19,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/genreTextView"
-        style="@style/normalMontserrat_ButtonFocused"
+        style="@style/smallMontserrat_ButtonFocused"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_10_dp"
@@ -44,7 +44,7 @@
         android:drawablePadding="@dimen/dimen_1_dp"
         android:paddingHorizontal="@dimen/dimen_8_dp"
         android:paddingVertical="@dimen/dimen_4_dp"
-        android:textSize="@dimen/dimen_12_sp"
+        android:textSize="@dimen/dimen_10_sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/posterImageView"
         app:layout_constraintEnd_toEndOf="@id/posterImageView" />

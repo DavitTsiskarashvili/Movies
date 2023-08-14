@@ -8,17 +8,27 @@ import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.details.ui.ui_state.DetailsUIState
 import com.movies.presentation.details.view_model.DetailsViewModel
+import com.movies.presentation.utils.NavigationConstants.DETAILS
+import com.movies.presentation.utils.NavigationConstants.MOVIE_ID
 import kotlin.reflect.KClass
 
 class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
 
     override val binding by viewBinding(FragmentDetailsBinding::bind)
+
     override val layout: Int get() = R.layout.fragment_details
+
     override val viewModelClass: KClass<DetailsViewModel> get() = DetailsViewModel::class
 
-    private val args by lazy { arguments?.getInt("movieId")!! }
+    override fun showBottomView(): Boolean = false
+
+    override fun resultKey() = DETAILS
 
     override fun onRefresh() = viewModel.fetchMovieDetails(args)
+
+    private val args by lazy { arguments?.getInt(MOVIE_ID)!! }
+
+    private var bundleArg: MovieUIModel? = null
 
     override fun onBind() {
         viewModel.fetchMovieDetails(args)
@@ -47,6 +57,7 @@ class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
 
     private fun handleFavouriteButton(favouriteMovie: MovieUIModel) {
         binding.favouritesToggleButton.setOnClickListener {
+            bundleArg = favouriteMovie
             viewModel.updateFavouriteMovieStatus(favouriteMovie)
         }
     }

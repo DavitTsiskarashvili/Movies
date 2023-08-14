@@ -1,4 +1,4 @@
-package com.movies.presentation.base.diff_util
+package com.movies.presentation.diff_util
 
 import androidx.recyclerview.widget.DiffUtil
 import com.movies.presentation.base.data.model.MovieUIModel

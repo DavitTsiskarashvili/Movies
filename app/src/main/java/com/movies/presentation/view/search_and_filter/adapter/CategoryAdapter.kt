@@ -15,7 +15,7 @@ class CategoryAdapter(
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     private var categoryList = listOf<CategoryUIModel>()
-    private var selectedIndex = 0
+    private var selectedIndex = DEFAULT_INDEX
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         return CategoryViewHolder(
@@ -70,4 +70,9 @@ class CategoryAdapter(
             }
         }
     }
+
+    private companion object {
+        const val DEFAULT_INDEX = 0
+    }
+
 }

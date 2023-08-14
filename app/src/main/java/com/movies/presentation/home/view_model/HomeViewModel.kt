@@ -1,6 +1,5 @@
 package com.movies.presentation.home.view_model
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingData
@@ -52,8 +51,6 @@ class HomeViewModel(
 
     fun searchMovies(query: String) {
         launchNetwork<Pager<Int, MovieDomainModel>> {
-            loading { if (it) _uiStateLiveData.postValue(UIState.Loading) }
-
             executeApi { searchMoviesUseCase.invoke(query) }
 
             success { handleSuccessCase(it.flow) }
@@ -98,7 +95,6 @@ class HomeViewModel(
         viewModelScope {
             flow.cachedIn(viewModelScope).collect { pagingData ->
                 val mappedData = pagingData.map {
-                    Log.d("giorgi", pagingData.toString())
                     with(it) {
                         isFavourite = checkFavouriteStatusUseCase(id)
                         genreString = genreMap[genreInt]

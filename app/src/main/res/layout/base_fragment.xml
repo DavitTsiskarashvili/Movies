@@ -8,13 +8,14 @@
         android:id="@+id/childFragmentContainerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/navigationButton"
+        app:layout_constraintBottom_toTopOf="@+id/bottomContainer"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.movies.presentation.view.navigation.NavigationView
-        android:id="@+id/navigationButton"
+    <LinearLayout
+        android:id="@+id/bottomContainer"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_62_dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

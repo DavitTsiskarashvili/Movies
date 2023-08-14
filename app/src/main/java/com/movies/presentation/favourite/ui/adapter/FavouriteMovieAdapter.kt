@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.movies.databinding.MovieItemBinding
 import com.movies.presentation.base.data.model.MovieUIModel
-import com.movies.presentation.base.diff_util.DiffUtilCallback
 import com.movies.presentation.base.view_holder.MoviesViewHolder
+import com.movies.presentation.diff_util.DiffUtilCallback
 
 class FavouriteMovieAdapter(
     private val onClickCallback: ((MovieUIModel) -> Unit),

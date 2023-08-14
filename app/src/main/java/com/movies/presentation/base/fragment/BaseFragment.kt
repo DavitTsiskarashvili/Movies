@@ -5,15 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.viewbinding.ViewBinding
+import com.movies.common.extensions.tryConfigureBottomView
 import com.movies.presentation.base.data.ui_state.UIStateHandler
+import com.movies.presentation.base.fragment.listener.BaseFunctionsInterface
 import com.movies.presentation.base.view_model.BaseViewModel
 import com.movies.presentation.view.error.ErrorView
 import com.movies.presentation.view.loader.LoaderDialog
+import com.movies.presentation.view.navigation.NavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModelForClass
 import kotlin.reflect.KClass
 
-abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStateHandler<T> {
+abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStateHandler<T>,
+    BaseFunctionsInterface {
 
     abstract val viewModelClass: KClass<VM>
     abstract val binding: ViewBinding
@@ -26,7 +32,8 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
     protected open val layout: Int = 0
 
     abstract fun onBind()
-    open fun onRefresh(){}
+
+    open fun onRefresh() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,15 +46,12 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return if (layout != 0) {
-            inflater.inflate(layout, container, false)
-        } else {
-            super.onCreateView(inflater, container, savedInstanceState)
-        }
+        return inflater.inflate(layout, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configureBottomView()
         onBind()
         observeUIState()
     }
@@ -72,4 +76,28 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
         }
     }
 
+    override fun bottomView(): View = NavigationView(requireContext())
+
+    private fun configureBottomView() {
+        tryConfigureBottomView {
+            (parentFragment as BaseChildFragment).configureBottomView()
+        }
+    }
+
+    protected fun Any.handleResult(
+        result: String,
+        callBack: (() -> Unit)? = null
+    ) {
+        setFragmentResultListener(result) { _, _ ->
+            configureBottomView()
+            callBack?.invoke()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        resultKey()?.let {
+            setFragmentResult(it, Bundle.EMPTY)
+        }
+    }
 }

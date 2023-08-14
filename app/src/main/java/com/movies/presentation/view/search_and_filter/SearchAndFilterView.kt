@@ -54,7 +54,6 @@ class SearchAndFilterView @JvmOverloads constructor(
                 searchCallback?.invoke(query.toString())
                 handleEmptySearchInput()
             }
-
         }
     }
 
