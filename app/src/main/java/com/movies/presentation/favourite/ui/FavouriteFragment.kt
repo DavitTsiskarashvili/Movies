@@ -2,6 +2,7 @@ package com.movies.presentation.favourite.ui
 
 import com.movies.R
 import com.movies.common.extensions.changeScreen
+import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentFavouritesBinding
@@ -19,9 +20,7 @@ class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>()
     override val binding by viewBinding(FragmentFavouritesBinding::bind)
     override val layout = R.layout.fragment_favourites
 
-    private val favouriteMovieAdapter by lazy { FavouriteMovieAdapter() }
-
-    override fun onRefresh() = viewModel.fetchFavouriteMovies()
+    private lateinit var favouriteMovieAdapter: FavouriteMovieAdapter
 
     override fun onDataLoaded(data: List<MovieUIModel>) {
         favouriteMovieAdapter.submitList(data)
@@ -30,25 +29,30 @@ class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>()
     }
 
     override fun onBind() {
-        binding.favouriteMoviesAdapter.adapter = favouriteMovieAdapter
+        initRecyclerView()
+        observer()
         setListeners()
     }
 
-    private fun setListeners() {
-        binding.navigationButton.setButtonsActiveStatus(NavigationButtons.RIGHT_BUTTON)
-        favouriteMovieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
-            viewModel.updateFavouriteMovieStatus(favouriteMovie) {
-                viewModel.fetchFavouriteMovies()
+    private fun observer() {
+        observeLiveData(viewModel.moviesLiveData) { viewModel.updateFavouriteMovieStatus(it) }
+    }
+
+    private fun setListeners() = with(binding.navigationButton) {
+        setButtonsActiveStatus(NavigationButtons.RIGHT_BUTTON)
+        leftButtonListener { changeScreen(HomeFragment(), null) }
+    }
+
+    private fun initRecyclerView() {
+        favouriteMovieAdapter = FavouriteMovieAdapter(
+            onClickCallback = { film ->
+                changeScreen(DetailsFragment(), film.id)
+            },
+            onFavouriteClick = { favouriteMovie ->
+                viewModel.moviesLiveData.value = favouriteMovie
             }
-        }
-        // Navigate to Details Screen
-        favouriteMovieAdapter.onItemClickListener { film ->
-            changeScreen(DetailsFragment(), film.id)
-        }
-        // Navigate to Home Screen
-        binding.navigationButton.leftButtonListener {
-            changeScreen(HomeFragment(), null)
-        }
+        )
+        binding.favouriteMoviesAdapter.adapter = favouriteMovieAdapter
     }
 
 }

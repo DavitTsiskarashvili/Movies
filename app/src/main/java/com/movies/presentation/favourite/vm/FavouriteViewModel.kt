@@ -1,5 +1,6 @@
 package com.movies.presentation.favourite.vm
 
+import androidx.lifecycle.MutableLiveData
 import com.movies.common.extensions.viewModelScope
 import com.movies.domain.usecase.favourites.GetFavouriteMoviesUseCase
 import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
@@ -16,22 +17,24 @@ class FavouriteViewModel(
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
 ) : BaseViewModel<List<MovieUIModel>>() {
 
-    override fun onCreate() {
-        fetchFavouriteMovies()
-    }
+    val moviesLiveData: MutableLiveData<MovieUIModel> = MutableLiveData()
 
-    fun fetchFavouriteMovies() {
+    override fun onCreate() {
         viewModelScope {
-            _uiStateLiveData.postValue(
-                UIState.Success(moviesUIMapper.mapList(getFavouriteMovies.invoke()))
-            )
+            fetchFavouriteMovies()
         }
     }
 
-    fun updateFavouriteMovieStatus(movie: MovieUIModel, callback: (() -> Unit)? = null) {
+    private suspend fun fetchFavouriteMovies() {
+        _uiStateLiveData.postValue(
+            UIState.Success(moviesUIMapper.mapList(getFavouriteMovies.invoke()))
+        )
+    }
+
+    fun updateFavouriteMovieStatus(movie: MovieUIModel) {
         viewModelScope {
             updateMovieStatus.invoke(movieUIToDomain(movie))
-            callback?.invoke()
+            fetchFavouriteMovies()
         }
     }
 

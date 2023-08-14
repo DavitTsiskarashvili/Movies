@@ -26,7 +26,7 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
     protected open val layout: Int = 0
 
     abstract fun onBind()
-    abstract fun onRefresh()
+    open fun onRefresh(){}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -17,9 +17,19 @@ import kotlin.reflect.KClass
 class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
 
     override val binding by viewBinding(FragmentHomeBinding::bind)
-    private val moviePagingAdapter by lazy { MoviePagingAdapter() }
     override val layout: Int = R.layout.fragment_home
     override val viewModelClass: KClass<HomeViewModel> get() = HomeViewModel::class
+    private val moviePagingAdapter by lazy {
+        MoviePagingAdapter(
+            onClickCallback = { film ->
+                changeScreen(DetailsFragment(), film.id)
+            },
+            onFavouriteClick = { favouriteMovie, _ ->
+                viewModel.updateFavouriteMovieStatus(favouriteMovie)
+            }
+        )
+    }
+
     override fun onRefresh() = viewModel.fetchAllMovies()
 
     override fun onBind() {
@@ -38,22 +48,22 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
             searchAndFilterView.onCategoryButtonClicked {
                 viewModel.selectCategory(it)
             }
-            navigationButton.setButtonsActiveStatus(NavigationButtons.LEFT_BUTTON)
-            navigationButton.rightButtonListener {
-                changeScreen(FavouriteFragment(), null)
-            }
             searchAndFilterView.setOnSearchListener {
                 viewModel.searchMovies(it)
             }
             searchAndFilterView.searchCancelListener {
                 viewModel.fetchAllMovies()
             }
+            navigationButton.setButtonsActiveStatus(NavigationButtons.LEFT_BUTTON)
+            navigationButton.rightButtonListener {
+                changeScreen(FavouriteFragment(), null)
+            }
         }
-        moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
-            viewModel.updateFavouriteMovieStatus(favouriteMovie)
-        }
-        moviePagingAdapter.onItemClickListener { film ->
-            changeScreen(DetailsFragment(), film.id)
-        }
+//        moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+//            viewModel.updateFavouriteMovieStatus(favouriteMovie)
+//        }
+//        moviePagingAdapter.onItemClickListener { film ->
+//            changeScreen(DetailsFragment(), film.id)
+//        }
     }
 }

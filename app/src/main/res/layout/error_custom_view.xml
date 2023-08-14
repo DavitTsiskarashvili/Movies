@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:strokeColor="@color/yellow_primary"
     android:layout_marginHorizontal="@dimen/dimen_25_dp"
     app:cardBackgroundColor="@color/neutral_01_black"
     app:cardCornerRadius="@dimen/dimen_30_dp">
@@ -54,7 +55,7 @@
             style="@style/smallMontserrat_Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_110_dp"
+            android:layout_marginTop="@dimen/dimen_60_dp"
             android:layout_marginBottom="@dimen/dimen_30_dp"
             android:background="@drawable/error_button_background"
             android:drawableEnd="@drawable/ic_refresh"
