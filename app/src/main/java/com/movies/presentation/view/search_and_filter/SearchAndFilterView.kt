@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.hideKeyboard
@@ -47,7 +46,7 @@ class SearchAndFilterView @JvmOverloads constructor(
     private fun isFilterChecked() {
         with(binding) {
             filterToggleButton.setOnCheckedChangeListener { _, checked ->
-                categoryRecyclerView.visibleIf(checked)
+                categoryRecyclerView.visibleIfWithAnimation(checked)
             }
         }
     }
@@ -88,15 +87,6 @@ class SearchAndFilterView @JvmOverloads constructor(
             cancelTextView.hiddenIf(isVisible)
             filterToggleButton.visibleIf(isVisible)
             categoryRecyclerView.visibleIfWithAnimation(false)
-            updateSearchViewConstraints(!isVisible)
-        }
-    }
-
-    private fun updateSearchViewConstraints(searchFocused: Boolean) {
-        with(binding) {
-            val params = searchEditText.layoutParams as ConstraintLayout.LayoutParams
-            params.endToStart = if (searchFocused) cancelTextView.id else filterToggleButton.id
-            searchEditText.layoutParams = params
         }
     }
 
