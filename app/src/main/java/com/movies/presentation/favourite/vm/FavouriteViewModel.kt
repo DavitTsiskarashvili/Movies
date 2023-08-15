@@ -13,7 +13,7 @@ import com.movies.presentation.home.ui.mapper.movie.MovieUIToDomainMapper
 class FavouriteViewModel(
     private val getFavouriteMovies: GetFavouriteMoviesUseCase,
     private val movieUIToDomain: MovieUIToDomainMapper,
-    private val moviesUIMapper: MovieDomainToUIMapper,
+    private val moviesDomainToUIMapper: MovieDomainToUIMapper,
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
 ) : BaseViewModel<List<MovieUIModel>>() {
 
@@ -27,7 +27,7 @@ class FavouriteViewModel(
 
     private suspend fun fetchFavouriteMovies() {
         _uiStateLiveData.postValue(
-            UIState.Success(moviesUIMapper.mapList(getFavouriteMovies.invoke()))
+            UIState.Success(moviesDomainToUIMapper.mapList(getFavouriteMovies.invoke()))
         )
     }
 
