@@ -19,6 +19,10 @@ import androidx.core.content.ContextCompat
 import com.movies.presentation.view.search_and_filter.adapter.model.CategoryStyle
 
 fun View.visibleIf(visible: Boolean) {
+    visibility = if (visible) View.VISIBLE else View.INVISIBLE
+}
+
+fun View.visibleIfWithAnimation(visible: Boolean) {
     animation = AnimationUtils.loadAnimation(
         context,
         androidx.appcompat.R.anim.abc_grow_fade_in_from_bottom

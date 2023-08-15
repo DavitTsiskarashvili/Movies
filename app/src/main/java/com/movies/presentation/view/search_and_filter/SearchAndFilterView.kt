@@ -4,11 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.hideKeyboard
 import com.movies.common.extensions.visibleIf
+import com.movies.common.extensions.visibleIfWithAnimation
 import com.movies.common.network.CategoryType
 import com.movies.databinding.SearchCustomViewBinding
 import com.movies.presentation.view.search_and_filter.adapter.CategoryAdapter
@@ -28,9 +28,12 @@ class SearchAndFilterView @JvmOverloads constructor(
         searchCallback = callback
     }
 
+    var emptySearchCallback: (() -> Unit)? = null
+
     init {
         isFilterChecked()
         setListeners()
+        searchCancelListener()
     }
 
     fun onCategoryButtonClicked(callBack: (CategoryType) -> Unit) {
@@ -43,7 +46,7 @@ class SearchAndFilterView @JvmOverloads constructor(
     private fun isFilterChecked() {
         with(binding) {
             filterToggleButton.setOnCheckedChangeListener { _, checked ->
-                categoryRecyclerView.visibleIf(checked)
+                categoryRecyclerView.visibleIfWithAnimation(checked)
             }
         }
     }
@@ -57,14 +60,14 @@ class SearchAndFilterView @JvmOverloads constructor(
         }
     }
 
-    fun searchCancelListener(callBack: () -> Unit) = with(binding) {
+    private fun searchCancelListener() = with(binding) {
         cancelTextView.setOnClickListener {
             searchEditText.hideKeyboard()
             searchEditText.text?.clear()
             searchEditText.clearFocus()
-            handleEmptySearchInput()
             filterToggleButton.isChecked = false
-            callBack.invoke()
+            setFilterVisibility(true)
+            emptySearchCallback?.invoke()
         }
     }
 
@@ -72,6 +75,7 @@ class SearchAndFilterView @JvmOverloads constructor(
         with(binding.searchEditText) {
             if (text!!.isBlank()) {
                 setFilterVisibility(true)
+                emptySearchCallback?.invoke()
             } else {
                 setFilterVisibility(false)
             }
@@ -82,16 +86,7 @@ class SearchAndFilterView @JvmOverloads constructor(
         with(binding) {
             cancelTextView.hiddenIf(isVisible)
             filterToggleButton.visibleIf(isVisible)
-            categoryRecyclerView.visibleIf(false)
-            updateSearchViewConstraints(!isVisible)
-        }
-    }
-
-    private fun updateSearchViewConstraints(searchFocused: Boolean) {
-        with(binding) {
-            val params = searchEditText.layoutParams as ConstraintLayout.LayoutParams
-            params.endToStart = if (searchFocused) cancelTextView.id else filterToggleButton.id
-            searchEditText.layoutParams = params
+            categoryRecyclerView.visibleIfWithAnimation(false)
         }
     }
 
