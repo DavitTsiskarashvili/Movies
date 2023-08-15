@@ -9,6 +9,7 @@ import androidx.core.widget.doOnTextChanged
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.hideKeyboard
 import com.movies.common.extensions.visibleIf
+import com.movies.common.extensions.visibleIfWithAnimation
 import com.movies.common.network.CategoryType
 import com.movies.databinding.SearchCustomViewBinding
 import com.movies.presentation.view.search_and_filter.adapter.CategoryAdapter
@@ -66,7 +67,7 @@ class SearchAndFilterView @JvmOverloads constructor(
             searchEditText.text?.clear()
             searchEditText.clearFocus()
             filterToggleButton.isChecked = false
-            setFilterVisibility(false)
+            setFilterVisibility(true)
             emptySearchCallback?.invoke()
         }
     }
@@ -86,7 +87,7 @@ class SearchAndFilterView @JvmOverloads constructor(
         with(binding) {
             cancelTextView.hiddenIf(isVisible)
             filterToggleButton.visibleIf(isVisible)
-            categoryRecyclerView.visibleIf(false)
+            categoryRecyclerView.visibleIfWithAnimation(false)
             updateSearchViewConstraints(!isVisible)
         }
     }
