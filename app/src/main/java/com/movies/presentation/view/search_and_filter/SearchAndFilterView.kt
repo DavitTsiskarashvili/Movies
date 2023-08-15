@@ -28,9 +28,12 @@ class SearchAndFilterView @JvmOverloads constructor(
         searchCallback = callback
     }
 
+    var emptySearchCallback: (() -> Unit)? = null
+
     init {
         isFilterChecked()
         setListeners()
+        searchCancelListener()
     }
 
     fun onCategoryButtonClicked(callBack: (CategoryType) -> Unit) {
@@ -57,14 +60,14 @@ class SearchAndFilterView @JvmOverloads constructor(
         }
     }
 
-    fun searchCancelListener(callBack: () -> Unit) = with(binding) {
+    private fun searchCancelListener() = with(binding) {
         cancelTextView.setOnClickListener {
             searchEditText.hideKeyboard()
             searchEditText.text?.clear()
             searchEditText.clearFocus()
-            handleEmptySearchInput()
             filterToggleButton.isChecked = false
-            callBack.invoke()
+            setFilterVisibility(false)
+            emptySearchCallback?.invoke()
         }
     }
 
@@ -72,6 +75,7 @@ class SearchAndFilterView @JvmOverloads constructor(
         with(binding.searchEditText) {
             if (text!!.isBlank()) {
                 setFilterVisibility(true)
+                emptySearchCallback?.invoke()
             } else {
                 setFilterVisibility(false)
             }
