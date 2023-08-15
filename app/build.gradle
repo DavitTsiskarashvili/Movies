@@ -61,9 +61,6 @@ dependencies {
     // Koin
     implementation "io.insert-koin:koin-android:3.4.0"
 
-    //Data Store
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
-
     // Fragment + Jetpack Nav
     implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
@@ -73,7 +70,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //Interceptor
-    implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
+    implementation  "com.squareup.okhttp3:logging-interceptor:4.11.0"
 
     //Glide
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
@@ -84,5 +81,4 @@ dependencies {
 
     //Paging
     implementation "androidx.paging:paging-runtime:3.2.0"
-
 }
