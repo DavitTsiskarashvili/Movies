@@ -7,7 +7,7 @@ import com.movies.domain.model.GenreDomainModel
 class GenresDTOMapper : Mapper<GenresDTO, List<GenreDomainModel>> {
     override fun invoke(model: GenresDTO): List<GenreDomainModel> =
         with(model) {
-            this.genres.map {
+            genres.map {
                 GenreDomainModel(
                     id = it.id,
                     name = it.name

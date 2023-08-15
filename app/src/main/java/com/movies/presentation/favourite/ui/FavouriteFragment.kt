@@ -3,9 +3,10 @@ package com.movies.presentation.favourite.ui
 import com.movies.R
 import com.movies.common.extensions.changeScreen
 import com.movies.common.extensions.hideKeyboard
+import com.movies.common.extensions.hideViews
 import com.movies.common.extensions.observeLiveData
+import com.movies.common.extensions.showViews
 import com.movies.common.extensions.viewBinding
-import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentFavouritesBinding
 import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.fragment.BaseFragment
@@ -38,8 +39,10 @@ class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>()
 
     override fun onDataLoaded(data: List<MovieUIModel>) {
         favouriteMovieAdapter.submitList(data)
-        binding.emptyListImageView.visibleIf(data.isEmpty())
-        binding.emptyListTextView.visibleIf(data.isEmpty())
+        with(binding){
+            if (data.isEmpty()) showViews(emptyListImageView, emptyListTextView)
+            else hideViews(emptyListTextView, emptyListImageView)
+        }
     }
 
     override fun onBind() {
@@ -55,7 +58,7 @@ class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>()
     private fun initRecyclerView() {
         favouriteMovieAdapter = FavouriteMovieAdapter(
             onClickCallback = { film ->
-                hideKeyboard()
+                context?.hideKeyboard()
                 changeScreen(DetailsFragment(), film.id)
             },
             onFavouriteClick = { favouriteMovie ->

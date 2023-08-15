@@ -65,7 +65,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
     private fun initRecyclerView() {
         moviePagingAdapter = MoviePagingAdapter(
             onClickCallback = { film ->
-                hideKeyboard()
+                context?.hideKeyboard()
                 changeScreen(DetailsFragment(), film.id)
             },
             onFavouriteClick = { favouriteMovie, _ ->
