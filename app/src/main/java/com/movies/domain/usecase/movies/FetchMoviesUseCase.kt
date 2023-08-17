@@ -6,7 +6,7 @@ import com.movies.domain.model.MovieDomainModel
 import com.movies.domain.repository.MoviesRepository
 import com.movies.domain.usecase.base.BaseUseCase
 
-class GetMoviesUseCase(
+class FetchMoviesUseCase(
     private val moviesRepository: MoviesRepository
 ) : BaseUseCase<CategoryType, Pager<Int, MovieDomainModel>>() {
 

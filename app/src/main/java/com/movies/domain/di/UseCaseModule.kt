@@ -1,20 +1,20 @@
 package com.movies.domain.di
 
 import com.movies.domain.usecase.favourites.CheckFavouriteStatusUseCase
-import com.movies.domain.usecase.favourites.GetFavouriteMoviesUseCase
+import com.movies.domain.usecase.favourites.FetchFavouriteMoviesUseCase
 import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
-import com.movies.domain.usecase.movies.GetGenresUseCase
-import com.movies.domain.usecase.movies.GetMovieDetailsUseCase
-import com.movies.domain.usecase.movies.GetMoviesUseCase
+import com.movies.domain.usecase.movies.FetchGenresUseCase
+import com.movies.domain.usecase.movies.FetchMovieDetailsUseCase
+import com.movies.domain.usecase.movies.FetchMoviesUseCase
 import com.movies.domain.usecase.search.SearchMoviesUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    single { GetMoviesUseCase(moviesRepository = get()) }
+    single { FetchMoviesUseCase(moviesRepository = get()) }
     single { SearchMoviesUseCase(searchRepository = get()) }
     single { UpdateFavouriteStatusMovieUseCase(favouriteMovieRepository = get()) }
-    single { GetFavouriteMoviesUseCase(favouriteMovieRepository = get()) }
+    single { FetchFavouriteMoviesUseCase(favouriteMovieRepository = get()) }
     single { CheckFavouriteStatusUseCase(favouriteMovieRepository = get()) }
-    single { GetGenresUseCase(moviesRepository = get()) }
-    single { GetMovieDetailsUseCase(moviesRepository = get()) }
+    single { FetchGenresUseCase(moviesRepository = get()) }
+    single { FetchMovieDetailsUseCase(moviesRepository = get()) }
 }
