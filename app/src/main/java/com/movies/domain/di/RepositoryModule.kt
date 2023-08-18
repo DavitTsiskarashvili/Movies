@@ -13,7 +13,8 @@ val repositoryModule = module {
         MoviesRepositoryImpl(
             fetchMovies = get(),
             movieListDTOMapper = get(),
-            genresDTOMapper = get()
+            genresDTOMapper = get(),
+            movieDetailsDTOMapper = get()
         )
     }
     single<SearchRepository> {

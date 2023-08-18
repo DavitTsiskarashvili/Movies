@@ -10,11 +10,11 @@ import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
 import com.movies.presentation.base.data.model.MovieUIModel
+import com.movies.presentation.base.data.ui_state.UIStateHandler
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.home.ui.adapter.favourite.FavouriteMovieAdapter
 import com.movies.presentation.home.ui.adapter.movie.MoviePagingAdapter
 import com.movies.presentation.home.ui.ui_state.HomeUIState
-import com.movies.presentation.home.ui.ui_state.UIStateHandler
 import com.movies.presentation.home.view_model.HomeViewModel
 import kotlin.reflect.KClass
 
@@ -53,7 +53,10 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
         }
         data.favouritesData?.let {
             handleFavouriteData(it.isNotEmpty())
-            initFavouriteRecycler(it)
+            binding.moviesRecyclerView.adapter = favouriteMovieAdapter
+            executeScope {
+                initFavouriteRecycler(it)
+            }
         }
     }
 
@@ -113,14 +116,14 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
 
     private fun refresh() {
         binding.errorStateView.refreshButtonListener {
-            viewModel.startNetworkCall()
+            viewModel.fetchMovies()
         }
     }
 
     private fun navigateToHomeListener() {
         with(binding) {
             navigationButton.leftButtonListener {
-                viewModel.startNetworkCall()
+                viewModel.fetchMovies()
                 handleBottomNavigationVisibility(false)
                 handleSearch(searchAndFilterView.searchInput)
                 initHomeRecycler()
@@ -164,7 +167,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
 
     private fun cancelSearch() {
         binding.searchAndFilterView.clearSearchInput {
-            viewModel.startNetworkCall()
+            viewModel.fetchMovies()
         }
     }
 
@@ -185,10 +188,10 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
 
     private fun setUpNavigation() {
         moviePagingAdapter.onItemClickListener { film ->
-            viewModel.navigateToDetails(film)
+            viewModel.navigateToDetails(film.id)
         }
         favouriteMovieAdapter.onItemClickListener { film ->
-            viewModel.navigateToDetails(film)
+            viewModel.navigateToDetails(film.id)
         }
     }
 

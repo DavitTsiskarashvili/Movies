@@ -8,7 +8,10 @@ val detailsModule = module {
     viewModel {
         DetailsViewModel(
             updateMovieStatus = get(),
-            movieUIToDomain = get()
+            movieUIToDomain = get(),
+            movieDomainToUIMapper = get(),
+            getMovieDetailsUseCase = get(),
+            checkFavouriteStatusUseCase = get()
         )
     }
 }

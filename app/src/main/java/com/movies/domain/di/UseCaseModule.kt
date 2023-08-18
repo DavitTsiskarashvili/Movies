@@ -4,6 +4,7 @@ import com.movies.domain.usecase.favourites.CheckFavouriteStatusUseCase
 import com.movies.domain.usecase.favourites.GetFavouriteMoviesUseCase
 import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
 import com.movies.domain.usecase.movies.GetGenresUseCase
+import com.movies.domain.usecase.movies.GetMovieDetailsUseCase
 import com.movies.domain.usecase.movies.GetMoviesUseCase
 import com.movies.domain.usecase.search.SearchMoviesUseCase
 import org.koin.dsl.module
@@ -15,4 +16,5 @@ val useCaseModule = module {
     single { GetFavouriteMoviesUseCase(favouriteMovieRepository = get()) }
     single { CheckFavouriteStatusUseCase(favouriteMovieRepository = get()) }
     single { GetGenresUseCase(moviesRepository = get()) }
+    single { GetMovieDetailsUseCase(moviesRepository = get()) }
 }

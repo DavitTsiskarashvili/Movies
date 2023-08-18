@@ -15,10 +15,8 @@ class FavouriteMovieRepositoryImpl(
         return favouriteMoviesDao.insertFavouriteMovie(favouriteMovieDomainMapper(movie))
     }
 
-
     override suspend fun deleteFavouriteMovie(movie: MovieDomainModel) {
         return favouriteMoviesDao.deleteFavouriteMovie(favouriteMovieDomainMapper(movie))
-
     }
 
     override suspend fun getFavouriteMovies(): List<MovieDomainModel> {

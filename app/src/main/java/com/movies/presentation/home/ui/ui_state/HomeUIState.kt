@@ -6,6 +6,4 @@ import com.movies.presentation.base.data.model.MovieUIModel
 data class HomeUIState(
     val pagingData: PagingData<MovieUIModel>? = null,
     val favouritesData: List<MovieUIModel>? = null
-): BaseUiState
-
-interface BaseUiState
+)
