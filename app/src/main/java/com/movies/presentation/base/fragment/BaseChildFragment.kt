@@ -37,7 +37,7 @@ class BaseChildFragment : Fragment() {
     }
 
     fun onBackPress() {
-        if (currentFragment().needPressBack().not()) return
+        if (setCurrentFragment().needPressBack().not()) return
 
         if (childFragmentManager.backStackEntryCount == 0) {
             requireActivity().finish()
@@ -46,11 +46,10 @@ class BaseChildFragment : Fragment() {
         childFragmentManager.popBackStack()
     }
 
-    private fun currentFragment() =
+    private fun setCurrentFragment() =
         childFragmentManager.findFragmentById(R.id.childFragmentContainerView) as BaseFragment<*, *>
 
-
-    fun configureBottomView(fragment: BaseFragment<*, *> = currentFragment()) = with(fragment) {
+    fun configureBottomView(fragment: BaseFragment<*, *> = setCurrentFragment()) = with(fragment) {
         (bottomView() as NavigationView).apply {
             leftButtonListener {
                 defaultLeftButtonAction()
@@ -64,6 +63,6 @@ class BaseChildFragment : Fragment() {
     }
 
     fun addBottomContainerView(view: View) {
-        childBinding.bottomContainer.replaceView(currentFragment().showBottomView(), view)
+        childBinding.bottomContainer.replaceView(setCurrentFragment().showBottomView(), view)
     }
 }
