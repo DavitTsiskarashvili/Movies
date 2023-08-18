@@ -2,6 +2,7 @@ package com.movies.presentation.favourite.ui
 
 import com.movies.R
 import com.movies.common.extensions.changeScreen
+import com.movies.common.extensions.executeScope
 import com.movies.common.extensions.hideKeyboard
 import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
@@ -32,7 +33,7 @@ class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>()
         parentFragmentManager.popBackStack()
     }
 
-    override fun needPressBack(): Boolean = false
+    override fun needPressBack(): Boolean = true
 
     private lateinit var favouriteMovieAdapter: FavouriteMovieAdapter
 
@@ -43,7 +44,7 @@ class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>()
     }
 
     override fun onBind() {
-        handleResult(DETAILS){ viewModel.onCreate() }
+        handleResult(DETAILS) { executeScope { viewModel.fetchFavouriteMovies() } }
         initRecyclerView()
         observer()
     }
