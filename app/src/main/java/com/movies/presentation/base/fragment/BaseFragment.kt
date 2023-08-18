@@ -80,7 +80,7 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
 
     private fun configureBottomView() {
         tryConfigureBottomView {
-            (parentFragment as BaseChildFragment).configureBottomView()
+            (parentFragment as ContainerFragment).configureBottomView()
         }
     }
 

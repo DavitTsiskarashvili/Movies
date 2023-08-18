@@ -11,7 +11,7 @@ import com.movies.databinding.BaseFragmentBinding
 import com.movies.presentation.home.ui.HomeFragment
 import com.movies.presentation.view.navigation.NavigationView
 
-class BaseChildFragment : Fragment() {
+class ContainerFragment : Fragment() {
 
     private lateinit var childBinding: BaseFragmentBinding
 
