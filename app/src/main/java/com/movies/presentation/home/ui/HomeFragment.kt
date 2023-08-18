@@ -48,7 +48,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
         initRecyclerView()
         setListeners()
         binding.moviesRecyclerView.adapter = moviePagingAdapter
-        binding.searchAndFilterView.emptySearchCallback = {viewModel.fetchAllMovies()}
+        binding.searchAndFilterView.emptySearchCallback = { viewModel.fetchAllMovies() }
     }
 
     private fun setListeners() {

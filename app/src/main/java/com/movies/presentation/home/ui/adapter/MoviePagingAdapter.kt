@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import com.movies.databinding.MovieItemBinding
 import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.view_holder.MoviesViewHolder
-import com.movies.presentation.diff_util.DiffUtilCallback
+import com.movies.presentation.utils.DiffUtilCallback
 
 class MoviePagingAdapter(
     private val onClickCallback: (MovieUIModel) -> Unit,
