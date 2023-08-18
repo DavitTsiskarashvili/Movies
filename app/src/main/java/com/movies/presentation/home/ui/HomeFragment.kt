@@ -40,10 +40,10 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
 
     override fun onBind() {
         handleResult(DETAILS) {
-            viewModel.onCreate()
+//            viewModel.fetchAllMovies()
         }
         handleResult(FAVOURITES) {
-            viewModel.onCreate()
+//            viewModel.fetchAllMovies()
         }
         initRecyclerView()
         setListeners()
