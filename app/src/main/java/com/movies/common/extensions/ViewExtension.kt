@@ -1,6 +1,7 @@
 package com.movies.common.extensions
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
@@ -8,6 +9,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
+import com.movies.presentation.view.search_and_filter.adapter.model.CategoryStyle
 
 fun View.visibleIf(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.GONE
@@ -23,6 +25,11 @@ fun View.invisibleIf(visible: Boolean) {
 
 fun View.changeBackgroundColor(@ColorRes colorRes: Int) {
     backgroundTintList = ContextCompat.getColorStateList(context, colorRes)
+}
+
+fun Button.setStyle(style: CategoryStyle) {
+    setTextAppearance(style.style)
+    backgroundTintList = ContextCompat.getColorStateList(context, style.backgroundColor)
 }
 
 fun TextView.changeTextStyle(@StyleRes styleRes: Int) {

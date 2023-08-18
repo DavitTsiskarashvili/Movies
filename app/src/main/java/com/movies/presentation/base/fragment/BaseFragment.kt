@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.movies.common.navigation.observeNonNull
 import com.movies.presentation.base.view_model.BaseViewModel
-import com.movies.presentation.navigation.NavigationCommand
+import com.movies.common.navigation.NavigationCommand
 import org.koin.androidx.viewmodel.ext.android.viewModelForClass
 import kotlin.reflect.KClass
 

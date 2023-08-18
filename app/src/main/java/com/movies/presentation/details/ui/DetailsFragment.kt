@@ -8,7 +8,7 @@ import com.movies.common.extensions.viewBinding
 import com.movies.databinding.FragmentDetailsBinding
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.details.view_model.DetailsViewModel
-import com.movies.presentation.model.movie.MovieUIModel
+import com.movies.presentation.base.data.MovieUIModel
 import kotlin.reflect.KClass
 
 class DetailsFragment : BaseFragment<DetailsViewModel>() {

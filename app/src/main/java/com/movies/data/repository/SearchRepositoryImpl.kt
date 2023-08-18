@@ -3,7 +3,7 @@ package com.movies.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.movies.data.local.dao.FavouriteMoviesDao
-import com.movies.data.remote.mapper.MovieListDTOMapper
+import com.movies.data.mapper.dto.MovieListDTOMapper
 import com.movies.data.remote.paging.MoviesPagingSource
 import com.movies.data.remote.service.api.ServiceApi
 import com.movies.domain.model.MovieDomainModel

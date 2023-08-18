@@ -10,10 +10,10 @@ import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
 import com.movies.presentation.base.fragment.BaseFragment
-import com.movies.presentation.home.adapter.favourite.FavouriteMovieAdapter
-import com.movies.presentation.home.adapter.movie.MoviePagingAdapter
+import com.movies.presentation.home.ui.adapter.favourite.FavouriteMovieAdapter
+import com.movies.presentation.home.ui.adapter.movie.MoviePagingAdapter
 import com.movies.presentation.home.view_model.HomeViewModel
-import com.movies.presentation.model.movie.MovieUIModel
+import com.movies.presentation.base.data.MovieUIModel
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
@@ -104,7 +104,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun filterMovies() {
         binding.searchAndFilterView.categoryButtonListener {
-            viewModel.selectCategory(it.categoryType)
+
         }
     }
 

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.movies.common.navigation.Event
 import com.movies.common.utils.LiveDataDelegate
-import com.movies.presentation.loader.LoaderDialog
-import com.movies.presentation.navigation.NavigationCommand
+import com.movies.presentation.view.loader.LoaderDialog
+import com.movies.common.navigation.NavigationCommand
 import org.koin.java.KoinJavaComponent.get
 
 abstract class BaseViewModel : ViewModel() {

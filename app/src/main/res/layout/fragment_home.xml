@@ -7,7 +7,7 @@
     android:background="@color/neutral_01_black"
     tools:context=".presentation.home.ui.HomeFragment">
 
-    <com.movies.presentation.home.custom_view.SearchAndFilterView
+    <com.movies.presentation.view.search_and_filter.SearchAndFilterView
         android:id="@+id/searchAndFilterView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         app:spanCount="2"
         tools:listitem="@layout/movie_item" />
 
-    <com.movies.presentation.home.custom_view.NavigationView
+    <com.movies.presentation.view.navigation.NavigationView
         android:id="@+id/navigationButton"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_62_dp"
@@ -87,7 +87,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emptyListImageView" />
 
-    <com.movies.presentation.home.custom_view.ErrorView
+    <com.movies.presentation.view.error.ErrorView
         android:id="@+id/errorStateView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
