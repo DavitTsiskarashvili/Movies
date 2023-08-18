@@ -1,8 +1,8 @@
 package com.movies.domain.di
 
-import com.movies.domain.usecase.movies.GetFavouriteMoviesUseCase
+import com.movies.domain.usecase.favourites.GetFavouriteMoviesUseCase
 import com.movies.domain.usecase.movies.GetMoviesUseCase
-import com.movies.domain.usecase.movies.UpdateFavouriteStatusMovieUseCase
+import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
 import com.movies.domain.usecase.search.SearchMoviesUseCase
 import org.koin.dsl.module
 

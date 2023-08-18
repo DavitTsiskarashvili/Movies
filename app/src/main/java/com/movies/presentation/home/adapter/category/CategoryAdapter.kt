@@ -1,4 +1,4 @@
-package com.movies.presentation.home.adapter
+package com.movies.presentation.home.adapter.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import com.movies.common.extensions.changeTextStyle
 import com.movies.common.utils.C
 import com.movies.common.utils.S
 import com.movies.databinding.CategoryItemBinding
-import com.movies.presentation.base.adapter.BaseAdapter
+import com.movies.presentation.base.adapter.base.BaseAdapter
 import com.movies.presentation.model.category.Category
 
 class CategoryAdapter : BaseAdapter<Category, CategoryAdapter.CategoryViewHolder>() {

@@ -1,10 +1,11 @@
-package com.movies.presentation.base.adapter
+package com.movies.presentation.base.adapter.base
 
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.movies.presentation.base.adapter.diff_util.DiffUtilCallback
 
-abstract class BaseAdapter<MODEL : Any, VH:BaseAdapter.BaseViewHolder<MODEL>> :
+abstract class BaseAdapter<MODEL : Any, VH: BaseAdapter.BaseViewHolder<MODEL>> :
     ListAdapter<MODEL, VH>(DiffUtilCallback<MODEL>()) {
 
     var onClickCallback: ((MODEL) -> Unit)? = null

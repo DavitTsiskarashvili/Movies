@@ -1,9 +1,10 @@
-package com.movies.presentation.base.adapter
+package com.movies.presentation.base.adapter.paging_adapter
 
 import androidx.viewbinding.ViewBinding
+import com.movies.presentation.base.adapter.movie_adapter.BaseMovieAdapter
 
-abstract class BaseMovieAdapter<MODEL : Any, VH : BaseMovieAdapter.BaseMovieViewHolder<MODEL>> :
-    BaseAdapter<MODEL, VH>() {
+abstract class BasePagingMovieAdapter<MODEL : Any, VH : BaseMovieAdapter.BaseMovieViewHolder<MODEL>> :
+    BasePagingAdapter<MODEL, VH>() {
 
     private var onFavouriteClick: ((MODEL, Boolean) -> Unit)? = null
 
@@ -21,10 +22,12 @@ abstract class BaseMovieAdapter<MODEL : Any, VH : BaseMovieAdapter.BaseMovieView
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        holder.onBindMovie(
-            getItem(position),
-            onClickCallback,
-            onFavouriteClick
-        )
+        getItem(position)?.let {
+            holder.onBindMovie(
+                it,
+                onClickCallback,
+                onFavouriteClick
+            )
+        }
     }
 }

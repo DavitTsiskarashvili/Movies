@@ -1,4 +1,4 @@
-package com.movies.presentation.base.adapter
+package com.movies.presentation.base.adapter.diff_util
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
