@@ -4,13 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import com.movies.common.utils.C
-import com.movies.common.utils.S
 import com.movies.common.extensions.changeBackgroundColor
 import com.movies.common.extensions.changeDrawable
 import com.movies.common.extensions.changeDrawableColor
 import com.movies.common.extensions.changeText
 import com.movies.common.extensions.changeTextStyle
+import com.movies.common.utils.C
+import com.movies.common.utils.S
 import com.movies.databinding.NavigationCustomViewItemBinding
 
 class NavigationViewItem @JvmOverloads constructor(
@@ -42,15 +42,15 @@ class NavigationViewItem @JvmOverloads constructor(
         }
     }
 
-    companion object {
-        private val ACTIVE_BACKGROUND_COLOR = C.yellow_primary
-        private val PASSIVE_BACKGROUND_COLOR = C.neutral_02_darkest_grey
+    private companion object {
+        val ACTIVE_BACKGROUND_COLOR = C.yellow_primary
+        val PASSIVE_BACKGROUND_COLOR = C.neutral_02_darkest_grey
 
-        private val ACTIVE_TEXT_STYLE = S.normalMontserrat_ButtonFocused
-        private val PASSIVE_TEXT_STYLE = S.normalMontserrat_Button
+        val ACTIVE_TEXT_STYLE = S.normalMontserrat_ButtonFocused
+        val PASSIVE_TEXT_STYLE = S.normalMontserrat_Button
 
-        private val ACTIVE_DRAWABLE_COLOR = C.neutral_01_black
-        private val PASSIVE_DRAWABLE_COLOR = C.neutral_08_whisper
+        val ACTIVE_DRAWABLE_COLOR = C.neutral_01_black
+        val PASSIVE_DRAWABLE_COLOR = C.neutral_08_whisper
     }
 
 }

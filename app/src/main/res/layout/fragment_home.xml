@@ -33,27 +33,15 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/dimen_16_dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/navigationView"
+        app:layout_constraintBottom_toTopOf="@id/navigationButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         app:spanCount="2"
         tools:listitem="@layout/movie_item" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="@dimen/dimen_100_dp"
-        android:layout_height="@dimen/dimen_100_dp"
-        android:indeterminate="true"
-        android:scaleX="-1"
-        android:indeterminateDrawable="@drawable/ic_spinner"
-        app:layout_constraintBottom_toTopOf="@id/navigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
-
     <com.movies.presentation.home.custom_view.NavigationView
-        android:id="@+id/navigationView"
+        android:id="@+id/navigationButton"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_62_dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -105,7 +93,7 @@
         android:layout_height="0dp"
         android:visibility="gone"
         android:layout_marginVertical="@dimen/dimen_5_dp"
-        app:layout_constraintBottom_toTopOf="@+id/navigationView"
+        app:layout_constraintBottom_toTopOf="@+id/navigationButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchAndFilterView" />

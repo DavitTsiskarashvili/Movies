@@ -1,4 +1,4 @@
-package com.movies.presentation.details
+package com.movies.presentation.details.ui
 
 import androidx.activity.addCallback
 import androidx.navigation.fragment.navArgs
@@ -7,6 +7,7 @@ import com.movies.common.extensions.loadImage
 import com.movies.common.extensions.viewBinding
 import com.movies.databinding.FragmentDetailsBinding
 import com.movies.presentation.base.fragment.BaseFragment
+import com.movies.presentation.details.view_model.DetailsViewModel
 import com.movies.presentation.model.movie.MovieUIModel
 import kotlin.reflect.KClass
 
@@ -14,6 +15,7 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
 
     private val binding by viewBinding(FragmentDetailsBinding::bind)
     private val args: DetailsFragmentArgs by navArgs()
+    private lateinit var details: MovieUIModel
 
     override val layout: Int
         get() = R.layout.fragment_details
@@ -21,15 +23,16 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
     override val viewModelClass: KClass<DetailsViewModel>
         get() = DetailsViewModel::class
 
+
     override fun onBind() {
-        val model = args.MovieDetails
+        details = args.MovieDetails
         navigationListener()
         setMovieDetails()
-        handleFavouriteButton(model)
+        handleFavouriteButton(details)
     }
 
     private fun setMovieDetails() {
-        with(args.MovieDetails) {
+        with(details) {
             with(binding) {
                 posterImageView.loadImage(poster)
                 movieTitleTextView.text = title

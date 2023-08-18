@@ -29,18 +29,20 @@ class SearchAndFilterView @JvmOverloads constructor(
         initRecycler()
     }
 
-    fun searchListener(callback: (String) -> Unit) {
+    fun searchListener(listener: (String) -> Unit) {
         binding.searchEditText.doOnTextChanged { text, _, _, _ ->
-            callback(text?.toString() ?: "")
-            handleViewsVisibility(true)
-            updateSearchViewConstraints(false)
-            emptyInputHandler()
+            if (text.isNullOrBlank().not()) {
+                listener(text.toString())
+                handleViewsVisibility(true)
+                updateSearchViewConstraints(false)
+                handleEmptyInput()
+            }
         }
         clearSearchInput()
     }
 
-    private fun emptyInputHandler(){
-        if (binding.searchEditText.text?.isNullOrEmpty() == true){
+    private fun handleEmptyInput() {
+        if (binding.searchEditText.text.isNullOrBlank()) {
             handleViewsVisibility(false)
             updateSearchViewConstraints(true)
         }
@@ -63,7 +65,7 @@ class SearchAndFilterView @JvmOverloads constructor(
     }
 
     private fun updateSearchViewConstraints(isFilterVisible: Boolean) {
-        with(binding){
+        with(binding) {
             val params = searchEditText.layoutParams as ConstraintLayout.LayoutParams
             params.endToStart = if (isFilterVisible) filterToggleButton.id else cancelTextView.id
             searchEditText.layoutParams = params

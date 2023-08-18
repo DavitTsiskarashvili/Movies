@@ -1,6 +1,5 @@
 package com.movies.presentation.home.ui
 
-import androidx.core.view.isVisible
 import com.movies.R
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.invisibleIf
@@ -30,18 +29,18 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     override fun onBind() {
         initRecycler()
         observe()
+        setUpNavigation()
         setListeners()
         searchMovies()
     }
 
     private fun initRecycler() {
-        viewModel.getMovies()
         binding.moviesRecyclerView.adapter = movieAdapter
     }
 
     private fun observe() {
         observeLiveData(viewModel.loadingLiveData) {
-            binding.progressBar.isVisible = it
+
         }
         observeLiveData(viewModel.fetchMoviesLiveData) { movies ->
             handleData(movies.isNotEmpty())
@@ -94,19 +93,21 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun homeListener() {
-        binding.navigationView.homeButtonListener {
-            handleBottomNavigation(false)
-            handleSearch(binding.searchAndFilterView.searchInput)
+        with(binding) {
+            navigationButton.leftButtonListener {
+                handleBottomNavigation(false)
+                handleSearch(searchAndFilterView.searchInput)
+            }
         }
     }
 
     private fun favouritesListener() {
-        binding.navigationView.favouritesButtonListener {
+        binding.navigationButton.rightButtonListener {
             handleBottomNavigation(true)
             viewModel.fetchFavouriteMovies()
         }
     }
-
+    // constraint group
     private fun handleBottomNavigation(isClicked: Boolean) {
         with(binding) {
             moviesRecyclerView.hiddenIf(isClicked)
@@ -137,13 +138,12 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
     private fun handleFavouriteButton() {
         movieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
-                viewModel.updateFavouriteMovieStatus(favouriteMovie)
-
+            viewModel.updateFavouriteMovieStatus(favouriteMovie)
         }
     }
 
-    private fun setUpNavigation(){
-        movieAdapter.onItemClickListener {film ->
+    private fun setUpNavigation() {
+        movieAdapter.onItemClickListener { film ->
             viewModel.navigateToDetails(film)
         }
     }

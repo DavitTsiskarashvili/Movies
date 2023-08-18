@@ -40,4 +40,3 @@ fun ImageView.changeDrawable(@DrawableRes drawableRes: Int) {
 fun ImageView.changeDrawableColor(@ColorRes colorRes: Int) {
     imageTintList = ContextCompat.getColorStateList(context, colorRes)
 }
-

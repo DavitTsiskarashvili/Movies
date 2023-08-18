@@ -29,6 +29,10 @@ class HomeViewModel(
     val fetchFavouriteMoviesLivedata by LiveDataDelegate<List<MovieUIModel>>()
     private val categoryStateLiveData = MutableLiveData(CategoryType.POPULAR)
 
+    override fun onCreate() {
+        getMovies()
+    }
+
     fun getMovies() {
         viewModelScope {
             loadingLiveData.addValue(true)

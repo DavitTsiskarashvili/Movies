@@ -1,4 +1,4 @@
-package com.movies.presentation.details
+package com.movies.presentation.details.view_model
 
 import com.movies.common.extensions.viewModelScope
 import com.movies.domain.usecase.movies.UpdateFavouriteStatusMovieUseCase

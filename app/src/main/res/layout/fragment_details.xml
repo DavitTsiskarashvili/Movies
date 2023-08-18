@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/neutral_01_black"
     android:paddingVertical="@dimen/dimen_20_dp"
-    tools:context=".presentation.details.DetailsFragment">
+    tools:context=".presentation.details.ui.DetailsFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/titleTextView"

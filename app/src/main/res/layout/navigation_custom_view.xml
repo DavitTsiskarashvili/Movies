@@ -6,7 +6,7 @@
     android:paddingVertical="@dimen/dimen_12_dp">
 
     <com.movies.presentation.home.custom_view.NavigationViewItem
-        android:id="@+id/navigationView"
+        android:id="@+id/leftButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_8_dp"
@@ -14,7 +14,7 @@
         android:layout_weight="1" />
 
     <com.movies.presentation.home.custom_view.NavigationViewItem
-        android:id="@+id/favouritesButton"
+        android:id="@+id/rightButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_8_dp"
