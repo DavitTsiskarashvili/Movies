@@ -28,8 +28,6 @@ class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
 
     private val args by lazy { arguments?.getInt(MOVIE_ID)!! }
 
-    private var bundleArg: MovieUIModel? = null
-
     override fun onBind() {
         viewModel.fetchMovieDetails(args)
         navigationListener()
@@ -57,7 +55,6 @@ class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
 
     private fun handleFavouriteButton(favouriteMovie: MovieUIModel) {
         binding.favouritesToggleButton.setOnClickListener {
-            bundleArg = favouriteMovie
             viewModel.updateFavouriteMovieStatus(favouriteMovie)
         }
     }
