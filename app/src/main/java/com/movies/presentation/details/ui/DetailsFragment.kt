@@ -6,7 +6,7 @@ import com.movies.R
 import com.movies.common.extensions.loadImage
 import com.movies.common.extensions.viewBinding
 import com.movies.databinding.FragmentDetailsBinding
-import com.movies.presentation.base.data.MovieUIModel
+import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.details.view_model.DetailsViewModel
 import kotlin.reflect.KClass

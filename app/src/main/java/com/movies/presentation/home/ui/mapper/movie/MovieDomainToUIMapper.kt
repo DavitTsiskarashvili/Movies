@@ -1,8 +1,8 @@
-package com.movies.presentation.home.ui.mapper
+package com.movies.presentation.home.ui.mapper.movie
 
 import com.movies.common.mapper.Mapper
 import com.movies.domain.model.MovieDomainModel
-import com.movies.presentation.base.data.MovieUIModel
+import com.movies.presentation.base.data.model.MovieUIModel
 
 class MovieDomainToUIMapper : Mapper<MovieDomainModel, MovieUIModel> {
     override fun invoke(model: MovieDomainModel): MovieUIModel =
@@ -14,7 +14,8 @@ class MovieDomainToUIMapper : Mapper<MovieDomainModel, MovieUIModel> {
                 rating = getFormattedRating(),
                 poster = getFullPoster(),
                 overview = overview,
-                isFavourite = isFavourite
+                isFavourite = isFavourite,
+                genreString = genreString
             )
         }
 
