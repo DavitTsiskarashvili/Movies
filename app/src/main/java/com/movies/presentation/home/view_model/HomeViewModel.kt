@@ -49,16 +49,6 @@ class HomeViewModel(
         fetchMovieGenre()
     }
 
-    fun searchMovies(query: String) {
-        launchNetwork<Pager<Int, MovieDomainModel>> {
-            executeApi { searchMoviesUseCase.invoke(query) }
-
-            success { handleSuccessCase(it.flow) }
-
-            error { _uiStateLiveData.postValue(UIState.Error(it)) }
-        }
-    }
-
     private fun fetchMovieGenre() {
         launchNetwork<List<GenreDomainModel>> {
             executeApi { genresUseCase.invoke() }
@@ -84,6 +74,16 @@ class HomeViewModel(
             }
 
             loading { if (it) _uiStateLiveData.postValue(UIState.Loading) }
+
+            success { handleSuccessCase(it.flow) }
+
+            error { _uiStateLiveData.postValue(UIState.Error(it)) }
+        }
+    }
+
+    fun searchMovies(query: String) {
+        launchNetwork<Pager<Int, MovieDomainModel>> {
+            executeApi { searchMoviesUseCase.invoke(query) }
 
             success { handleSuccessCase(it.flow) }
 
