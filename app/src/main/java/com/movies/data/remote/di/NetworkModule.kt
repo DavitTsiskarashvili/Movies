@@ -1,7 +1,9 @@
 package com.movies.data.remote.di
 
-import com.movies.data.remote.NetworkConstants.BASE_URL
 import com.movies.data.remote.NetworkConstants.API_KEY
+import com.movies.data.remote.NetworkConstants.BASE_URL
+import com.movies.data.remote.network.NetworkLauncher
+import com.movies.data.remote.network.NetworkLauncherImpl
 import com.movies.data.remote.service.api.ServiceApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -34,4 +36,5 @@ private fun createRetrofit(): Retrofit {
 val networkModule = module {
     single { createRetrofit() }
     single { get<Retrofit>().create(ServiceApi::class.java) }
+    single<NetworkLauncher> { NetworkLauncherImpl() }
 }

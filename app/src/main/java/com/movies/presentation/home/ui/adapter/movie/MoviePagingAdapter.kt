@@ -9,7 +9,6 @@ import com.movies.presentation.base.adapter.paging_adapter.BasePagingMovieAdapte
 import com.movies.presentation.base.data.MovieUIModel
 
 class MoviePagingAdapter : BasePagingMovieAdapter<MovieUIModel, MoviePagingAdapter.MoviesViewHolder>() {
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

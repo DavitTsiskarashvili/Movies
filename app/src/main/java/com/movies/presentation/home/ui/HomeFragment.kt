@@ -1,23 +1,24 @@
 package com.movies.presentation.home.ui
 
-import androidx.lifecycle.lifecycleScope
+import android.annotation.SuppressLint
 import com.movies.R
 import com.movies.common.extensions.collectLatestInLifecycle
+import com.movies.common.extensions.executeScope
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.invisibleIf
-import com.movies.common.extensions.observeLiveData
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
+import com.movies.presentation.base.data.MovieUIModel
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.home.ui.adapter.favourite.FavouriteMovieAdapter
 import com.movies.presentation.home.ui.adapter.movie.MoviePagingAdapter
+import com.movies.presentation.home.ui.ui_state.HomeUIState
+import com.movies.presentation.home.ui.ui_state.UIStateHandler
 import com.movies.presentation.home.view_model.HomeViewModel
-import com.movies.presentation.base.data.MovieUIModel
-import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
-class HomeFragment : BaseFragment<HomeViewModel>() {
+class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<HomeUIState> {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
 
@@ -43,6 +44,27 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         searchMovies()
     }
 
+    override fun onDataLoaded(data: HomeUIState) {
+        data.pagingData?.let {
+            handleDataVisibility()
+            executeScope {
+                moviePagingAdapter.submitData(it)
+            }
+        }
+        data.favouritesData?.let {
+            handleFavouriteData(it.isNotEmpty())
+            initFavouriteRecycler(it)
+        }
+    }
+
+    override fun onLoading(loading: Boolean) {
+        binding.loaderView.initiateDialog(loading)
+    }
+
+    override fun onError(error: Throwable) {
+
+    }
+
     private fun initHomeRecycler() {
         binding.moviesRecyclerView.adapter = moviePagingAdapter
     }
@@ -53,35 +75,25 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     private fun observe() {
-        viewModel.fetchMoviesStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-            handleDataVisibility(true)
-            it?.let {
-                moviePagingAdapter.submitData(it)
-            }
+        viewModel.uiStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
+            it?.let { handleUIState(it) }
         }
-
-        viewModel.searchStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-            handleDataVisibility(true)
-            it?.let {
-                moviePagingAdapter.submitData(it)
-            }
-        }
-        observeLiveData(viewModel.fetchFavouriteMoviesLivedata) { favouriteMovies ->
-            handleFavouriteData(favouriteMovies.isNotEmpty())
-            binding.moviesRecyclerView.adapter = favouriteMovieAdapter
-            lifecycleScope.launch {
-                initFavouriteRecycler(favouriteMovies)
-            }
-        }
-
-        observeLiveData(viewModel.loadingLiveData) { }
-
     }
 
-    private fun handleDataVisibility(isLoaded: Boolean) {
+    private fun setListeners() {
+        filterMovies()
+        refresh()
+        navigateToHomeListener()
+        navigateToFavouritesListener()
+        handleFavouriteButton()
+        setUpNavigation()
+        cancelSearch()
+    }
+
+    private fun handleDataVisibility() {
         with(binding) {
-            errorStateView.hiddenIf(isLoaded)
-            moviesRecyclerView.visibleIf(isLoaded)
+            errorStateView.hiddenIf(true)
+            moviesRecyclerView.visibleIf(true)
         }
     }
 
@@ -93,45 +105,37 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         }
     }
 
-    private fun setListeners() {
-        filterMovies()
-        refresh()
-        homeListener()
-        favouritesListener()
-        handleFavouriteButton()
-        setUpNavigation()
-    }
-
     private fun filterMovies() {
         binding.searchAndFilterView.categoryButtonListener {
-
+            viewModel.selectCategory(it)
         }
     }
 
     private fun refresh() {
         binding.errorStateView.refreshButtonListener {
-            viewModel.getMovies()
+            viewModel.startNetworkCall()
         }
     }
 
-    private fun homeListener() {
+    private fun navigateToHomeListener() {
         with(binding) {
             navigationButton.leftButtonListener {
-                handleBottomNavigation(false)
+                viewModel.startNetworkCall()
+                handleBottomNavigationVisibility(false)
                 handleSearch(searchAndFilterView.searchInput)
+                initHomeRecycler()
             }
         }
     }
 
-    private fun favouritesListener() {
+    private fun navigateToFavouritesListener() {
         binding.navigationButton.rightButtonListener {
-            handleBottomNavigation(true)
+            handleBottomNavigationVisibility(true)
             viewModel.fetchFavouriteMovies()
         }
     }
 
-    // constraint group
-    private fun handleBottomNavigation(isClicked: Boolean) {
+    private fun handleBottomNavigationVisibility(isClicked: Boolean) {
         with(binding) {
             moviesRecyclerView.hiddenIf(isClicked)
             searchAndFilterView.hiddenIf(isClicked)
@@ -154,14 +158,28 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         if (searchInput.isNotEmpty()) {
             viewModel.searchMovies(query = searchInput)
         } else {
-            handleDataVisibility(true)
-            viewModel.getMovies()
+            handleDataVisibility()
         }
     }
 
+    private fun cancelSearch() {
+        binding.searchAndFilterView.clearSearchInput {
+            viewModel.startNetworkCall()
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     private fun handleFavouriteButton() {
-        moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
-            viewModel.updateFavouriteMovieStatus(favouriteMovie)
+        with(viewModel) {
+            moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+                updateFavouriteMovieStatus(favouriteMovie)
+            }
+            favouriteMovieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+                updateFavouriteMovieStatus(favouriteMovie) {
+                    fetchFavouriteMovies()
+                    favouriteMovieAdapter.notifyDataSetChanged()
+                }
+            }
         }
     }
 
@@ -173,5 +191,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
             viewModel.navigateToDetails(film)
         }
     }
+
 
 }

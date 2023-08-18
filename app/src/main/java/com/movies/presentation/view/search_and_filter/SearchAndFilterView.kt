@@ -33,33 +33,31 @@ class SearchAndFilterView @JvmOverloads constructor(
             if (text.isNullOrBlank().not()) {
                 listener(text.toString())
                 handleViewsVisibility(true)
-                updateSearchViewConstraints(false)
-                handleEmptyInput()
             }
         }
-        clearSearchInput()
+        emptyInputHandler()
     }
 
-    private fun handleEmptyInput() {
-        if (binding.searchEditText.text.isNullOrBlank()) {
+    private fun emptyInputHandler() {
+        if (binding.searchEditText.text?.isEmpty() == true) {
             handleViewsVisibility(false)
-            updateSearchViewConstraints(true)
         }
     }
 
-    private fun clearSearchInput() {
+    fun clearSearchInput(callBack: () -> Unit) {
         binding.cancelTextView.setOnClickListener {
             binding.searchEditText.text?.clear()
             handleViewsVisibility(false)
-            updateSearchViewConstraints(true)
+            callBack.invoke()
         }
     }
 
     private fun handleViewsVisibility(searchIsClicked: Boolean) {
         with(binding) {
             filterToggleButton.hiddenIf(searchIsClicked)
-            categoryRecyclerView.hiddenIf(searchIsClicked)
             cancelTextView.visibleIf(searchIsClicked)
+            categoryRecyclerView.hiddenIf(true)
+            updateSearchViewConstraints(!searchIsClicked)
         }
     }
 

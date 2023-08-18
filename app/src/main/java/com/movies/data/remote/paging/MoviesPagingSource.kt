@@ -2,8 +2,8 @@ package com.movies.data.remote.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.movies.data.remote.dto.movies.MoviesDTO
 import com.movies.data.mapper.dto.MovieListDTOMapper
+import com.movies.data.remote.dto.movies.MoviesDTO
 import com.movies.data.remote.service.api.ServiceApi
 import com.movies.domain.model.MovieDomainModel
 import retrofit2.HttpException

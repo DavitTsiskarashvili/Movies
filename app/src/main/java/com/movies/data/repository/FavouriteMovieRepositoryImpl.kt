@@ -28,5 +28,4 @@ class FavouriteMovieRepositoryImpl(
     override suspend fun isFavouriteMovie(id: Int): Boolean {
         return favouriteMoviesDao.isFavouriteMovie(id)
     }
-
 }
