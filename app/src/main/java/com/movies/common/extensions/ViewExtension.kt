@@ -25,18 +25,17 @@ fun View.goneIf(visible: Boolean) {
 }
 
 fun View.applyAnimation(visible: Boolean) {
-    if (visible) {
-        animation = AnimationUtils.loadAnimation(
+    animation = if (visible) {
+        AnimationUtils.loadAnimation(
             context,
             androidx.appcompat.R.anim.abc_grow_fade_in_from_bottom
         )
     } else {
-        animation = AnimationUtils.loadAnimation(
+        AnimationUtils.loadAnimation(
             context,
             androidx.appcompat.R.anim.abc_shrink_fade_out_from_bottom
         )
     }
-
 }
 
 fun View.hiddenIf(visible: Boolean) {

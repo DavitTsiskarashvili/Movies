@@ -88,7 +88,7 @@ class SearchAndFilterView @JvmOverloads constructor(
         with(binding) {
             cancelTextView.hiddenIf(isVisible)
             filterToggleButton.visibleIf(isVisible)
-            categoryRecyclerView.visibleIf(false)
+            categoryRecyclerView.goneIf(false)
             categoryRecyclerView.applyAnimation(false)
         }
     }
