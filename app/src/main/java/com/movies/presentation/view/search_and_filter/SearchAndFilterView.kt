@@ -49,6 +49,7 @@ class SearchAndFilterView @JvmOverloads constructor(
             filterToggleButton.setOnCheckedChangeListener { _, checked ->
                 categoryRecyclerView.goneIf(checked)
                 categoryRecyclerView.applyAnimation(checked)
+                clearFocus()
             }
         }
     }
@@ -71,6 +72,10 @@ class SearchAndFilterView @JvmOverloads constructor(
             setFilterVisibility(true)
             emptySearchCallback?.invoke()
         }
+    }
+
+    override fun clearFocus(){
+        binding.searchEditText.clearFocus()
     }
 
     private fun handleEmptySearchInput() {

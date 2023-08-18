@@ -54,10 +54,15 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
     private fun setListeners() {
         with(binding) {
             searchAndFilterView.onCategoryButtonClicked {
+                searchAndFilterView.clearFocus()
                 viewModel.selectCategory(it)
             }
             searchAndFilterView.setOnSearchListener {
                 viewModel.searchMovies(it)
+            }
+            root.setOnClickListener {
+                hideKeyboard()
+                searchAndFilterView.clearFocus()
             }
         }
     }
@@ -66,6 +71,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
         moviePagingAdapter = MoviePagingAdapter(
             onClickCallback = { film ->
                 hideKeyboard()
+                binding.searchAndFilterView.clearFocus()
                 changeScreen(DetailsFragment(), film.id)
             },
             onFavouriteClick = { favouriteMovie, _ ->
