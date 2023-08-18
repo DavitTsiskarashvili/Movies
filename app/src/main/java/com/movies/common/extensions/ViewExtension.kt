@@ -1,9 +1,7 @@
 package com.movies.common.extensions
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -57,10 +55,6 @@ fun ImageView.changeDrawable(@DrawableRes drawableRes: Int) {
 
 fun ImageView.changeDrawableColor(@ColorRes colorRes: Int) {
     imageTintList = ContextCompat.getColorStateList(context, colorRes)
-}
-
-fun ViewGroup.inflate(layoutRes: Int): View {
-    return LayoutInflater.from(context).inflate(layoutRes, this, false)
 }
 
 fun LinearLayout.replaceView(needsAdd: Boolean, view: View) {
