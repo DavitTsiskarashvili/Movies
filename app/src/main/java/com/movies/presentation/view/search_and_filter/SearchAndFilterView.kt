@@ -5,10 +5,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.core.widget.doOnTextChanged
+import com.movies.common.extensions.applyAnimation
+import com.movies.common.extensions.goneIf
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.hideKeyboard
 import com.movies.common.extensions.visibleIf
-import com.movies.common.extensions.visibleIfWithAnimation
 import com.movies.common.network.CategoryType
 import com.movies.databinding.SearchCustomViewBinding
 import com.movies.presentation.view.search_and_filter.adapter.CategoryAdapter
@@ -46,7 +47,9 @@ class SearchAndFilterView @JvmOverloads constructor(
     private fun isFilterChecked() {
         with(binding) {
             filterToggleButton.setOnCheckedChangeListener { _, checked ->
-                categoryRecyclerView.visibleIfWithAnimation(checked)
+                categoryRecyclerView.goneIf(checked)
+                categoryRecyclerView.applyAnimation(checked)
+                clearFocus()
             }
         }
     }
@@ -71,6 +74,10 @@ class SearchAndFilterView @JvmOverloads constructor(
         }
     }
 
+    override fun clearFocus(){
+        binding.searchEditText.clearFocus()
+    }
+
     private fun handleEmptySearchInput() {
         with(binding.searchEditText) {
             if (text!!.isBlank()) {
@@ -86,7 +93,8 @@ class SearchAndFilterView @JvmOverloads constructor(
         with(binding) {
             cancelTextView.hiddenIf(isVisible)
             filterToggleButton.visibleIf(isVisible)
-            categoryRecyclerView.visibleIfWithAnimation(false)
+            categoryRecyclerView.goneIf(false)
+            categoryRecyclerView.applyAnimation(false)
         }
     }
 

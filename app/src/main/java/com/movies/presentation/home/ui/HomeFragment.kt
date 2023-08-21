@@ -40,24 +40,28 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
 
     override fun onBind() {
         handleResult(DETAILS) {
-            viewModel.onCreate()
+//            viewModel.fetchAllMovies()
         }
         handleResult(FAVOURITES) {
-            viewModel.onCreate()
+//            viewModel.fetchAllMovies()
         }
         initRecyclerView()
         setListeners()
-        binding.moviesRecyclerView.adapter = moviePagingAdapter
-        binding.searchAndFilterView.emptySearchCallback = {viewModel.fetchAllMovies()}
+        binding.searchAndFilterView.emptySearchCallback = { viewModel.fetchAllMovies() }
     }
 
     private fun setListeners() {
         with(binding) {
             searchAndFilterView.onCategoryButtonClicked {
+                searchAndFilterView.clearFocus()
                 viewModel.selectCategory(it)
             }
             searchAndFilterView.setOnSearchListener {
                 viewModel.searchMovies(it)
+            }
+            root.setOnClickListener {
+                requireContext().hideKeyboard()
+                searchAndFilterView.clearFocus()
             }
         }
     }
@@ -66,12 +70,14 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
         moviePagingAdapter = MoviePagingAdapter(
             onClickCallback = { film ->
                 requireContext().hideKeyboard()
+                binding.searchAndFilterView.clearFocus()
                 changeScreen(DetailsFragment(), film.id)
             },
             onFavouriteClick = { favouriteMovie, _ ->
                 viewModel.updateFavouriteMovieStatus(favouriteMovie)
             }
         )
+        binding.moviesRecyclerView.adapter = moviePagingAdapter
     }
 
 }

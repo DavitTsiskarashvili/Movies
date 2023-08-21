@@ -1,8 +1,8 @@
 package com.movies.common.extensions
 
 import android.view.LayoutInflater
+import android.content.Context
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
@@ -20,20 +20,22 @@ fun View.visibleIf(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.INVISIBLE
 }
 
-fun Any.showViews(vararg  views: View){
-    views.forEach { it.visibility = View.VISIBLE }
-}
-
-fun Any.hideViews(vararg  views: View){
-    views.forEach { it.visibility = View.INVISIBLE }
-}
-
-fun View.visibleIfWithAnimation(visible: Boolean) {
-    animation = AnimationUtils.loadAnimation(
-        context,
-        androidx.appcompat.R.anim.abc_grow_fade_in_from_bottom
-    )
+fun View.goneIf(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.GONE
+}
+
+fun View.applyAnimation(visible: Boolean) {
+    animation = if (visible) {
+        AnimationUtils.loadAnimation(
+            context,
+            androidx.appcompat.R.anim.abc_grow_fade_in_from_bottom
+        )
+    } else {
+        AnimationUtils.loadAnimation(
+            context,
+            androidx.appcompat.R.anim.abc_shrink_fade_out_from_bottom
+        )
+    }
 }
 
 fun View.hiddenIf(visible: Boolean) {
@@ -63,10 +65,6 @@ fun ImageView.changeDrawable(@DrawableRes drawableRes: Int) {
 
 fun ImageView.changeDrawableColor(@ColorRes colorRes: Int) {
     imageTintList = ContextCompat.getColorStateList(context, colorRes)
-}
-
-fun ViewGroup.inflate(layoutRes: Int): View {
-    return LayoutInflater.from(context).inflate(layoutRes, this, false)
 }
 
 fun LinearLayout.replaceView(needsAdd: Boolean, view: View) {

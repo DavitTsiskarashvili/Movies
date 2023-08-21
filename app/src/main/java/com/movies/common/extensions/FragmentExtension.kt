@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.movies.R
-import com.movies.presentation.base.fragment.BaseChildFragment
 import com.movies.presentation.base.fragment.BaseFragment
+import com.movies.presentation.base.fragment.ContainerFragment
 import com.movies.presentation.utils.NavigationConstants.MOVIE_ID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ fun BaseFragment<*, *>.tryConfigureBottomView(tryAction: () -> Unit) {
     try {
         tryAction.invoke()
     } catch (_: Exception) {
-        (parentFragment as BaseChildFragment).addBottomContainerView(bottomView())
+        (parentFragment as ContainerFragment).addBottomContainerView(bottomView())
     }
 }
 

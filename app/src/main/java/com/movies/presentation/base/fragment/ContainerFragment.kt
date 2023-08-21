@@ -11,7 +11,7 @@ import com.movies.databinding.BaseFragmentBinding
 import com.movies.presentation.home.ui.HomeFragment
 import com.movies.presentation.view.navigation.NavigationView
 
-class BaseChildFragment : Fragment() {
+class ContainerFragment : Fragment() {
 
     private lateinit var childBinding: BaseFragmentBinding
 
@@ -37,7 +37,7 @@ class BaseChildFragment : Fragment() {
     }
 
     fun onBackPress() {
-        if (setCurrentFragment().needPressBack().not()) return
+        if (getCurrentFragment().needPressBack().not()) return
 
         if (childFragmentManager.backStackEntryCount == 0) {
             requireActivity().finish()
@@ -46,10 +46,10 @@ class BaseChildFragment : Fragment() {
         childFragmentManager.popBackStack()
     }
 
-    private fun setCurrentFragment() =
+    private fun getCurrentFragment() =
         childFragmentManager.findFragmentById(R.id.childFragmentContainerView) as BaseFragment<*, *>
 
-    fun configureBottomView(fragment: BaseFragment<*, *> = setCurrentFragment()) = with(fragment) {
+    fun configureBottomView(fragment: BaseFragment<*, *> = getCurrentFragment()) = with(fragment) {
         (bottomView() as NavigationView).apply {
             leftButtonListener {
                 defaultLeftButtonAction()
@@ -63,6 +63,6 @@ class BaseChildFragment : Fragment() {
     }
 
     fun addBottomContainerView(view: View) {
-        childBinding.bottomContainer.replaceView(setCurrentFragment().showBottomView(), view)
+        childBinding.bottomContainer.replaceView(getCurrentFragment().showBottomView(), view)
     }
 }

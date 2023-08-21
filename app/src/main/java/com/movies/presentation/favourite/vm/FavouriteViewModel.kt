@@ -25,7 +25,7 @@ class FavouriteViewModel(
         }
     }
 
-    private suspend fun fetchFavouriteMovies() {
+    suspend fun fetchFavouriteMovies() {
         _uiStateLiveData.postValue(
             UIState.Success(moviesDomainToUIMapper.mapList(getFavouriteMovies.invoke()))
         )

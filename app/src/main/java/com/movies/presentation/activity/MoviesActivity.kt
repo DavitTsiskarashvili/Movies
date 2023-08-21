@@ -6,7 +6,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import com.movies.R
 import com.movies.databinding.ActivityMoviesBinding
-import com.movies.presentation.base.fragment.BaseChildFragment
+import com.movies.presentation.base.fragment.ContainerFragment
 
 class MoviesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMoviesBinding
@@ -17,7 +17,7 @@ class MoviesActivity : AppCompatActivity() {
         installSplashScreen()
         setContentView(binding.root)
         supportFragmentManager.beginTransaction().replace(
-            R.id.nav_host_fragment, BaseChildFragment()
+            R.id.nav_host_fragment, ContainerFragment()
         ).commit()
     }
 
@@ -27,7 +27,7 @@ class MoviesActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         when (val currentFragment = getCurrentFragment()) {
-            is BaseChildFragment -> {
+            is ContainerFragment -> {
                 return currentFragment.onBackPress()
             }
         }
