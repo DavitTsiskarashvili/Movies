@@ -29,7 +29,7 @@ fun View.changeBackgroundColor(@ColorRes colorRes: Int) {
 
 fun Button.setStyle(style: CategoryStyle) {
     setTextAppearance(style.style)
-    backgroundTintList = ContextCompat.getColorStateList(context, style.backgroundColor)
+    changeBackground(style.strokeStyle)
 }
 
 fun TextView.changeTextStyle(@StyleRes styleRes: Int) {
@@ -38,6 +38,10 @@ fun TextView.changeTextStyle(@StyleRes styleRes: Int) {
 
 fun TextView.changeText(@StringRes textRes: Int) {
     text = context.getString(textRes)
+}
+
+fun View.changeBackground(@DrawableRes drawableRes: Int){
+    background = ContextCompat.getDrawable(context, drawableRes)
 }
 
 fun ImageView.changeDrawable(@DrawableRes drawableRes: Int) {

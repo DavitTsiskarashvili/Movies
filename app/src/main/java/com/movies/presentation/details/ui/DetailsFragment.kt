@@ -1,40 +1,37 @@
 package com.movies.presentation.details.ui
 
-import androidx.activity.addCallback
-import androidx.navigation.fragment.navArgs
 import com.movies.R
-import com.movies.common.extensions.collectLatestInLifecycle
 import com.movies.common.extensions.loadImage
 import com.movies.common.extensions.viewBinding
 import com.movies.databinding.FragmentDetailsBinding
 import com.movies.presentation.base.data.model.MovieUIModel
-import com.movies.presentation.base.data.ui_state.UIStateHandler
 import com.movies.presentation.base.fragment.BaseFragment
 import com.movies.presentation.details.ui.ui_state.DetailsUIState
 import com.movies.presentation.details.view_model.DetailsViewModel
 import kotlin.reflect.KClass
 
-class DetailsFragment : BaseFragment<DetailsUIState,DetailsViewModel>(), UIStateHandler<DetailsUIState> {
+class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
 
-    private val binding by viewBinding(FragmentDetailsBinding::bind)
-    private val args: DetailsFragmentArgs by navArgs()
+    override val binding by viewBinding(FragmentDetailsBinding::bind)
+    override val layout: Int get() = R.layout.fragment_details
+    override val viewModelClass: KClass<DetailsViewModel> get() = DetailsViewModel::class
 
-    override val layout: Int
-        get() = R.layout.fragment_details
+    private val args by lazy { arguments?.getInt("movieId")!! }
 
-    override val viewModelClass: KClass<DetailsViewModel>
-        get() = DetailsViewModel::class
+    override fun onRefresh() = viewModel.fetchMovieDetails(args)
 
     override fun onBind() {
-        val movieId = args.MovieId
-        viewModel.fetchMovieDetails(movieId)
-        observe()
+        viewModel.fetchMovieDetails(args)
         navigationListener()
     }
 
     override fun onDataLoaded(data: DetailsUIState) {
-        with(data.movieDetailsData){
-            handleFavouriteButton(this)
+        handleFavouriteButton(data.movieDetailsData)
+        setMovieDetailsViews(data)
+    }
+
+    private fun setMovieDetailsViews(data: DetailsUIState) {
+        with(data.movieDetailsData) {
             with(binding) {
                 posterImageView.loadImage(poster)
                 movieTitleTextView.text = title
@@ -48,28 +45,15 @@ class DetailsFragment : BaseFragment<DetailsUIState,DetailsViewModel>(), UIState
         }
     }
 
-    override fun onLoading(loading: Boolean) { }
-
-    override fun onError(error: Throwable) { }
-
-    private fun observe() {
-        viewModel.uiStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-            it?.let { handleUIState(it) }
+    private fun handleFavouriteButton(favouriteMovie: MovieUIModel) {
+        binding.favouritesToggleButton.setOnClickListener {
+            viewModel.updateFavouriteMovieStatus(favouriteMovie)
         }
     }
 
     private fun navigationListener() {
         binding.backImageButton.setOnClickListener {
-            viewModel.navigateUp()
-        }
-        requireActivity().onBackPressedDispatcher.addCallback {
-            viewModel.navigateUp()
-        }
-    }
-
-    private fun handleFavouriteButton(favouriteMovie: MovieUIModel) {
-        binding.favouritesToggleButton.setOnClickListener {
-            viewModel.updateFavouriteMovieStatus(favouriteMovie)
+            parentFragmentManager.popBackStack()
         }
     }
 

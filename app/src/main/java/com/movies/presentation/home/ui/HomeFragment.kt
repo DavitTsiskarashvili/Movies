@@ -1,102 +1,110 @@
 package com.movies.presentation.home.ui
 
-import android.annotation.SuppressLint
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.movies.R
-import com.movies.common.extensions.collectLatestInLifecycle
+import com.movies.common.extensions.changeScreen
 import com.movies.common.extensions.executeScope
 import com.movies.common.extensions.hiddenIf
-import com.movies.common.extensions.invisibleIf
 import com.movies.common.extensions.viewBinding
 import com.movies.common.extensions.visibleIf
 import com.movies.databinding.FragmentHomeBinding
-import com.movies.presentation.base.data.model.MovieUIModel
-import com.movies.presentation.base.data.ui_state.UIStateHandler
 import com.movies.presentation.base.fragment.BaseFragment
+import com.movies.presentation.details.ui.DetailsFragment
 import com.movies.presentation.home.ui.adapter.favourite.FavouriteMovieAdapter
 import com.movies.presentation.home.ui.adapter.movie.MoviePagingAdapter
 import com.movies.presentation.home.ui.ui_state.HomeUIState
 import com.movies.presentation.home.view_model.HomeViewModel
 import kotlin.reflect.KClass
 
-class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<HomeUIState> {
+class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
 
-    private val binding by viewBinding(FragmentHomeBinding::bind)
-
-    private val moviePagingAdapter by lazy {
-        MoviePagingAdapter()
-    }
-
-    private val favouriteMovieAdapter by lazy {
-        FavouriteMovieAdapter()
-    }
-
-    override val layout: Int
-        get() = R.layout.fragment_home
-
-    override val viewModelClass: KClass<HomeViewModel>
-        get() = HomeViewModel::class
+    override val binding by viewBinding(FragmentHomeBinding::bind)
+    private val moviePagingAdapter by lazy { MoviePagingAdapter() }
+    private val favouriteMovieAdapter by lazy { FavouriteMovieAdapter() }
+    override val layout: Int get() = R.layout.fragment_home
+    override val viewModelClass: KClass<HomeViewModel> get() = HomeViewModel::class
+    var favouritesIsUpdated = false
+    override fun onRefresh() = viewModel.fetchAllMovies()
 
     override fun onBind() {
-        initHomeRecycler()
-        observe()
-        setUpNavigation()
         setListeners()
-        searchMovies()
+        binding.moviesRecyclerView.adapter = moviePagingAdapter
     }
 
     override fun onDataLoaded(data: HomeUIState) {
         data.pagingData?.let {
-            handleDataVisibility()
-            executeScope {
-                moviePagingAdapter.submitData(it)
-            }
+            executeScope { moviePagingAdapter.submitData(it) }
         }
         data.favouritesData?.let {
+            favouriteMovieAdapter.submitList(it)
             handleFavouriteData(it.isNotEmpty())
-            binding.moviesRecyclerView.adapter = favouriteMovieAdapter
-            executeScope {
-                initFavouriteRecycler(it)
-            }
-        }
-    }
-
-    override fun onLoading(loading: Boolean) {
-        binding.loaderView.initiateDialog(loading)
-    }
-
-    override fun onError(error: Throwable) {
-
-    }
-
-    private fun initHomeRecycler() {
-        binding.moviesRecyclerView.adapter = moviePagingAdapter
-    }
-
-    private fun initFavouriteRecycler(list: List<MovieUIModel>) {
-        binding.moviesRecyclerView.adapter = favouriteMovieAdapter
-        favouriteMovieAdapter.submitList(list)
-    }
-
-    private fun observe() {
-        viewModel.uiStateFlow.collectLatestInLifecycle(viewLifecycleOwner) {
-            it?.let { handleUIState(it) }
         }
     }
 
     private fun setListeners() {
-        filterMovies()
-        refresh()
-        navigateToHomeListener()
-        navigateToFavouritesListener()
-        handleFavouriteButton()
-        setUpNavigation()
-        cancelSearch()
+        with(binding) {
+            searchAndFilterView.onCategoryButtonClicked {
+                viewModel.selectCategory(it)
+            }
+            // Navigate to Home Screen
+            navigationButton.leftButtonListener {
+                setHomeScreen()
+            }
+            // Navigate to Favourites Screen
+            navigationButton.rightButtonListener {
+                setFavouritesScreen()
+                handleFavouriteData(true)
+            }
+            // Search
+            searchAndFilterView.setOnSearchListener {
+                viewModel.searchMovies(it)
+            }
+            // Cancel Search
+            searchAndFilterView.searchCancelListener {
+                viewModel.fetchAllMovies()
+            }
+        }
+        with(viewModel) {
+            // Add or Remove from favourites
+            moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+                updateFavouriteMovieStatus(favouriteMovie)
+            }
+            // Navigate to Details Screen
+            moviePagingAdapter.onItemClickListener { film ->
+                changeScreen(DetailsFragment(), film.id)
+            }
+            // Add or Remove from favourites
+            favouriteMovieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
+                updateFavouriteMovieStatus(favouriteMovie) {
+                    fetchFavouriteMovies()
+                }
+            }
+            // Navigate to Details Screen
+            favouriteMovieAdapter.onItemClickListener { film ->
+                changeScreen(DetailsFragment(), film.id)
+            }
+        }
     }
 
-    private fun handleDataVisibility() {
+    private fun setHomeScreen() {
+        handleHomeScreenComponentsVisibility(true)
+        updateRecyclerViewConstraint(false)
+        binding.moviesRecyclerView.adapter = moviePagingAdapter
+    }
+
+    private fun setFavouritesScreen() {
+        handleHomeScreenComponentsVisibility(false)
+        updateRecyclerViewConstraint(true)
+        binding.moviesRecyclerView.adapter = favouriteMovieAdapter
+        if (favouriteMovieAdapter.itemCount == 0 || favouritesIsUpdated) viewModel.fetchFavouriteMovies()
+        favouritesIsUpdated = false
+    }
+
+    private fun handleHomeScreenComponentsVisibility(isHomeSelected: Boolean) {
         with(binding) {
-            errorStateView.hiddenIf(true)
-            moviesRecyclerView.visibleIf(true)
+            searchAndFilterView.visibleIf(isHomeSelected)
+            titleTextView.visibleIf(isHomeSelected)
+            favouritesTitleTextView.hiddenIf(isHomeSelected)
         }
     }
 
@@ -108,92 +116,12 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>(), UIStateHandler<
         }
     }
 
-    private fun filterMovies() {
-        binding.searchAndFilterView.categoryButtonListener {
-            viewModel.selectCategory(it)
-        }
-    }
-
-    private fun refresh() {
-        binding.errorStateView.refreshButtonListener {
-            viewModel.fetchMovies()
-        }
-    }
-
-    private fun navigateToHomeListener() {
+    private fun updateRecyclerViewConstraint(isFavourite: Boolean) {
         with(binding) {
-            navigationButton.leftButtonListener {
-                viewModel.fetchMovies()
-                handleBottomNavigationVisibility(false)
-                handleSearch(searchAndFilterView.searchInput)
-                initHomeRecycler()
-            }
+            val params = moviesRecyclerView.layoutParams as ConstraintLayout.LayoutParams
+            params.topToBottom = if (isFavourite) favouritesTitleTextView.id else titleTextView.id
+            moviesRecyclerView.layoutParams = params
         }
     }
-
-    private fun navigateToFavouritesListener() {
-        binding.navigationButton.rightButtonListener {
-            handleBottomNavigationVisibility(true)
-            viewModel.fetchFavouriteMovies()
-        }
-    }
-
-    private fun handleBottomNavigationVisibility(isClicked: Boolean) {
-        with(binding) {
-            moviesRecyclerView.hiddenIf(isClicked)
-            searchAndFilterView.hiddenIf(isClicked)
-            titleTextView.invisibleIf(isClicked)
-            favouritesTitleTextView.visibleIf(isClicked)
-            emptyListImageView.visibleIf(isClicked)
-            emptyListTextView.visibleIf(isClicked)
-        }
-    }
-
-    private fun searchMovies() {
-        with(binding.searchAndFilterView) {
-            searchListener {
-                handleSearch(searchInput)
-            }
-        }
-    }
-
-    private fun handleSearch(searchInput: String) {
-        if (searchInput.isNotEmpty()) {
-            viewModel.searchMovies(query = searchInput)
-        } else {
-            handleDataVisibility()
-        }
-    }
-
-    private fun cancelSearch() {
-        binding.searchAndFilterView.clearSearchInput {
-            viewModel.fetchMovies()
-        }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun handleFavouriteButton() {
-        with(viewModel) {
-            moviePagingAdapter.onFavouriteClickListener { favouriteMovie, _ ->
-                updateFavouriteMovieStatus(favouriteMovie)
-            }
-            favouriteMovieAdapter.onFavouriteClickListener { favouriteMovie, _ ->
-                updateFavouriteMovieStatus(favouriteMovie) {
-                    fetchFavouriteMovies()
-                    favouriteMovieAdapter.notifyDataSetChanged()
-                }
-            }
-        }
-    }
-
-    private fun setUpNavigation() {
-        moviePagingAdapter.onItemClickListener { film ->
-            viewModel.navigateToDetails(film.id)
-        }
-        favouriteMovieAdapter.onItemClickListener { film ->
-            viewModel.navigateToDetails(film.id)
-        }
-    }
-
 
 }

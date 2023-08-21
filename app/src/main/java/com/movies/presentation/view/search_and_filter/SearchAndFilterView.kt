@@ -24,61 +24,22 @@ class SearchAndFilterView @JvmOverloads constructor(
     private lateinit var categoryAdapter: CategoryAdapter
     val searchInput get() = binding.searchEditText.text.toString()
 
+    private var searchCallback: ((String) -> Unit)? = null
+
+    fun setOnSearchListener(callback: (String) -> Unit) {
+        searchCallback = callback
+    }
+
     init {
         isFilterChecked()
+        setListeners()
     }
 
-    fun searchListener(listener: (String) -> Unit) {
-        binding.searchEditText.doOnTextChanged { text, _, _, _ ->
-            if (text.isNullOrBlank().not()) {
-                listener(text.toString())
-                handleViewsVisibility(true)
-            }
-        }
-        emptyInputHandler()
-    }
-
-    private fun emptyInputHandler() {
-        if (binding.searchEditText.text?.isEmpty() == true) {
-            handleViewsVisibility(false)
-        }
-    }
-
-    fun clearSearchInput(callBack: () -> Unit) {
-        binding.cancelTextView.setOnClickListener {
-            binding.searchEditText.text?.clear()
-            handleViewsVisibility(false)
-            callBack.invoke()
-        }
-    }
-
-    private fun handleViewsVisibility(searchIsClicked: Boolean) {
-        with(binding) {
-            filterToggleButton.hiddenIf(searchIsClicked)
-            cancelTextView.visibleIf(searchIsClicked)
-            categoryRecyclerView.hiddenIf(true)
-            updateSearchViewConstraints(!searchIsClicked)
-        }
-    }
-
-    private fun updateSearchViewConstraints(isFilterVisible: Boolean) {
-        with(binding) {
-            val params = searchEditText.layoutParams as ConstraintLayout.LayoutParams
-            params.endToStart = if (isFilterVisible) filterToggleButton.id else cancelTextView.id
-            searchEditText.layoutParams = params
-        }
-    }
-
-    fun categoryButtonListener(callBack: (CategoryType) -> Unit) {
+    fun onCategoryButtonClicked(callBack: (CategoryType) -> Unit) {
         categoryAdapter = CategoryAdapter {
             callBack(it)
         }
         initRecycler()
-    }
-
-    private fun initRecycler() {
-        binding.categoryRecyclerView.adapter = categoryAdapter
-        categoryAdapter.setAdapterList(CategoryUIModel.getCategoryList())
     }
 
     private fun isFilterChecked() {
@@ -88,4 +49,56 @@ class SearchAndFilterView @JvmOverloads constructor(
             }
         }
     }
+
+    private fun setListeners() {
+        with(binding) {
+            searchEditText.doOnTextChanged { query, _, _, _ ->
+                searchCallback?.invoke(query.toString())
+                handleEmptySearchInput()
+            }
+
+        }
+    }
+
+    fun searchCancelListener(callBack: () -> Unit) = with(binding) {
+        cancelTextView.setOnClickListener {
+            searchEditText.text?.clear()
+            searchEditText.clearFocus()
+            handleEmptySearchInput()
+            callBack.invoke()
+        }
+    }
+
+    private fun handleEmptySearchInput() {
+        with(binding.searchEditText) {
+            if (text!!.isBlank()) {
+                setFilterVisibility(true)
+            } else {
+                setFilterVisibility(false)
+            }
+        }
+    }
+
+    private fun setFilterVisibility(isVisible: Boolean) {
+        with(binding) {
+            cancelTextView.hiddenIf(isVisible)
+            filterToggleButton.visibleIf(isVisible)
+            categoryRecyclerView.visibleIf(false)
+            updateSearchViewConstraints(!isVisible)
+        }
+    }
+
+    private fun updateSearchViewConstraints(searchFocused: Boolean) {
+        with(binding) {
+            val params = searchEditText.layoutParams as ConstraintLayout.LayoutParams
+            params.endToStart = if (searchFocused) cancelTextView.id else filterToggleButton.id
+            searchEditText.layoutParams = params
+        }
+    }
+
+    private fun initRecycler() {
+        binding.categoryRecyclerView.adapter = categoryAdapter
+        categoryAdapter.setAdapterList(CategoryUIModel.getCategoryList())
+    }
+
 }

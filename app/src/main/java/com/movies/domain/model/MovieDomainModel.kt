@@ -25,6 +25,6 @@ data class MovieDomainModel(
         return IMAGE_BASE_URL + poster
     }
 
-    fun getFormattedDuration(): String = duration?.toHoursAndMinutes() ?: ""
+    fun getFormattedRuntime(): String = duration?.toHoursAndMinutes() ?: ""
 
 }

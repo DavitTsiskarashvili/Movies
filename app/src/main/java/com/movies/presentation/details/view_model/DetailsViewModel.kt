@@ -20,27 +20,24 @@ class DetailsViewModel(
     private val checkFavouriteStatusUseCase: CheckFavouriteStatusUseCase
 ) : BaseViewModel<DetailsUIState>() {
 
-
     fun fetchMovieDetails(movieId: Int) {
-        launchNetwork<MovieDomainModel> {
-            loading {
-                if (it) {
-                    _uiStateFlow.emit(UIState.Loading)
-                }
-            }
-            executeApi {
-                getMovieDetailsUseCase.invoke(movieId)
-            }
-            success {
-                it.isFavourite = checkFavouriteStatusUseCase(it.id)
-                _uiStateFlow.emit(UIState.Success(data = DetailsUIState(movieDomainToUIMapper(it))))
-            }
-            error {
-                _uiStateFlow.emit(UIState.Error(it))
-            }
+        launchNetwork {
+            loading { if (it) _uiStateLiveData.postValue(UIState.Loading) }
+
+            executeApi { getMovieDetailsUseCase.invoke(movieId) }
+
+            success { handleSuccessCase(it) }
+
+            error { _uiStateLiveData.postValue(UIState.Error(it)) }
         }
     }
 
+    private fun handleSuccessCase(movie: MovieDomainModel) {
+        viewModelScope {
+            movie.isFavourite = checkFavouriteStatusUseCase(movie.id)
+            _uiStateLiveData.postValue(UIState.Success(data = DetailsUIState(movieDomainToUIMapper(movie))))
+        }
+    }
 
     fun updateFavouriteMovieStatus(movie: MovieUIModel) {
         viewModelScope {

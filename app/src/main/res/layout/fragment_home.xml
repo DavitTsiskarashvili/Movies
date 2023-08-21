@@ -87,20 +87,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emptyListImageView" />
 
-    <com.movies.presentation.view.error.ErrorView
-        android:id="@+id/errorStateView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        android:layout_marginVertical="@dimen/dimen_5_dp"
-        app:layout_constraintBottom_toTopOf="@+id/navigationButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchAndFilterView" />
-
-    <com.movies.presentation.view.loader.LoaderDialog
-        android:id="@+id/loaderView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
