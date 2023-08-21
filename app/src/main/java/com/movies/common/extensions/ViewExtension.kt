@@ -1,7 +1,5 @@
 package com.movies.common.extensions
 
-import android.view.LayoutInflater
-import android.content.Context
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
@@ -22,6 +20,14 @@ fun View.visibleIf(visible: Boolean) {
 
 fun View.goneIf(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.GONE
+}
+
+fun Any.showViews(vararg  views: View){
+    views.forEach { it.visibility = View.VISIBLE }
+}
+
+fun Any.hideViews(vararg  views: View){
+    views.forEach { it.visibility = View.INVISIBLE }
 }
 
 fun View.applyAnimation(visible: Boolean) {
