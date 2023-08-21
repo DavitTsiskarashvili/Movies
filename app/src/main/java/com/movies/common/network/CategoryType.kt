@@ -1,6 +1,6 @@
 package com.movies.common.network
 
-import com.movies.data.remote.service.api.ServiceApi
+import com.commondata.service.ServiceApi
 
 enum class CategoryType (val value: String){
     POPULAR(ServiceApi.POPULAR),

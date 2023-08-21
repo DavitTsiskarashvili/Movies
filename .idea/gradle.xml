@@ -10,6 +10,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CommonData" />
+            <option value="$PROJECT_DIR$/DetailsData" />
+            <option value="$PROJECT_DIR$/HomeData" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

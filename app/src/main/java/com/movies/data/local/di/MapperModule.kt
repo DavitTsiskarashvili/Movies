@@ -1,6 +1,6 @@
 package com.movies.data.local.di
 
-import com.movies.data.mapper.dto.GenresDTOMapper
+import com.homedata.mapper.dto.GenresDTOMapper
 import com.movies.data.mapper.entity.FavouriteMovieDomainToEntityMapper
 import com.movies.data.mapper.entity.FavouriteMovieEntityToDomainMapper
 import org.koin.dsl.module

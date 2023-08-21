@@ -1,7 +1,7 @@
 package com.movies.domain.model
 
+import com.commondata.NetworkConstants.IMAGE_BASE_URL
 import com.movies.common.extensions.toHoursAndMinutes
-import com.movies.data.remote.NetworkConstants.IMAGE_BASE_URL
 import java.math.BigDecimal
 import java.math.RoundingMode
 

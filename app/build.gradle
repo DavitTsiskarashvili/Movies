@@ -74,4 +74,9 @@ dependencies {
 
     //Paging
     implementation libs.paging
+
+    implementation(project(":CommonData"))
+    implementation(project(":HomeData"))
+    implementation(project(":DetailsData"))
+
 }
