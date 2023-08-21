@@ -47,7 +47,6 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
         }
         initRecyclerView()
         setListeners()
-        binding.moviesRecyclerView.adapter = moviePagingAdapter
         binding.searchAndFilterView.emptySearchCallback = { viewModel.fetchAllMovies() }
     }
 
@@ -78,6 +77,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
                 viewModel.updateFavouriteMovieStatus(favouriteMovie)
             }
         )
+        binding.moviesRecyclerView.adapter = moviePagingAdapter
     }
 
 }
