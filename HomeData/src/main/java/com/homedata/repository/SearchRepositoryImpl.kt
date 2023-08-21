@@ -4,10 +4,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.homedata.mapper.dto.MovieListDTOMapper
 import com.homedata.remote.paging.MoviesPagingSource
-import com.commondata.service.ServiceApi
 import com.homedata.remote.service.ServiceApi
 import com.movies.domain.model.MovieDomainModel
-import com.movies.domain.repository.SearchRepository
+import com.homedomain.repository.SearchRepository
 
 class SearchRepositoryImpl(
     private val fetchSearchedMovies: ServiceApi,

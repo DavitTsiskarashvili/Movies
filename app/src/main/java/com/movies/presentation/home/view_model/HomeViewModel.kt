@@ -8,11 +8,8 @@ import androidx.paging.map
 import com.movies.common.extensions.viewModelScope
 import com.movies.common.network.CategoryType
 import com.movies.domain.model.GenreDomainModel
-import com.movies.domain.model.MovieDomainModel
-import com.movies.domain.usecase.favourites.CheckFavouriteStatusUseCase
-import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
-import com.movies.domain.usecase.movies.FetchGenresUseCase
-import com.movies.domain.usecase.movies.FetchMoviesUseCase
+import com.favouritesdomain.usecase.CheckFavouriteStatusUseCase
+import com.favouritesdomain.usecase.UpdateFavouriteStatusMovieUseCase
 import com.movies.domain.usecase.search.SearchMoviesUseCase
 import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.data.ui_state.UIState

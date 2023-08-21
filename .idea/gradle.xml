@@ -11,9 +11,13 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/CommonData" />
+            <option value="$PROJECT_DIR$/CommonDomain" />
             <option value="$PROJECT_DIR$/DetailsData" />
+            <option value="$PROJECT_DIR$/DetailsDomain" />
             <option value="$PROJECT_DIR$/FavouritesData" />
+            <option value="$PROJECT_DIR$/FavouritesDomain" />
             <option value="$PROJECT_DIR$/HomeData" />
+            <option value="$PROJECT_DIR$/HomeDomain" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

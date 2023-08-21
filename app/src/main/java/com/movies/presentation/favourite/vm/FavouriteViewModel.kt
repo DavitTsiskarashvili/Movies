@@ -2,8 +2,8 @@ package com.movies.presentation.favourite.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.movies.common.extensions.viewModelScope
-import com.movies.domain.usecase.favourites.FetchFavouriteMoviesUseCase
-import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
+import com.favouritesdomain.usecase.FetchFavouriteMoviesUseCase
+import com.favouritesdomain.usecase.UpdateFavouriteStatusMovieUseCase
 import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.data.ui_state.UIState
 import com.movies.presentation.base.view_model.BaseViewModel

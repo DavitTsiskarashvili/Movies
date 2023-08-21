@@ -1,7 +1,6 @@
 package com.movies.presentation.home.ui.mapper.movie
 
 import com.commondata.mapper.Mapper
-import com.movies.domain.model.MovieDomainModel
 import com.movies.presentation.base.data.model.MovieUIModel
 
 class MovieUIToDomainMapper: Mapper<MovieUIModel, MovieDomainModel> {

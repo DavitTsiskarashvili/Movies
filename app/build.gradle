@@ -79,5 +79,9 @@ dependencies {
     implementation(project(":HomeData"))
     implementation(project(":DetailsData"))
     implementation(project(":FavouritesData"))
+    implementation(project(":CommonDomain"))
+    implementation(project(":HomeDomain"))
+    implementation(project(":DetailsDomain"))
+    implementation(project(":FavouritesDomain"))
 
 }

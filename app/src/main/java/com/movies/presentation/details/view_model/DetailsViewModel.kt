@@ -1,10 +1,9 @@
 package com.movies.presentation.details.view_model
 
 import com.movies.common.extensions.viewModelScope
-import com.movies.domain.model.MovieDomainModel
-import com.movies.domain.usecase.favourites.CheckFavouriteStatusUseCase
-import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
-import com.movies.domain.usecase.movies.FetchMovieDetailsUseCase
+import com.favouritesdomain.usecase.CheckFavouriteStatusUseCase
+import com.favouritesdomain.usecase.UpdateFavouriteStatusMovieUseCase
+import com.detailsdomain.usecase.FetchMovieDetailsUseCase
 import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.data.ui_state.UIState
 import com.movies.presentation.base.view_model.BaseViewModel

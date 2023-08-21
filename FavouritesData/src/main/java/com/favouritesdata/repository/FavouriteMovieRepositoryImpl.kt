@@ -4,7 +4,7 @@ import com.favouritesdata.mapper.FavouriteMovieDomainToEntityMapper
 import com.favouritesdata.mapper.FavouriteMovieEntityToDomainMapper
 import com.favouritesdata.local.dao.FavouriteMoviesDao
 import com.movies.domain.model.MovieDomainModel
-import com.movies.domain.repository.FavouriteMovieRepository
+import com.favouritesdomain.repository.FavouriteMovieRepository
 
 class FavouriteMovieRepositoryImpl(
     private val favouriteMoviesDao: FavouriteMoviesDao,
