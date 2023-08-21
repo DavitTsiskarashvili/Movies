@@ -1,9 +1,9 @@
 package com.favouritesdata.repository
 
+import com.commondomain.model.MovieDomainModel
+import com.favouritesdata.local.dao.FavouriteMoviesDao
 import com.favouritesdata.mapper.FavouriteMovieDomainToEntityMapper
 import com.favouritesdata.mapper.FavouriteMovieEntityToDomainMapper
-import com.favouritesdata.local.dao.FavouriteMoviesDao
-import com.movies.domain.model.MovieDomainModel
 import com.favouritesdomain.repository.FavouriteMovieRepository
 
 class FavouriteMovieRepositoryImpl(

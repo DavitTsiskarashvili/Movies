@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.movies.common.extensions.setStyle
-import com.movies.common.network.CategoryType
+import com.homedomain.network.CategoryType
 import com.movies.databinding.CategoryItemBinding
 import com.movies.presentation.view.search_and_filter.adapter.model.CategoryStyle
 import com.movies.presentation.view.search_and_filter.adapter.model.CategoryUIModel

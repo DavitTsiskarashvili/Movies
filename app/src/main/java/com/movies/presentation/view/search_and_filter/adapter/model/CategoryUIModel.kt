@@ -2,7 +2,7 @@ package com.movies.presentation.view.search_and_filter.adapter.model
 
 import androidx.annotation.StringRes
 import com.movies.R
-import com.movies.common.network.CategoryType
+import com.homedomain.network.CategoryType
 
 data class CategoryUIModel(
     @StringRes val name: Int,

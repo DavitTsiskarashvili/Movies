@@ -1,6 +1,6 @@
 package com.commondomain.model
 
-import com.commondata.NetworkConstants.IMAGE_BASE_URL
+import com.commondomain.NetworkConstants.IMAGE_BASE_URL
 import com.commondomain.extensions.toHoursAndMinutes
 import java.math.BigDecimal
 import java.math.RoundingMode

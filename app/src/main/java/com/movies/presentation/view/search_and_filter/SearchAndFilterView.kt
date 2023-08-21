@@ -10,7 +10,7 @@ import com.movies.common.extensions.goneIf
 import com.movies.common.extensions.hiddenIf
 import com.movies.common.extensions.hideKeyboard
 import com.movies.common.extensions.visibleIf
-import com.movies.common.network.CategoryType
+import com.homedomain.network.CategoryType
 import com.movies.databinding.SearchCustomViewBinding
 import com.movies.presentation.view.search_and_filter.adapter.CategoryAdapter
 import com.movies.presentation.view.search_and_filter.adapter.model.CategoryUIModel

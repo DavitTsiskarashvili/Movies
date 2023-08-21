@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.movies.common.extensions.viewModelScope
-import com.movies.common.network.CategoryType
+import com.homedomain.network.CategoryType
 import com.movies.domain.model.GenreDomainModel
 import com.favouritesdomain.usecase.CheckFavouriteStatusUseCase
 import com.favouritesdomain.usecase.UpdateFavouriteStatusMovieUseCase

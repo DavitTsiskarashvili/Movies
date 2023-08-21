@@ -7,7 +7,7 @@ import com.homedata.mapper.dto.GenresDTOMapper
 import com.homedata.mapper.dto.MovieListDTOMapper
 import com.homedata.remote.paging.MoviesPagingSource
 import com.homedata.remote.service.ServiceApi
-import com.movies.common.network.CategoryType
+import com.homedomain.network.CategoryType
 import com.homedomain.model.GenreDomainModel
 import com.movies.domain.model.MovieDomainModel
 import com.homedomain.repository.MoviesRepository
