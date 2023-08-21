@@ -78,5 +78,6 @@ dependencies {
     implementation(project(":CommonData"))
     implementation(project(":HomeData"))
     implementation(project(":DetailsData"))
+    implementation(project(":FavouritesData"))
 
 }

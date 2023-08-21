@@ -1,4 +1,4 @@
-package com.movies.data.local.entity
+package com.favouritesdata.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

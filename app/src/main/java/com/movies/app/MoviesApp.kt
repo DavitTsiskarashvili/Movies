@@ -3,10 +3,10 @@ package com.movies.app
 import android.app.Application
 import com.commondata.di.networkModule
 import com.detailsdata.remote.di.detailsDTOMapperModule
+import com.favouritesdata.local.di.dataBaseModule
+import com.favouritesdata.local.di.entityMapperModule
 import com.homedata.remote.di.dtoMapperModule
 import com.homedata.remote.di.retrofitModule
-import com.movies.data.local.di.dataBaseModule
-import com.movies.data.local.di.entityMapperModule
 import com.movies.domain.di.repositoryModule
 import com.movies.domain.di.useCaseModule
 import com.movies.presentation.details.di.detailsViewModelModule

@@ -1,6 +1,6 @@
 package com.movies.domain.di
 
-import com.movies.data.repository.FavouriteMovieRepositoryImpl
+import com.favouritesdata.repository.FavouriteMovieRepositoryImpl
 import com.detailsdata.repository.MoviesRepositoryImpl
 import com.homedata.repository.SearchRepositoryImpl
 import com.movies.domain.repository.FavouriteMovieRepository

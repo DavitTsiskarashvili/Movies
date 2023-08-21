@@ -1,8 +1,8 @@
-package com.movies.data.local.di
+package com.favouritesdata.local.di
 
 import android.content.Context
 import androidx.room.Room
-import com.movies.data.local.database.FavouriteMovieDatabase
+import com.favouritesdata.local.database.FavouriteMovieDatabase
 import org.koin.dsl.module
 
 private fun provideFavouriteMovieDatabase(context: Context): FavouriteMovieDatabase {

@@ -1,11 +1,11 @@
-package com.movies.data.local.dao
+package com.favouritesdata.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.movies.data.local.entity.FavouriteMovieEntity
+import com.favouritesdata.local.entity.FavouriteMovieEntity
 
 @Dao
 interface FavouriteMoviesDao {
