@@ -12,10 +12,17 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/CommonData" />
             <option value="$PROJECT_DIR$/CommonDomain" />
+            <option value="$PROJECT_DIR$/CommonPresentation" />
             <option value="$PROJECT_DIR$/DetailsData" />
             <option value="$PROJECT_DIR$/DetailsDomain" />
             <option value="$PROJECT_DIR$/FavouritesData" />
             <option value="$PROJECT_DIR$/FavouritesDomain" />
+            <option value="$PROJECT_DIR$/FeatureDetailsApi" />
+            <option value="$PROJECT_DIR$/FeatureDetailsImpl" />
+            <option value="$PROJECT_DIR$/FeatureFavouritesAPI" />
+            <option value="$PROJECT_DIR$/FeatureFavouritesImpl" />
+            <option value="$PROJECT_DIR$/FeatureHomeAPI" />
+            <option value="$PROJECT_DIR$/FeatureHomeImpl" />
             <option value="$PROJECT_DIR$/HomeData" />
             <option value="$PROJECT_DIR$/HomeDomain" />
             <option value="$PROJECT_DIR$/app" />

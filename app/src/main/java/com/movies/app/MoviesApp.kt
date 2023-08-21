@@ -5,6 +5,9 @@ import com.commondata.di.networkModule
 import com.detailsdata.di.detailsRepositoryModule
 import com.detailsdata.remote.di.detailsDTOMapperModule
 import com.detailsdomain.di.detailsUseCaseModule
+import com.example.featurefavouritesimpl.favourite.di.favouriteViewModelModule
+import com.example.featurehomeimpl.home.di.homeMapperModule
+import com.example.featurehomeimpl.home.di.homeViewModelModule
 import com.favouritesdata.di.favouritesRepositoryModule
 import com.favouritesdata.local.di.dataBaseModule
 import com.favouritesdata.local.di.entityMapperModule
@@ -13,12 +16,7 @@ import com.homedata.di.homeRepositoryModule
 import com.homedata.remote.di.dtoMapperModule
 import com.homedata.remote.di.retrofitModule
 import com.homedomain.di.homeUseCaseModule
-import com.movies.domain.di.repositoryModule
-import com.movies.domain.di.useCaseModule
-import com.movies.presentation.details.di.detailsViewModelModule
-import com.movies.presentation.favourite.di.favouriteViewModelModule
-import com.movies.presentation.home.di.homeMapperModule
-import com.movies.presentation.home.di.homeViewModelModule
+import com.featuredetailsimpl.details.di.detailsViewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -31,24 +29,22 @@ class MoviesApp : Application() {
             androidLogger()
             androidContext(this@MoviesApp)
             modules(
-                detailsDTOMapperModule,
                 retrofitModule,
                 networkModule,
-                homeViewModelModule,
-                homeMapperModule,
-                favouriteViewModelModule,
-                dtoMapperModule,
-                detailsViewModelModule,
-                repositoryModule,
-                useCaseModule,
                 dataBaseModule,
+                dtoMapperModule,
                 entityMapperModule,
-                homeUseCaseModule,
-                homeRepositoryModule,
+                detailsDTOMapperModule,
+                detailsViewModelModule,
                 detailsRepositoryModule,
                 detailsUseCaseModule,
+                homeMapperModule,
+                homeRepositoryModule,
+                homeUseCaseModule,
+                homeViewModelModule,
                 favouritesRepositoryModule,
                 favouritesUseCaseModule,
+                favouriteViewModelModule,
             )
         }
     }

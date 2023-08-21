@@ -83,5 +83,9 @@ dependencies {
     implementation(project(":HomeDomain"))
     implementation(project(":DetailsDomain"))
     implementation(project(":FavouritesDomain"))
+    implementation(project(":FeatureHomeImpl"))
+    implementation(project(":FeatureDetailsImpl"))
+    implementation(project(":FeatureFavouritesImpl"))
+    implementation(project(":CommonPresentation"))
 
 }
