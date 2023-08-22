@@ -21,10 +21,10 @@ class FavouriteMovieAdapter(
         )
         return MoviesViewHolder(binding).apply {
             binding.favouritesToggleButton.setOnClickListener {
-                onFavouriteClick.invoke(getItem(bindingAdapterPosition))
+                onFavouriteClick.invoke(getItem(adapterPosition))
             }
             binding.root.setOnClickListener {
-                onClickCallback.invoke(getItem(bindingAdapterPosition))
+                onClickCallback.invoke(getItem(adapterPosition))
             }
         }
     }

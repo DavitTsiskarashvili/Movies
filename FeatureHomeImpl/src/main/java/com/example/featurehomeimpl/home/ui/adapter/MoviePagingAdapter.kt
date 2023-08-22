@@ -20,15 +20,15 @@ class MoviePagingAdapter(
         return MoviesViewHolder(binding).apply {
 
             binding.favouritesToggleButton.setOnClickListener {
-                val currentItem = getItem(bindingAdapterPosition)!!
+                val currentItem = getItem(adapterPosition)!!
 
                 val newIsFavourite = !currentItem.isFavourite
                 onFavouriteClick.invoke(currentItem, newIsFavourite)
                 currentItem.isFavourite = newIsFavourite
-                notifyItemChanged(bindingAdapterPosition)
+                notifyItemChanged(adapterPosition)
             }
             binding.root.setOnClickListener {
-                val currentItem = getItem(bindingAdapterPosition)!!
+                val currentItem = getItem(adapterPosition)!!
                 onClickCallback.invoke(currentItem)
             }
         }

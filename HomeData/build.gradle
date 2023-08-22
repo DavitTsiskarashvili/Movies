@@ -50,6 +50,6 @@ dependencies {
     implementation libs.converter.gson
 
     implementation(project(":CommonData"))
-    api(project(":HomeDomain"))
+    implementation(project(":HomeDomain"))
 
 }

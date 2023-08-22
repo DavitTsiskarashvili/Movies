@@ -2,10 +2,10 @@ package com.homedata.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.commondomain.model.MovieDomainModel
 import com.homedata.mapper.dto.MovieListDTOMapper
 import com.homedata.remote.paging.MoviesPagingSource
 import com.homedata.remote.service.ServiceApi
-import com.movies.domain.model.MovieDomainModel
 import com.homedomain.repository.SearchRepository
 
 class SearchRepositoryImpl(

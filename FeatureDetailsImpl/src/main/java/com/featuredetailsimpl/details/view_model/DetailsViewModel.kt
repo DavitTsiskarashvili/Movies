@@ -7,12 +7,9 @@ import com.commonpresentation.mapper.movie.MovieUIToDomainMapper
 import com.commonpresentation.presentation.base.data.model.MovieUIModel
 import com.commonpresentation.presentation.base.data.ui_state.UIState
 import com.commonpresentation.presentation.base.view_model.BaseViewModel
-import com.movies.common.extensions.viewModelScope
+import com.detailsdomain.usecase.FetchMovieDetailsUseCase
 import com.favouritesdomain.usecase.CheckFavouriteStatusUseCase
 import com.favouritesdomain.usecase.UpdateFavouriteStatusMovieUseCase
-import com.detailsdomain.usecase.FetchMovieDetailsUseCase
-import com.movies.presentation.base.data.model.MovieUIModel
-import com.movies.presentation.base.data.ui_state.UIState
 import com.featuredetailsimpl.details.ui.ui_state.DetailsUIState
 
 class DetailsViewModel(

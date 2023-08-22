@@ -1,10 +1,10 @@
 package com.homedata.mapper.dto
 
 import com.commondomain.mapper.Mapper
+import com.commondomain.model.MovieDomainModel
 import com.homedata.remote.dto.movies.MoviesDTO
-import com.movies.domain.model.MovieDomainModel
 
-class MovieListDTOMapper : com.commondomain.mapper.Mapper<MoviesDTO, List<MovieDomainModel>> {
+class MovieListDTOMapper : Mapper<MoviesDTO, List<MovieDomainModel>> {
     override fun invoke(model: MoviesDTO): List<MovieDomainModel> =
         with(model) {
             this.results?.map {

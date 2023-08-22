@@ -7,14 +7,8 @@ import com.commonpresentation.mapper.movie.MovieUIToDomainMapper
 import com.commonpresentation.presentation.base.data.model.MovieUIModel
 import com.commonpresentation.presentation.base.data.ui_state.UIState
 import com.commonpresentation.presentation.base.view_model.BaseViewModel
-import com.movies.common.extensions.viewModelScope
 import com.favouritesdomain.usecase.FetchFavouriteMoviesUseCase
 import com.favouritesdomain.usecase.UpdateFavouriteStatusMovieUseCase
-import com.movies.presentation.base.data.model.MovieUIModel
-import com.movies.presentation.base.data.ui_state.UIState
-import com.movies.presentation.base.view_model.BaseViewModel
-import com.movies.presentation.home.ui.mapper.movie.MovieDomainToUIMapper
-import com.movies.presentation.home.ui.mapper.movie.MovieUIToDomainMapper
 
 class FavouriteViewModel(
     private val getFavouriteMovies: FetchFavouriteMoviesUseCase,

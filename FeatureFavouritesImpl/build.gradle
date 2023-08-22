@@ -52,7 +52,7 @@ dependencies {
     implementation libs.navigation.fragment.ktx
 
     implementation(project(":CommonPresentation"))
-    api(project(":FavouritesDomain"))
+    implementation(project(":FavouritesDomain"))
     implementation(project(":FeatureFavouritesAPI"))
     implementation(project(":FeatureHomeAPI"))
     implementation(project(":FeatureDetailsApi"))

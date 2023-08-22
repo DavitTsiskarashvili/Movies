@@ -50,7 +50,6 @@ dependencies {
     implementation libs.koin.android
 
     implementation(project(":CommonData"))
-    api(project(":FavouritesDomain"))
-    implementation project(path: ':CommonDomain')
+    implementation(project(":FavouritesDomain"))
 
 }

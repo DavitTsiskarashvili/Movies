@@ -40,7 +40,6 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
-    implementation project(path: ':CommonDomain')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -53,8 +52,8 @@ dependencies {
     implementation libs.navigation.fragment.ktx
 
     implementation(project(":CommonPresentation"))
-    api(project(":FavouritesDomain"))
-    api(project(":DetailsDomain"))
+    implementation(project(":FavouritesDomain"))
+    implementation(project(":DetailsDomain"))
     implementation(project(":FeatureHomeAPI"))
     implementation(project(":FeatureDetailsApi"))
     implementation(project(":FeatureFavouritesAPI"))

@@ -14,9 +14,9 @@ import com.commonpresentation.utils.NavigationConstants.DETAILS
 import com.commonpresentation.utils.NavigationConstants.FAVOURITES
 import com.example.featurefavouritesimpl.R
 import com.example.featurefavouritesimpl.databinding.FragmentFavouritesBinding
-import com.movies.presentation.details.ui.DetailsFragment
 import com.example.featurefavouritesimpl.favourite.ui.adapter.FavouriteMovieAdapter
 import com.example.featurefavouritesimpl.favourite.vm.FavouriteViewModel
+import com.movies.presentation.details.ui.DetailsFragment
 
 class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>() {
 

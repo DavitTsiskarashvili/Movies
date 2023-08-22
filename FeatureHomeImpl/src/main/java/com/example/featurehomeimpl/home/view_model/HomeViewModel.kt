@@ -5,21 +5,22 @@ import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
+import com.commondomain.model.MovieDomainModel
 import com.commonpresentation.extensions.viewModelScope
+import com.commonpresentation.mapper.movie.MovieDomainToUIMapper
+import com.commonpresentation.mapper.movie.MovieUIToDomainMapper
 import com.commonpresentation.presentation.base.data.model.MovieUIModel
 import com.commonpresentation.presentation.base.data.ui_state.UIState
 import com.commonpresentation.presentation.base.view_model.BaseViewModel
-import com.homedomain.network.CategoryType
+import com.example.featurehomeimpl.home.ui.ui_state.HomeUIState
 import com.favouritesdomain.usecase.CheckFavouriteStatusUseCase
 import com.favouritesdomain.usecase.UpdateFavouriteStatusMovieUseCase
 import com.homedomain.model.GenreDomainModel
+import com.homedomain.network.CategoryType
 import com.homedomain.usecase.movies.FetchGenresUseCase
 import com.homedomain.usecase.movies.FetchMoviesUseCase
 import com.homedomain.usecase.search.SearchMoviesUseCase
 import com.movies.presentation.base.data.ui_state.UIState
-import com.commonpresentation.mapper.movie.MovieDomainToUIMapper
-import com.commonpresentation.mapper.movie.MovieUIToDomainMapper
-import com.example.featurehomeimpl.home.ui.ui_state.HomeUIState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 

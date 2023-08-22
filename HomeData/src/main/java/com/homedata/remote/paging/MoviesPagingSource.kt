@@ -2,10 +2,10 @@ package com.homedata.remote.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.commondomain.model.MovieDomainModel
 import com.homedata.mapper.dto.MovieListDTOMapper
 import com.homedata.remote.dto.movies.MoviesDTO
 import com.homedata.remote.service.ServiceApi
-import com.movies.domain.model.MovieDomainModel
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
