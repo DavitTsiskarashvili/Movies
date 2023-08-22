@@ -1,19 +1,6 @@
 <resources>
-    <string name="app_name">Movies</string>
-    <string name="search">Search</string>
-    <string name="title">Movies</string>
     <string name="home_button">Home</string>
     <string name="favourites_button">Favourites</string>
-    <string name="popular">Popular</string>
-    <string name="now_playing">Now Playing</string>
-    <string name="upcoming">Upcoming</string>
-    <string name="top_rated">Top Rated</string>
-    <string name="cancel">Cancel</string>
-    <string name="details">Details</string>
-    <string name="about">About Movie</string>
-    <string name="trailer">Trailer</string>
-    <string name="favourite_movies">Favourite Movies</string>
-    <string name="no_movies">No movies added yet</string>
     <string name="no_data">Data can\'t be loaded</string>
     <string name="no_internet">internet connection or some other server error</string>
     <string name="server_error">some server error</string>
