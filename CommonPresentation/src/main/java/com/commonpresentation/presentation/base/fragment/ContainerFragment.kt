@@ -8,10 +8,7 @@ import androidx.fragment.app.Fragment
 import com.commonpresentation.R
 import com.commonpresentation.databinding.BaseFragmentBinding
 import com.commonpresentation.extensions.replaceView
-import com.google.android.material.navigation.NavigationView
-import com.movies.common.extensions.replaceView
-import com.movies.databinding.BaseFragmentBinding
-import com.movies.presentation.home.ui.HomeFragment
+import com.commonpresentation.presentation.view.navigation.NavigationView
 
 class ContainerFragment : Fragment() {
 

@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.commonpresentation.databinding.CategoryItemBinding
-import com.commonpresentation.extensions.setStyle
 import com.example.featurehomeimpl.view.search_and_filter.adapter.model.CategoryStyle
 import com.example.featurehomeimpl.view.search_and_filter.adapter.model.CategoryType
 import com.example.featurehomeimpl.view.search_and_filter.adapter.model.CategoryUIModel
+import com.example.featurehomeimpl.view.search_and_filter.extension.setStyle
 
 class CategoryAdapter(
     private val itemClick: (CategoryType) -> Unit

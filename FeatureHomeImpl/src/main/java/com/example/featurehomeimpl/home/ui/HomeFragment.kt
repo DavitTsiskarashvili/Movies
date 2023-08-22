@@ -69,7 +69,8 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
             onClickCallback = { film ->
                 requireContext().hideKeyboard()
                 binding.searchAndFilterView.clearFocus()
-                changeScreen(DetailsFragment(), film.id)
+                viewModel.navigateToDetails(film.id)
+//                changeScreen(DetailsFragment(), film.id)
             },
             onFavouriteClick = { favouriteMovie, _ ->
                 viewModel.updateFavouriteMovieStatus(favouriteMovie)

@@ -1,5 +1,6 @@
 package com.example.featurehomeimpl.home.view_model
 
+import android.os.Bundle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingData
@@ -12,10 +13,12 @@ import com.commonpresentation.mapper.movie.MovieUIToDomainMapper
 import com.commonpresentation.presentation.base.data.model.MovieUIModel
 import com.commonpresentation.presentation.base.data.ui_state.UIState
 import com.commonpresentation.presentation.base.view_model.BaseViewModel
+import com.commonpresentation.utils.NavigationConstants.MOVIE_ID
 import com.example.featurehomeimpl.home.ui.ui_state.HomeUIState
 import com.example.featurehomeimpl.view.search_and_filter.adapter.model.CategoryType
 import com.favouritesdomain.usecase.CheckFavouriteStatusUseCase
 import com.favouritesdomain.usecase.UpdateFavouriteStatusMovieUseCase
+import com.featuredetailsapi.navigation.DetailsNavigationApi
 import com.homedomain.model.GenreDomainModel
 import com.homedomain.usecase.movies.FetchGenresUseCase
 import com.homedomain.usecase.movies.FetchMoviesUseCase
@@ -31,7 +34,8 @@ class HomeViewModel(
     private val genresUseCase: FetchGenresUseCase,
     private val movieUIToDomain: MovieUIToDomainMapper,
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
-) : BaseViewModel<HomeUIState>() {
+    private val navigationApi: DetailsNavigationApi,
+    ) : BaseViewModel<HomeUIState>() {
 
     private val categoryStateFlow = MutableStateFlow(CategoryType.POPULAR.toString())
     private val genreMap = mutableMapOf<Int, String>()
@@ -112,4 +116,10 @@ class HomeViewModel(
         }
     }
 
+    fun navigateToDetails(item: Int) {
+        val bundle = Bundle().apply {
+            putParcelable(MOVIE_ID, item)
+        }
+        navigationApi.navigateToDetails(bundle)
+    }
 }
