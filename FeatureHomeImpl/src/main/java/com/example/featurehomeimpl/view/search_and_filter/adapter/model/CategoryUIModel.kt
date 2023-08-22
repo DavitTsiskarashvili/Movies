@@ -1,8 +1,7 @@
 package com.example.featurehomeimpl.view.search_and_filter.adapter.model
 
 import androidx.annotation.StringRes
-import com.commonpresentation.R
-import com.homedomain.network.CategoryType
+import com.example.featurehomeimpl.R
 
 data class CategoryUIModel(
     @StringRes val name: Int,
