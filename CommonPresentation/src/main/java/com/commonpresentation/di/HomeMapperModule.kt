@@ -1,4 +1,4 @@
-package com.example.featurehomeimpl.home.di
+package com.commonpresentation.di
 
 import com.commonpresentation.mapper.movie.MovieDomainToUIMapper
 import com.commonpresentation.mapper.movie.MovieUIToDomainMapper

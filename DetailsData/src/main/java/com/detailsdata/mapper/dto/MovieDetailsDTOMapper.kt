@@ -1,8 +1,8 @@
 package com.detailsdata.mapper.dto
 
-import com.commondata.mapper.Mapper
+import com.commondomain.mapper.Mapper
+import com.commondomain.model.MovieDomainModel
 import com.detailsdata.remote.dto.details.MovieDetailsDTO
-import com.movies.domain.model.MovieDomainModel
 
 class MovieDetailsDTOMapper : Mapper<MovieDetailsDTO, MovieDomainModel> {
     override fun invoke(model: MovieDetailsDTO): MovieDomainModel =

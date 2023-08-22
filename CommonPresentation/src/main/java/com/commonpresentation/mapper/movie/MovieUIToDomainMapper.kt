@@ -1,8 +1,8 @@
 package com.commonpresentation.mapper.movie
 
-import com.commondata.mapper.Mapper
+import com.commondomain.mapper.Mapper
+import com.commondomain.model.MovieDomainModel
 import com.commonpresentation.presentation.base.data.model.MovieUIModel
-import com.movies.presentation.base.data.model.MovieUIModel
 
 class MovieUIToDomainMapper: Mapper<MovieUIModel, MovieDomainModel> {
     override fun invoke(model: MovieUIModel): MovieDomainModel =

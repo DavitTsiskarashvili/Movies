@@ -53,4 +53,5 @@ dependencies {
     annotationProcessor libs.glide.compiler
     implementation libs.glide
 
+    implementation(project(":CommonDomain"))
 }

@@ -47,6 +47,6 @@ dependencies {
 
     implementation(project(":CommonData"))
     api(project(":DetailsDomain"))
-    implementation project(path: ':CommonDomain')
+    implementation(project(":CommonDomain"))
 
 }

@@ -6,7 +6,7 @@ import com.detailsdata.di.detailsRepositoryModule
 import com.detailsdata.remote.di.detailsDTOMapperModule
 import com.detailsdomain.di.detailsUseCaseModule
 import com.example.featurefavouritesimpl.favourite.di.favouriteViewModelModule
-import com.example.featurehomeimpl.home.di.homeMapperModule
+import com.commonpresentation.di.homeMapperModule
 import com.example.featurehomeimpl.home.di.homeViewModelModule
 import com.favouritesdata.di.favouritesRepositoryModule
 import com.favouritesdata.local.di.dataBaseModule

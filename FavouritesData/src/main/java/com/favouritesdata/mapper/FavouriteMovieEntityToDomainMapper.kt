@@ -1,6 +1,6 @@
 package com.favouritesdata.mapper
 
-import com.commondata.mapper.Mapper
+import com.commondomain.mapper.Mapper
 import com.commondomain.model.MovieDomainModel
 import com.favouritesdata.local.entity.FavouriteMovieEntity
 

@@ -10,7 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.commonpresentation.R
 import com.commonpresentation.presentation.base.fragment.BaseFragment
 import com.commonpresentation.presentation.base.fragment.ContainerFragment
-import com.movies.presentation.utils.NavigationConstants.MOVIE_ID
+import com.commonpresentation.utils.NavigationConstants.MOVIE_ID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext

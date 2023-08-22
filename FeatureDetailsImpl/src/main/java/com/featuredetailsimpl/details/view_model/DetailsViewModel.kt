@@ -1,5 +1,6 @@
 package com.featuredetailsimpl.details.view_model
 
+import com.commondomain.model.MovieDomainModel
 import com.commonpresentation.extensions.viewModelScope
 import com.commonpresentation.mapper.movie.MovieDomainToUIMapper
 import com.commonpresentation.mapper.movie.MovieUIToDomainMapper
