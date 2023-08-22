@@ -17,7 +17,7 @@ class MoviesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment, HomeFragment(), "home"
+            R.id.nav_host_fragment, HomeFragment()
         ).commit()
     }
 
