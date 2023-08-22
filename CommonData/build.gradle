@@ -54,4 +54,6 @@ dependencies {
     // Koin
     implementation libs.koin.android
 
+    implementation(project(":CommonDomain"))
+
 }

@@ -2,7 +2,7 @@ package com.commondata.di
 
 import com.commondata.NetworkConstants.API_KEY
 import com.commondata.NetworkConstants.BASE_URL
-import com.commondata.network.NetworkLauncher
+import com.commondomain.network.NetworkLauncher
 import com.commondata.network.NetworkLauncherImpl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -34,5 +34,5 @@ private fun createRetrofit(): Retrofit {
 
 val networkModule = module {
     single { createRetrofit() }
-    single<NetworkLauncher> { NetworkLauncherImpl() }
+    single<com.commondomain.network.NetworkLauncher> { NetworkLauncherImpl() }
 }

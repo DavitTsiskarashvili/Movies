@@ -1,4 +1,4 @@
-package com.commondata.network
+package com.commondomain.network
 
 import kotlinx.coroutines.CoroutineScope
 

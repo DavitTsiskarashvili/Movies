@@ -1,4 +1,4 @@
-package com.commondata.network
+package com.commondomain.network
 
 class NetworkBuilder<T> {
     var execute: (suspend () -> T)? = null

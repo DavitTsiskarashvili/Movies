@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.commondata.network.NetworkBuilder
-import com.commondata.network.NetworkLauncher
+import com.commondomain.network.NetworkBuilder
+import com.commondomain.network.NetworkLauncher
 import com.commonpresentation.presentation.base.data.ui_state.UIState
 import org.koin.java.KoinJavaComponent.inject
 
