@@ -87,5 +87,8 @@ dependencies {
     implementation(project(":FeatureDetailsImpl"))
     implementation(project(":FeatureFavouritesImpl"))
     implementation(project(":CommonPresentation"))
-
+    implementation(project(":FeatureHomeAPI"))
+    implementation(project(":FeatureFavouritesAPI"))
+    implementation(project(":FeatureDetailsApi"))
+    
 }

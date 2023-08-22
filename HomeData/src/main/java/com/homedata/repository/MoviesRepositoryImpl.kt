@@ -8,9 +8,7 @@ import com.homedata.mapper.dto.GenresDTOMapper
 import com.homedata.mapper.dto.MovieListDTOMapper
 import com.homedata.remote.paging.MoviesPagingSource
 import com.homedata.remote.service.ServiceApi
-import com.homedomain.network.CategoryType
 import com.homedomain.model.GenreDomainModel
-import com.movies.domain.model.MovieDomainModel
 import com.homedomain.repository.MoviesRepository
 
 class MoviesRepositoryImpl(
@@ -18,14 +16,14 @@ class MoviesRepositoryImpl(
     private val movieListDTOMapper: MovieListDTOMapper,
     private val genresDTOMapper: GenresDTOMapper,
 ) : MoviesRepository {
-    override suspend fun fetchMovies(category: CategoryType): Pager<Int, MovieDomainModel> {
+    override suspend fun fetchMovies(category: String): Pager<Int, MovieDomainModel> {
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = {
                 MoviesPagingSource(
                     fetchMovies,
                     movieListDTOMapper,
-                    category = category.value
+                    category = category
                 )
             }
         )

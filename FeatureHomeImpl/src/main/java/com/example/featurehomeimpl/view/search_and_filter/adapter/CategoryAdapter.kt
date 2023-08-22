@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.commonpresentation.databinding.CategoryItemBinding
 import com.commonpresentation.extensions.setStyle
-import com.homedomain.network.CategoryType
 import com.example.featurehomeimpl.view.search_and_filter.adapter.model.CategoryStyle
+import com.example.featurehomeimpl.view.search_and_filter.adapter.model.CategoryType
 import com.example.featurehomeimpl.view.search_and_filter.adapter.model.CategoryUIModel
 
 class CategoryAdapter(

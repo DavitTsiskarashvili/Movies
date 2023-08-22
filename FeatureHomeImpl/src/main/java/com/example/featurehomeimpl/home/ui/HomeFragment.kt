@@ -9,8 +9,6 @@ import com.commonpresentation.utils.NavigationConstants.DETAILS
 import com.commonpresentation.utils.NavigationConstants.FAVOURITES
 import com.example.featurehomeimpl.R
 import com.example.featurehomeimpl.databinding.FragmentHomeBinding
-import com.movies.presentation.details.ui.DetailsFragment
-import com.movies.presentation.favourite.ui.FavouriteFragment
 import com.example.featurehomeimpl.home.ui.adapter.MoviePagingAdapter
 import com.example.featurehomeimpl.home.ui.ui_state.HomeUIState
 import com.example.featurehomeimpl.home.view_model.HomeViewModel

@@ -11,7 +11,6 @@ import com.commonpresentation.extensions.hiddenIf
 import com.commonpresentation.extensions.hideKeyboard
 import com.commonpresentation.extensions.visibleIf
 import com.example.featurehomeimpl.databinding.SearchCustomViewBinding
-import com.homedomain.network.CategoryType
 import com.example.featurehomeimpl.view.search_and_filter.adapter.CategoryAdapter
 import com.example.featurehomeimpl.view.search_and_filter.adapter.model.CategoryUIModel
 
