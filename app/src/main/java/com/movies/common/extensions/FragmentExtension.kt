@@ -61,12 +61,16 @@ fun <T> Fragment.observeLiveData(
 }
 
 fun <T> Fragment.changeScreen(fragment: Fragment, args: T? = null) {
-    val bundle = Bundle().apply {
-        putArguments(args)
+    args?.let {
+        val bundle = Bundle().apply {
+            putArguments(args)
+        }
+        fragment.arguments = bundle
     }
-    fragment.arguments = bundle
+
     parentFragmentManager.beginTransaction().add(
-        R.id.nav_host_fragment, fragment, fragment.tag).addToBackStack(fragment.tag).commit()
+        R.id.nav_host_fragment, fragment, fragment.tag
+    ).addToBackStack(fragment.tag).commit()
 }
 
 private fun <T> Bundle.putArguments(args: T) {

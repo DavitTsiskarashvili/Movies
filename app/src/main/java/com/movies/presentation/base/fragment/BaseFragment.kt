@@ -23,7 +23,7 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
     private val loader by lazy { LoaderDialog(requireContext(), binding.root as ViewGroup) }
     private val errorView by lazy { ErrorView(requireContext(), binding.root as ViewGroup) }
 
-    protected abstract val layout: Int
+    protected open val layout: Int = 0
 
     abstract fun onBind()
     abstract fun onRefresh()
@@ -39,7 +39,11 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(layout, container, false)
+        return if (layout != 0) {
+            inflater.inflate(layout, container, false)
+        } else {
+            super.onCreateView(inflater, container, savedInstanceState)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +61,7 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
     }
 
     private fun observeUIState() {
-        viewModel.uiStateLiveData.observe(viewLifecycleOwner){
+        viewModel.uiStateLiveData.observe(viewLifecycleOwner) {
             handleUIState(it)
         }
     }

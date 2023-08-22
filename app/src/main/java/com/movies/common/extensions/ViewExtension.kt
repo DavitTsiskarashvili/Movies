@@ -1,7 +1,10 @@
 package com.movies.common.extensions
 
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
@@ -50,4 +53,10 @@ fun ImageView.changeDrawable(@DrawableRes drawableRes: Int) {
 
 fun ImageView.changeDrawableColor(@ColorRes colorRes: Int) {
     imageTintList = ContextCompat.getColorStateList(context, colorRes)
+}
+
+fun EditText.hideKeyboard() {
+    val inputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }

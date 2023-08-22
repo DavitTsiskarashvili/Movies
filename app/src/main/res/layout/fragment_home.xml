@@ -25,7 +25,7 @@
         android:text="@string/title"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchAndFilterView" />
+        app:layout_constraintTop_toBottomOf="@+id/searchAndFilterView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/moviesRecyclerView"
@@ -33,10 +33,10 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/dimen_16_dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/navigationButton"
+        app:layout_constraintBottom_toTopOf="@+id/navigationButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
         app:spanCount="2"
         tools:listitem="@layout/movie_item" />
 
@@ -44,47 +44,9 @@
         android:id="@+id/navigationButton"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_62_dp"
+        app:layout_constraintTop_toBottomOf="@+id/moviesRecyclerView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/favouritesTitleTextView"
-        style="@style/normalMontserrat_Regular"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dimen_16_dp"
-        android:layout_marginTop="@dimen/dimen_11_dp"
-        android:paddingHorizontal="@dimen/dimen_8_dp"
-        android:text="@string/favourite_movies"
-        android:textAlignment="center"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/emptyListImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_no_results"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/emptyListTextView"
-        style="@style/normalMontserrat_Regular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_25_dp"
-        android:text="@string/no_movies"
-        android:textColor="@color/neutral_03_dark_grey"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emptyListImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.movies.presentation.home.ui.adapter.favourite
+package com.movies.presentation.favourite.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

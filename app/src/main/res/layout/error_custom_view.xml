@@ -1,64 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/neutral_01_black">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dimen_25_dp"
+    app:cardBackgroundColor="@color/neutral_01_black"
+    app:cardCornerRadius="@dimen/dimen_30_dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/errorImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_caution"
-        app:layout_constraintBottom_toTopOf="@+id/titleTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/titleTextView"
-        style="@style/bigMontserrat_noInternet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_28_dp"
-        android:text="@string/no_data"
-        app:layout_constraintBottom_toTopOf="@+id/notificationTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/errorImageView" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/errorImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_30_dp"
+            android:src="@drawable/ic_caution"
+            app:layout_constraintBottom_toTopOf="@+id/titleTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/notificationTextView"
-        style="@style/normalMontserrat_noInternet"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dimen_65_dp"
-        android:layout_marginTop="@dimen/dimen_23_dp"
-        android:gravity="center_horizontal"
-        android:text="@string/no_internet"
-        app:layout_constraintBottom_toTopOf="@+id/refreshButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleTextView"
+            style="@style/bigMontserrat_noInternet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_28_dp"
+            android:text="@string/no_data"
+            app:layout_constraintBottom_toTopOf="@+id/notificationTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/errorImageView" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/refreshButton"
-        style="@style/smallMontserrat_Regular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_110_dp"
-        android:background="@drawable/error_button_background"
-        android:drawableEnd="@drawable/ic_refresh"
-        android:drawablePadding="@dimen/dimen_2_dp"
-        android:paddingHorizontal="@dimen/dimen_30_dp"
-        android:paddingVertical="@dimen/dimen_14_dp"
-        android:text="@string/refresh"
-        android:textAllCaps="false"
-        android:textColor="@color/neutral_01_black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notificationTextView" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/notificationTextView"
+            style="@style/normalMontserrat_noInternet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_65_dp"
+            android:layout_marginTop="@dimen/dimen_23_dp"
+            android:gravity="center_horizontal"
+            android:text="@string/no_internet"
+            app:layout_constraintBottom_toTopOf="@+id/refreshButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/refreshButton"
+            style="@style/smallMontserrat_Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_110_dp"
+            android:layout_marginBottom="@dimen/dimen_30_dp"
+            android:background="@drawable/error_button_background"
+            android:drawableEnd="@drawable/ic_refresh"
+            android:drawablePadding="@dimen/dimen_2_dp"
+            android:paddingHorizontal="@dimen/dimen_30_dp"
+            android:paddingVertical="@dimen/dimen_14_dp"
+            android:text="@string/refresh"
+            android:textAllCaps="false"
+            android:textColor="@color/neutral_01_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/notificationTextView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -4,7 +4,7 @@ import com.movies.presentation.details.view_model.DetailsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val detailsModule = module {
+val detailsViewModelModule = module {
     viewModel {
         DetailsViewModel(
             updateMovieStatus = get(),

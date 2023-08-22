@@ -21,7 +21,6 @@ val repositoryModule = module {
         SearchRepositoryImpl(
             fetchSearchedMovies = get(),
             movieListDTOMapper = get(),
-            favouriteMoviesDao = get()
         )
     }
     single<FavouriteMovieRepository> {

@@ -7,7 +7,8 @@ import com.movies.data.remote.di.dtoMapperModule
 import com.movies.data.remote.di.networkModule
 import com.movies.domain.di.repositoryModule
 import com.movies.domain.di.useCaseModule
-import com.movies.presentation.details.di.detailsModule
+import com.movies.presentation.details.di.detailsViewModelModule
+import com.movies.presentation.favourite.di.favouriteViewModelModule
 import com.movies.presentation.home.di.homeMapperModule
 import com.movies.presentation.home.di.homeViewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -25,12 +26,13 @@ class MoviesApp : Application() {
                 networkModule,
                 homeViewModelModule,
                 homeMapperModule,
+                favouriteViewModelModule,
                 dtoMapperModule,
-                detailsModule,
+                detailsViewModelModule,
                 repositoryModule,
                 useCaseModule,
                 dataBaseModule,
-                entityMapperModule
+                entityMapperModule,
             )
         }
     }
