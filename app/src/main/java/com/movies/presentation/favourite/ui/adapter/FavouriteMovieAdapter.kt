@@ -2,51 +2,35 @@ package com.movies.presentation.favourite.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.movies.common.extensions.loadImage
+import androidx.recyclerview.widget.ListAdapter
 import com.movies.databinding.MovieItemBinding
-import com.movies.presentation.base.adapter.movie_adapter.BaseMovieAdapter
 import com.movies.presentation.base.data.model.MovieUIModel
+import com.movies.presentation.base.diff_util.DiffUtilCallback
+import com.movies.presentation.base.view_holder.MoviesViewHolder
 
-class FavouriteMovieAdapter : BaseMovieAdapter<MovieUIModel, FavouriteMovieAdapter.MoviesViewHolder>() {
+class FavouriteMovieAdapter(
+    private val onClickCallback: ((MovieUIModel) -> Unit),
+    private val onFavouriteClick: ((MovieUIModel) -> Unit)
+) : ListAdapter<MovieUIModel, MoviesViewHolder>(DiffUtilCallback()) {
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): MoviesViewHolder {
-        return MoviesViewHolder(
-            MovieItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
+        val binding = MovieItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         )
-    }
-
-    class MoviesViewHolder(val binding: MovieItemBinding) :
-        BaseMovieViewHolder<MovieUIModel>(binding) {
-        override fun onBindMovie(
-            item: MovieUIModel,
-            onClickCallback: ((MovieUIModel) -> Unit)?,
-            onFavouriteClick: ((MovieUIModel, Boolean) -> Unit)?,
-        ) {
-            with(item) {
-                with(binding) {
-                    posterImageView.loadImage(poster)
-                    titleTextView.text = title
-                    releaseYearTextView.text = releaseDate
-                    ratingTextView.text = rating.toString()
-                    genreTextView.text = genreString
-                    favouritesToggleButton.isChecked = isFavourite
-
-                    root.setOnClickListener {
-                        onClickCallback?.invoke(item)
-                    }
-                    favouritesToggleButton.setOnClickListener {
-                        onFavouriteClick?.invoke(item, favouritesToggleButton.isChecked)
-                    }
-                }
+        return MoviesViewHolder(binding).apply {
+            binding.favouritesToggleButton.setOnClickListener {
+                onFavouriteClick.invoke(getItem(bindingAdapterPosition))
+            }
+            binding.root.setOnClickListener {
+                onClickCallback.invoke(getItem(bindingAdapterPosition))
             }
         }
+    }
+
+    override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
+        holder.bind(getItem(position))
     }
 
 }

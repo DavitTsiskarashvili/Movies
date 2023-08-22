@@ -70,7 +70,7 @@
         android:layout_marginEnd="@dimen/dimen_4_dp"
         android:background="@drawable/ic_favourites_selector"
         android:checked="false"
-        android:padding="@dimen/dimen_4_dp"
+        android:padding="@dimen/dimen_10_dp"
         android:textOff=""
         android:textOn=""
         app:layout_constraintEnd_toEndOf="parent"

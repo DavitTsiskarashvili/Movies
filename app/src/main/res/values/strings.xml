@@ -5,6 +5,8 @@
     <string name="home_button">Home</string>
     <string name="favourites_button">Favourites</string>
     <string name="popular">Popular</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="upcoming">Upcoming</string>
     <string name="top_rated">Top Rated</string>
     <string name="cancel">Cancel</string>
     <string name="details">Details</string>

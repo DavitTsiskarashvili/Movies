@@ -32,7 +32,8 @@ fun View.changeBackgroundColor(@ColorRes colorRes: Int) {
 
 fun Button.setStyle(style: CategoryStyle) {
     setTextAppearance(style.style)
-    changeBackground(style.strokeStyle)
+//    changeBackground(style.strokeStyle)
+    backgroundTintList = ContextCompat.getColorStateList(context, style.backgroundColor)
 }
 
 fun TextView.changeTextStyle(@StyleRes styleRes: Int) {

@@ -53,11 +53,10 @@ fun <T> StateFlow<T>.collectLatestInLifecycle(
 fun <T> Fragment.observeLiveData(
     liveData: LiveData<T>,
     block: (T) -> Unit
-): LiveData<T> {
+) {
     liveData.observe(viewLifecycleOwner) {
         block(it)
     }
-    return liveData
 }
 
 fun <T> Fragment.changeScreen(fragment: Fragment, args: T? = null) {
