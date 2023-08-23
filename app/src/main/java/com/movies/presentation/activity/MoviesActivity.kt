@@ -21,21 +21,6 @@ class MoviesActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         navControllerManager.setNavController(navController)
-
     }
-}
 
-//        supportFragmentManager.beginTransaction().replace(
-//            R.id.nav_host_fragment, ContainerFragment()
-//        ).commit()
-//    private fun getCurrentFragment(): Fragment? {
-//        return supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-//    }
-//
-//    override fun onBackPressed() {
-//        when (val currentFragment = getCurrentFragment()) {
-//            is ContainerFragment -> {
-//                return currentFragment.onBackPress()
-//            }
-//        }
-//    }
+}
