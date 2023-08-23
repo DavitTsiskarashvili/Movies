@@ -10,7 +10,9 @@ val favouriteViewModelModule = module {
             moviesDomainToUIMapper = get(),
             getFavouriteMovies = get(),
             updateMovieStatus = get(),
-            movieUIToDomain = get()
+            movieUIToDomain = get(),
+            detailsNavigationApi = get(),
+            homeNavigationApi = get()
         )
     }
 }

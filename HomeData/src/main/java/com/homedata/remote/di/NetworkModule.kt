@@ -4,6 +4,6 @@ import com.homedata.remote.service.ServiceApi
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
-val retrofitModule = module {
+val moviesRetrofitModule = module {
     single { get<Retrofit>().create(ServiceApi::class.java) }
 }

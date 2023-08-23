@@ -1,12 +1,10 @@
 package com.example.featurehomeimpl.home.ui
 
-import com.commonpresentation.extensions.changeScreen
 import com.commonpresentation.extensions.executeScope
 import com.commonpresentation.extensions.hideKeyboard
 import com.commonpresentation.extensions.viewBinding
 import com.commonpresentation.presentation.base.fragment.BaseFragment
-import com.commonpresentation.utils.NavigationConstants.DETAILS
-import com.commonpresentation.utils.NavigationConstants.FAVOURITES
+import com.commonpresentation.presentation.view.navigation.NavigationButtons
 import com.example.featurehomeimpl.R
 import com.example.featurehomeimpl.databinding.FragmentHomeBinding
 import com.example.featurehomeimpl.home.ui.adapter.MoviePagingAdapter
@@ -24,8 +22,12 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
 
     override fun onRefresh() = viewModel.fetchAllMovies()
 
-    override fun defaultRightButtonAction() {
-        changeScreen(FavouriteFragment(), null)
+    private lateinit var moviePagingAdapter: MoviePagingAdapter
+
+    override fun onBind() {
+        initRecyclerView()
+        setListeners()
+        binding.searchAndFilterView.emptySearchCallback = { viewModel.fetchAllMovies() }
     }
 
     override fun onDataLoaded(data: HomeUIState) {
@@ -34,18 +36,18 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
         }
     }
 
-    private lateinit var moviePagingAdapter: MoviePagingAdapter
-
-    override fun onBind() {
-        handleResult(DETAILS) {
-//            viewModel.fetchAllMovies()
-        }
-        handleResult(FAVOURITES) {
-//            viewModel.fetchAllMovies()
-        }
-        initRecyclerView()
-        setListeners()
-        binding.searchAndFilterView.emptySearchCallback = { viewModel.fetchAllMovies() }
+    private fun initRecyclerView() {
+        moviePagingAdapter = MoviePagingAdapter(
+            onClickCallback = { film ->
+                requireContext().hideKeyboard()
+                binding.searchAndFilterView.clearFocus()
+                viewModel.navigateToDetails(film.id)
+            },
+            onFavouriteClick = { favouriteMovie, _ ->
+                viewModel.updateFavouriteMovieStatus(favouriteMovie)
+            }
+        )
+        binding.moviesRecyclerView.adapter = moviePagingAdapter
     }
 
     private fun setListeners() {
@@ -61,22 +63,11 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
                 requireContext().hideKeyboard()
                 searchAndFilterView.clearFocus()
             }
-        }
-    }
-
-    private fun initRecyclerView() {
-        moviePagingAdapter = MoviePagingAdapter(
-            onClickCallback = { film ->
-                requireContext().hideKeyboard()
-                binding.searchAndFilterView.clearFocus()
-                viewModel.navigateToDetails(film.id)
-//                changeScreen(DetailsFragment(), film.id)
-            },
-            onFavouriteClick = { favouriteMovie, _ ->
-                viewModel.updateFavouriteMovieStatus(favouriteMovie)
+            navigationView.setButtonsActiveStatus(NavigationButtons.LEFT_BUTTON)
+            navigationView.rightButtonListener {
+                viewModel.navigateToFavourites()
             }
-        )
-        binding.moviesRecyclerView.adapter = moviePagingAdapter
+        }
     }
 
 }

@@ -36,9 +36,9 @@ class SearchAndFilterView @JvmOverloads constructor(
         searchCancelListener()
     }
 
-    fun onCategoryButtonClicked(callBack: (CategoryType) -> Unit) {
+    fun onCategoryButtonClicked(callBack: (String) -> Unit) {
         categoryAdapter = CategoryAdapter {
-            callBack(it)
+            callBack(it.toString())
         }
         initRecycler()
     }

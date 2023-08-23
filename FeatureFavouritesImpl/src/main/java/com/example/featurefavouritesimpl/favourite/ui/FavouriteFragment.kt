@@ -1,7 +1,5 @@
 package com.example.featurefavouritesimpl.favourite.ui
 
-import com.commonpresentation.extensions.changeScreen
-import com.commonpresentation.extensions.executeScope
 import com.commonpresentation.extensions.hideKeyboard
 import com.commonpresentation.extensions.hideViews
 import com.commonpresentation.extensions.observeLiveData
@@ -10,13 +8,10 @@ import com.commonpresentation.extensions.viewBinding
 import com.commonpresentation.presentation.base.data.model.MovieUIModel
 import com.commonpresentation.presentation.base.fragment.BaseFragment
 import com.commonpresentation.presentation.view.navigation.NavigationButtons
-import com.commonpresentation.utils.NavigationConstants.DETAILS
-import com.commonpresentation.utils.NavigationConstants.FAVOURITES
 import com.example.featurefavouritesimpl.R
 import com.example.featurefavouritesimpl.databinding.FragmentFavouritesBinding
 import com.example.featurefavouritesimpl.favourite.ui.adapter.FavouriteMovieAdapter
 import com.example.featurefavouritesimpl.favourite.vm.FavouriteViewModel
-import com.movies.presentation.details.ui.DetailsFragment
 
 class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>() {
 
@@ -26,47 +21,54 @@ class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>()
 
     override val layout = R.layout.fragment_favourites
 
-    override fun activeNavigationButton(): NavigationButtons = NavigationButtons.RIGHT_BUTTON
+//    override fun activeNavigationButton(): NavigationButtons = NavigationButtons.RIGHT_BUTTON
+//
+//    override fun resultKey(): String = FAVOURITES
+//
+//    override fun defaultLeftButtonAction() {
+//        parentFragmentManager.popBackStack()
+//    }
 
-    override fun resultKey(): String = FAVOURITES
-
-    override fun defaultLeftButtonAction() {
-        parentFragmentManager.popBackStack()
-    }
-
-    override fun needPressBack(): Boolean = true
+//    override fun needPressBack(): Boolean = true
 
     private lateinit var favouriteMovieAdapter: FavouriteMovieAdapter
 
     override fun onDataLoaded(data: List<MovieUIModel>) {
         favouriteMovieAdapter.submitList(data)
-        with(binding){
+        with(binding) {
             if (data.isEmpty()) showViews(emptyListImageView, emptyListTextView)
             else hideViews(emptyListTextView, emptyListImageView)
         }
     }
 
     override fun onBind() {
-        handleResult(DETAILS) { executeScope { viewModel.fetchFavouriteMovies() } }
+//        handleResult(DETAILS) { executeScope { viewModel.fetchFavouriteMovies() } }
         initRecyclerView()
         observer()
+        setListeners()
     }
 
     private fun observer() {
         observeLiveData(viewModel.moviesLiveData) { viewModel.updateFavouriteMovieStatus(it) }
     }
 
+    private fun setListeners() = with(binding.navigationView) {
+        setButtonsActiveStatus(NavigationButtons.RIGHT_BUTTON)
+        leftButtonListener { viewModel.navigateToHome() }
+    }
+
     private fun initRecyclerView() {
         favouriteMovieAdapter = FavouriteMovieAdapter(
             onClickCallback = { film ->
                 context?.hideKeyboard()
-                changeScreen(DetailsFragment(), film.id)
+                viewModel.navigateToDetails(film.id)
+//                changeScreen(DetailsFragment(), film.id)
             },
             onFavouriteClick = { favouriteMovie ->
                 viewModel.moviesLiveData.value = favouriteMovie
             }
         )
-        binding.favouriteMoviesAdapter.adapter = favouriteMovieAdapter
+        binding.favouriteMoviesRecyclerView.adapter = favouriteMovieAdapter
     }
 
 }

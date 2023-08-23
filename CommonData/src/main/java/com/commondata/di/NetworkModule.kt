@@ -1,38 +1,37 @@
 package com.commondata.di
 
-import com.commondata.NetworkConstants.API_KEY
 import com.commondata.NetworkConstants.BASE_URL
-import com.commondomain.network.NetworkLauncher
 import com.commondata.network.NetworkLauncherImpl
+import com.commondomain.network.NetworkLauncher
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private fun createInterceptor(): Interceptor {
+private fun createInterceptor(apiKey: String): Interceptor {
     return Interceptor { chain ->
         val request = chain.request().newBuilder()
-            .header("Authorization", API_KEY)
+            .header("Authorization", apiKey)
             .build()
         chain.proceed(request)
     }
 }
 
-private fun creteOkhttpClient(): OkHttpClient {
+private fun creteOkhttpClient(apiKey: String): OkHttpClient {
     return OkHttpClient.Builder()
-        .addInterceptor(createInterceptor())
+        .addInterceptor(createInterceptor(apiKey))
         .build()
 }
 
-private fun createRetrofit(): Retrofit {
+private fun createRetrofit(apiKey: String): Retrofit {
     return Retrofit.Builder().baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
-        .client(creteOkhttpClient())
+        .client(creteOkhttpClient(apiKey))
         .build()
 }
 
-val networkModule = module {
-    single { createRetrofit() }
-    single<com.commondomain.network.NetworkLauncher> { NetworkLauncherImpl() }
+fun networkModule(apiKey: String) = module {
+    single { createRetrofit(apiKey) }
+    single<NetworkLauncher> { NetworkLauncherImpl() }
 }

@@ -19,6 +19,7 @@ import com.example.featurehomeimpl.view.search_and_filter.adapter.model.Category
 import com.favouritesdomain.usecase.CheckFavouriteStatusUseCase
 import com.favouritesdomain.usecase.UpdateFavouriteStatusMovieUseCase
 import com.featuredetailsapi.navigation.DetailsNavigationApi
+import com.featurefavouritesapi.navigation.FavouritesNavigationApi
 import com.homedomain.model.GenreDomainModel
 import com.homedomain.usecase.movies.FetchGenresUseCase
 import com.homedomain.usecase.movies.FetchMoviesUseCase
@@ -34,10 +35,11 @@ class HomeViewModel(
     private val genresUseCase: FetchGenresUseCase,
     private val movieUIToDomain: MovieUIToDomainMapper,
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
-    private val navigationApi: DetailsNavigationApi,
-    ) : BaseViewModel<HomeUIState>() {
+    private val detailsNavigationApi: DetailsNavigationApi,
+    private val favouritesNavigationApi: FavouritesNavigationApi
+) : BaseViewModel<HomeUIState>() {
 
-    private val categoryStateFlow = MutableStateFlow(CategoryType.POPULAR.toString())
+    private val categoryStateFlow = MutableStateFlow(CategoryType.POPULAR.value)
     private val genreMap = mutableMapOf<Int, String>()
 
     override fun onCreate() {
@@ -49,7 +51,7 @@ class HomeViewModel(
     }
 
     fun selectCategory(categoryType: String) {
-        categoryStateFlow.value = categoryType
+        categoryStateFlow.value = categoryType.lowercase()
         fetchMovieGenre()
     }
 
@@ -118,8 +120,13 @@ class HomeViewModel(
 
     fun navigateToDetails(item: Int) {
         val bundle = Bundle().apply {
-            putParcelable(MOVIE_ID, item)
+            putInt(MOVIE_ID, item)
         }
-        navigationApi.navigateToDetails(bundle)
+        detailsNavigationApi.navigateToDetails(bundle)
     }
+
+    fun navigateToFavourites() {
+        favouritesNavigationApi.navigateToFavourites()
+    }
+
 }

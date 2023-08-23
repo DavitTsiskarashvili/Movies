@@ -13,7 +13,9 @@ val homeViewModelModule = module {
             checkFavouriteStatusUseCase = get(),
             genresUseCase = get(),
             movieUIToDomain = get(),
-            updateMovieStatus = get()
+            updateMovieStatus = get(),
+            favouritesNavigationApi = get(),
+            detailsNavigationApi = get()
         )
     }
 }

@@ -4,7 +4,6 @@ import com.commonpresentation.extensions.loadImage
 import com.commonpresentation.extensions.viewBinding
 import com.commonpresentation.presentation.base.data.model.MovieUIModel
 import com.commonpresentation.presentation.base.fragment.BaseFragment
-import com.commonpresentation.utils.NavigationConstants.DETAILS
 import com.commonpresentation.utils.NavigationConstants.MOVIE_ID
 import com.featuredetailsimpl.R
 import com.featuredetailsimpl.databinding.FragmentDetailsBinding
@@ -20,9 +19,9 @@ class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
 
     override val viewModelClass: KClass<DetailsViewModel> get() = DetailsViewModel::class
 
-    override fun showBottomView(): Boolean = false
-
-    override fun resultKey() = DETAILS
+//    override fun showBottomView(): Boolean = false
+//
+//    override fun resultKey() = DETAILS
 
     override fun onRefresh() = viewModel.fetchMovieDetails(args)
 
