@@ -45,7 +45,6 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        configureBottomView()
         onBind()
         observeUIState()
     }
@@ -70,28 +69,4 @@ abstract class BaseFragment<T : Any, VM : BaseViewModel<T>> : Fragment(), UIStat
         }
     }
 
-//    override fun bottomView(): View = NavigationView(requireContext())
-//
-//    private fun configureBottomView() {
-//        tryConfigureBottomView {
-//            (parentFragment as ContainerFragment).configureBottomView()
-//        }
-//    }
-//
-//    protected fun Any.handleResult(
-//        result: String,
-//        callBack: (() -> Unit)? = null
-//    ) {
-//        setFragmentResultListener(result) { _, _ ->
-//            configureBottomView()
-//            callBack?.invoke()
-//        }
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        resultKey()?.let {
-//            setFragmentResult(it, Bundle.EMPTY)
-//        }
-//    }
 }
