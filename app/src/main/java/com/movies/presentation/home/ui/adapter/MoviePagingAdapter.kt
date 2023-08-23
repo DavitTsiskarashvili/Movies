@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import com.movies.databinding.MovieItemBinding
 import com.movies.presentation.base.data.model.MovieUIModel
-import com.movies.presentation.base.diff_util.DiffUtilCallback
 import com.movies.presentation.base.view_holder.MoviesViewHolder
+import com.movies.presentation.utils.DiffUtilCallback
 
 class MoviePagingAdapter(
     private val onClickCallback: (MovieUIModel) -> Unit,
@@ -37,4 +37,5 @@ class MoviePagingAdapter(
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
+
 }

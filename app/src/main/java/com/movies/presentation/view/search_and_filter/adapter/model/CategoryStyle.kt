@@ -7,19 +7,16 @@ import com.movies.common.utils.S
 
 enum class CategoryStyle(
     @StyleRes val style: Int,
-//    @DrawableRes val strokeStyle: Int,
     @ColorRes val backgroundColor: Int
 
 ) {
     ACTIVE(
         style = S.smallMontserrat_ButtonFocused,
-//        strokeStyle = D.background_filter_focused,
         backgroundColor = C.yellow_primary
 
     ),
     INACTIVE(
         style = S.smallMontserrat_Button,
-//        strokeStyle = D.background_filter_unfocused,
         backgroundColor = C.neutral_02_darkest_grey
     )
 }

@@ -38,7 +38,7 @@ class NavigationView @JvmOverloads constructor(
         }
     }
 
-    private fun setDefaultButtonTypes(){
+    private fun setDefaultButtonTypes() {
         with(binding) {
             leftButton.setContent(NavigationButtons.LEFT_BUTTON)
             rightButton.setContent(NavigationButtons.RIGHT_BUTTON)
@@ -52,6 +52,7 @@ class NavigationView @JvmOverloads constructor(
                     leftButton.setActiveButton(true)
                     rightButton.setActiveButton(false)
                 }
+
                 NavigationButtons.RIGHT_BUTTON -> {
                     leftButton.setActiveButton(false)
                     rightButton.setActiveButton(true)
