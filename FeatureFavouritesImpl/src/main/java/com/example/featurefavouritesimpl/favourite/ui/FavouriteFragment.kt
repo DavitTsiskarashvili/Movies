@@ -21,16 +21,6 @@ class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>()
 
     override val layout = R.layout.fragment_favourites
 
-//    override fun activeNavigationButton(): NavigationButtons = NavigationButtons.RIGHT_BUTTON
-//
-//    override fun resultKey(): String = FAVOURITES
-//
-//    override fun defaultLeftButtonAction() {
-//        parentFragmentManager.popBackStack()
-//    }
-
-//    override fun needPressBack(): Boolean = true
-
     private lateinit var favouriteMovieAdapter: FavouriteMovieAdapter
 
     override fun onDataLoaded(data: List<MovieUIModel>) {
@@ -42,7 +32,6 @@ class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>()
     }
 
     override fun onBind() {
-//        handleResult(DETAILS) { executeScope { viewModel.fetchFavouriteMovies() } }
         initRecyclerView()
         observer()
         setListeners()
@@ -62,7 +51,6 @@ class FavouriteFragment : BaseFragment<List<MovieUIModel>, FavouriteViewModel>()
             onClickCallback = { film ->
                 context?.hideKeyboard()
                 viewModel.navigateToDetails(film.id)
-//                changeScreen(DetailsFragment(), film.id)
             },
             onFavouriteClick = { favouriteMovie ->
                 viewModel.moviesLiveData.value = favouriteMovie

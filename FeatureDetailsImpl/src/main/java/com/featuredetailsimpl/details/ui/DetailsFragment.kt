@@ -19,10 +19,6 @@ class DetailsFragment : BaseFragment<DetailsUIState, DetailsViewModel>() {
 
     override val viewModelClass: KClass<DetailsViewModel> get() = DetailsViewModel::class
 
-//    override fun showBottomView(): Boolean = false
-//
-//    override fun resultKey() = DETAILS
-
     override fun onRefresh() = viewModel.fetchMovieDetails(args)
 
     private val args by lazy { arguments?.getInt(MOVIE_ID)!! }

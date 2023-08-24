@@ -64,9 +64,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
                 searchAndFilterView.clearFocus()
             }
             navigationView.setButtonsActiveStatus(NavigationButtons.LEFT_BUTTON)
-            navigationView.rightButtonListener {
-                viewModel.navigateToFavourites()
-            }
+            navigationView.rightButtonListener { viewModel.navigateToFavourites() }
         }
     }
 
