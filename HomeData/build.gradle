@@ -37,8 +37,10 @@ dependencies {
     //Paging
     implementation libs.paging
 
-    //Retrofit + Gson
+    //Retrofit
     implementation libs.retrofit
+
+    //Gson
     implementation libs.converter.gson
 
     implementation(project(":CommonData"))

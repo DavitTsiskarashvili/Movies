@@ -45,35 +45,16 @@ android {
 dependencies {
     implementation libs.material
 
-    //Room Database
-    implementation libs.room.runtime
-    //Kotlin Extensions and Coroutines support for Room
-    implementation libs.room.ktx
-    kapt libs.room.compiler
-
     // Koin
     implementation libs.koin.android
 
-    // Fragment + Jetpack Nav
+    // Fragment + Jetpack Navigation
     implementation libs.navigation.ui.ktx
     implementation libs.navigation.fragment.ktx
-
-    //Retrofit + Gson
-    implementation libs.retrofit
-    implementation libs.converter.gson
-
-    //Interceptor
-    implementation libs.logging.interceptor
-
-    //Glide
-    annotationProcessor libs.glide.compiler
-    implementation libs.glide
 
     //Splash Screen
     implementation libs.splash
 
-    //Paging
-    implementation libs.paging
 
     implementation(project(":CommonData"))
     implementation(project(":HomeData"))

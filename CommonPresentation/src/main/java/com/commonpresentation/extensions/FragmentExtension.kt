@@ -27,34 +27,3 @@ fun <T> Fragment.observeLiveData(
         block(it)
     }
 }
-
-//fun BaseFragment<*, *>.tryConfigureBottomView(tryAction: () -> Unit) {
-//    try {
-//        tryAction.invoke()
-//    } catch (_: Exception) {
-//        (parentFragment as ContainerFragment).addBottomContainerView(bottomView())
-//    }
-//}
-//
-//fun <T> Fragment.changeScreen(fragment: Fragment, args: T? = null) {
-//    args?.let {
-//        val bundle = Bundle().apply {
-//            putArguments(MOVIE_ID, args)
-//        }
-//        fragment.arguments = bundle
-//    }
-//
-//    parentFragmentManager.beginTransaction().add(
-//        R.id.childFragmentContainerView, fragment
-//    ).addToBackStack(null).commit()
-//}
-//
-//@Suppress("UNCHECKED_CAST")
-//fun <T> Bundle.putArguments(key: String, args: T? = null) {
-//    when (args) {
-//        is Int -> putInt(key, args)
-//        is String -> putString(key, args)
-//        is ArrayList<*> -> putStringArrayList(key, args as ArrayList<String>)
-//        is Parcelable -> putParcelable(key, args)
-//    }
-//}

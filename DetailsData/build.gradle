@@ -34,8 +34,10 @@ dependencies {
     // Koin
     implementation libs.koin.android
 
-    //Retrofit + Gson
+    //Retrofit
     implementation libs.retrofit
+
+    //Gson
     implementation libs.converter.gson
 
     implementation(project(":CommonData"))

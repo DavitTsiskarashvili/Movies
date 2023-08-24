@@ -39,7 +39,7 @@ dependencies {
     // Koin
     implementation libs.koin.android
 
-    // Fragment + Jetpack Nav
+    // Fragment + Jetpack Navigation
     implementation libs.navigation.ui.ktx
     implementation libs.navigation.fragment.ktx
 

@@ -36,8 +36,10 @@ android {
 }
 
 dependencies {
-    //Retrofit + Gson
+    //Retrofit
     implementation libs.retrofit
+
+    //Gson
     implementation libs.converter.gson
 
     //Interceptor
