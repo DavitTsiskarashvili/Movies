@@ -14,3 +14,18 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Movies"
 include ':app'
+include ':HomeData'
+include ':CommonData'
+include ':DetailsData'
+include ':FavouritesData'
+include ':HomeDomain'
+include ':DetailsDomain'
+include ':FavouritesDomain'
+include ':CommonDomain'
+include ':CommonPresentation'
+include ':FeatureFavouritesAPI'
+include ':FeatureFavouritesImpl'
+include ':FeatureHomeAPI'
+include ':FeatureHomeImpl'
+include ':FeatureDetailsApi'
+include ':FeatureDetailsImpl'

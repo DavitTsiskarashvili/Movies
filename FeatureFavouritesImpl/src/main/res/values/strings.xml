@@ -1,0 +1,4 @@
+<resources>
+    <string name="favourite_movies">Favourite Movies</string>
+    <string name="no_movies">No movies added yet</string>
+</resources>

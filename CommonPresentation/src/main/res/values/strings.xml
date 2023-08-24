@@ -1,0 +1,8 @@
+<resources>
+    <string name="home_button">Home</string>
+    <string name="favourites_button">Favourites</string>
+    <string name="no_data">Data can\'t be loaded</string>
+    <string name="no_internet">internet connection or some other server error</string>
+    <string name="server_error">some server error</string>
+    <string name="refresh">Refresh</string>
+</resources>
