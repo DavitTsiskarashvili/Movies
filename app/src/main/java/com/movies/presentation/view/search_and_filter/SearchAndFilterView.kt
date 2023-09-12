@@ -65,7 +65,7 @@ class SearchAndFilterView @JvmOverloads constructor(
 
     private fun searchCancelListener() = with(binding) {
         cancelTextView.setOnClickListener {
-            searchEditText.hideKeyboard()
+            context.hideKeyboard()
             searchEditText.text?.clear()
             searchEditText.clearFocus()
             filterToggleButton.isChecked = false

@@ -4,7 +4,7 @@ import com.movies.domain.model.MovieDomainModel
 import com.movies.domain.repository.FavouriteMovieRepository
 import com.movies.domain.usecase.base.BaseUseCase
 
-class GetFavouriteMoviesUseCase(
+class FetchFavouriteMoviesUseCase(
     private val favouriteMovieRepository: FavouriteMovieRepository
 ) : BaseUseCase<Unit, List<MovieDomainModel>>() {
 

@@ -7,6 +7,7 @@ import com.movies.data.remote.network.NetworkLauncherImpl
 import com.movies.data.remote.service.api.ServiceApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import org.koin.android.BuildConfig
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

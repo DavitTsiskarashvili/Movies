@@ -60,7 +60,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
                 viewModel.searchMovies(it)
             }
             root.setOnClickListener {
-                hideKeyboard()
+                requireContext().hideKeyboard()
                 searchAndFilterView.clearFocus()
             }
         }
@@ -69,7 +69,7 @@ class HomeFragment : BaseFragment<HomeUIState, HomeViewModel>() {
     private fun initRecyclerView() {
         moviePagingAdapter = MoviePagingAdapter(
             onClickCallback = { film ->
-                hideKeyboard()
+                requireContext().hideKeyboard()
                 binding.searchAndFilterView.clearFocus()
                 changeScreen(DetailsFragment(), film.id)
             },

@@ -4,7 +4,7 @@ import com.movies.common.extensions.viewModelScope
 import com.movies.domain.model.MovieDomainModel
 import com.movies.domain.usecase.favourites.CheckFavouriteStatusUseCase
 import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
-import com.movies.domain.usecase.movies.GetMovieDetailsUseCase
+import com.movies.domain.usecase.movies.FetchMovieDetailsUseCase
 import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.data.ui_state.UIState
 import com.movies.presentation.base.view_model.BaseViewModel
@@ -16,7 +16,7 @@ class DetailsViewModel(
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
     private val movieUIToDomain: MovieUIToDomainMapper,
     private val movieDomainToUIMapper: MovieDomainToUIMapper,
-    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+    private val fetchMovieDetailsUseCase: FetchMovieDetailsUseCase,
     private val checkFavouriteStatusUseCase: CheckFavouriteStatusUseCase
 ) : BaseViewModel<DetailsUIState>() {
 
@@ -24,7 +24,7 @@ class DetailsViewModel(
         launchNetwork {
             loading { if (it) _uiStateLiveData.postValue(UIState.Loading) }
 
-            executeApi { getMovieDetailsUseCase.invoke(movieId) }
+            executeApi { fetchMovieDetailsUseCase.invoke(movieId) }
 
             success { handleSuccessCase(it) }
 

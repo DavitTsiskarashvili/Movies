@@ -4,7 +4,7 @@ import com.movies.domain.model.GenreDomainModel
 import com.movies.domain.repository.MoviesRepository
 import com.movies.domain.usecase.base.BaseUseCase
 
-class GetGenresUseCase(
+class FetchGenresUseCase(
     private val moviesRepository: MoviesRepository
 ) : BaseUseCase<Unit, List<GenreDomainModel>>() {
 
