@@ -11,8 +11,8 @@ import com.movies.domain.model.GenreDomainModel
 import com.movies.domain.model.MovieDomainModel
 import com.movies.domain.usecase.favourites.CheckFavouriteStatusUseCase
 import com.movies.domain.usecase.favourites.UpdateFavouriteStatusMovieUseCase
-import com.movies.domain.usecase.movies.FetchGenresUseCase
-import com.movies.domain.usecase.movies.FetchMoviesUseCase
+import com.movies.domain.usecase.movies.GetGenresUseCase
+import com.movies.domain.usecase.movies.GetMoviesUseCase
 import com.movies.domain.usecase.search.SearchMoviesUseCase
 import com.movies.presentation.base.data.model.MovieUIModel
 import com.movies.presentation.base.data.ui_state.UIState
@@ -24,11 +24,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class HomeViewModel(
-    private val moviesUseCase: FetchMoviesUseCase,
+    private val moviesUseCase: GetMoviesUseCase,
     private val searchMoviesUseCase: SearchMoviesUseCase,
     private val moviesUIMapper: MovieDomainToUIMapper,
     private val checkFavouriteStatusUseCase: CheckFavouriteStatusUseCase,
-    private val genresUseCase: FetchGenresUseCase,
+    private val genresUseCase: GetGenresUseCase,
     private val movieUIToDomain: MovieUIToDomainMapper,
     private val updateMovieStatus: UpdateFavouriteStatusMovieUseCase,
 ) : BaseViewModel<HomeUIState>() {
@@ -47,6 +47,16 @@ class HomeViewModel(
     fun selectCategory(categoryType: CategoryType) {
         categoryStateFlow.value = categoryType
         fetchMovieGenre()
+    }
+
+    fun searchMovies(query: String) {
+        launchNetwork<Pager<Int, MovieDomainModel>> {
+            executeApi { searchMoviesUseCase.invoke(query) }
+
+            success { handleSuccessCase(it.flow) }
+
+            error { _uiStateLiveData.postValue(UIState.Error(it)) }
+        }
     }
 
     private fun fetchMovieGenre() {
@@ -74,16 +84,6 @@ class HomeViewModel(
             }
 
             loading { if (it) _uiStateLiveData.postValue(UIState.Loading) }
-
-            success { handleSuccessCase(it.flow) }
-
-            error { _uiStateLiveData.postValue(UIState.Error(it)) }
-        }
-    }
-
-    fun searchMovies(query: String) {
-        launchNetwork<Pager<Int, MovieDomainModel>> {
-            executeApi { searchMoviesUseCase.invoke(query) }
 
             success { handleSuccessCase(it.flow) }
 

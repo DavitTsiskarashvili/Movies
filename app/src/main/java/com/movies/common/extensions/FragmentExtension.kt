@@ -1,7 +1,9 @@
 package com.movies.common.extensions
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
@@ -62,5 +64,13 @@ fun <T> Bundle.putArguments(key: String, args: T? = null) {
         is String -> putString(key, args)
         is ArrayList<*> -> putStringArrayList(key, args as ArrayList<String>)
         is Parcelable -> putParcelable(key, args)
+    }
+}
+
+fun Fragment.hideKeyboard() {
+    val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val currentFocusedView = requireActivity().currentFocus
+    if (currentFocusedView != null) {
+        imm.hideSoftInputFromWindow(currentFocusedView.windowToken, 0)
     }
 }

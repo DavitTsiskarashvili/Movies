@@ -7,7 +7,7 @@ import org.koin.dsl.module
 val favouriteViewModelModule = module {
     viewModel {
         FavouriteViewModel(
-            moviesDomainToUIMapper = get(),
+            moviesUIMapper = get(),
             getFavouriteMovies = get(),
             updateMovieStatus = get(),
             movieUIToDomain = get()

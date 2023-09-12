@@ -1,8 +1,11 @@
 package com.movies.common.extensions
 
+import android.content.Context
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -11,7 +14,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
 import com.movies.presentation.view.search_and_filter.adapter.model.CategoryStyle
 
 fun View.visibleIf(visible: Boolean) {
@@ -20,14 +22,6 @@ fun View.visibleIf(visible: Boolean) {
 
 fun View.goneIf(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.GONE
-}
-
-fun Any.showViews(vararg  views: View){
-    views.forEach { it.visibility = View.VISIBLE }
-}
-
-fun Any.hideViews(vararg  views: View){
-    views.forEach { it.visibility = View.INVISIBLE }
 }
 
 fun View.applyAnimation(visible: Boolean) {
@@ -79,8 +73,8 @@ fun LinearLayout.replaceView(needsAdd: Boolean, view: View) {
     else removeAllViews()
 }
 
-fun ImageView.loadImage (url: String?) {
-    Glide.with(context)
-        .load(url)
-        .into(this)
+fun EditText.hideKeyboard() {
+    val inputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }

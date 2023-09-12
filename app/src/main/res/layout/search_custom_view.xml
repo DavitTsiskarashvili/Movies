@@ -46,7 +46,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/cancelTextView"
-        style="@style/normalMontserrat_Button"
+        style="@style/smallMontserrat_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_8_dp"
